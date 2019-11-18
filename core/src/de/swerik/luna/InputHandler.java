@@ -10,11 +10,11 @@ public class InputHandler implements InputProcessor {
     Sprite sprite;
     float movement = 0f;
     boolean movingLeft=false;
-    Timer running;
+    Animation animation;
 
-    public InputHandler(Sprite sprite, Timer running) {
+    public InputHandler(Sprite sprite, Animation animation) {
         this.sprite = sprite;
-        this.running = running;
+        this.animation = animation;
     }
 
     public float getMovement() {
@@ -64,7 +64,7 @@ public class InputHandler implements InputProcessor {
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         if(button== Input.Buttons.LEFT){
-            running.start();
+            animation.start();
         }
         return false;
     }
@@ -72,7 +72,7 @@ public class InputHandler implements InputProcessor {
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
         if(button== Input.Buttons.LEFT){
-            running.stop();
+            animation.stop();
         }
         return false;
     }

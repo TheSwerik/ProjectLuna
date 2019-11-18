@@ -17,7 +17,7 @@ public class Luna extends ApplicationAdapter {
     TextureRegion[][] regions;
     Sprite sprite;
     InputHandler inputHandler;
-    Timer running;
+    Animation running;
 
     @Override
     public void create() {
@@ -26,10 +26,10 @@ public class Luna extends ApplicationAdapter {
         regions = TextureRegion.split(img, 363, 458);
         sprite = new Sprite(regions[0][0]);
         sprite.setScale(0.25f);
-        running = new Timer();
-        this.testTimer();
-        running.stop();
-        inputHandler = new InputHandler(sprite,running);
+
+        running = new Animation(sprite, regions);
+        inputHandler = new InputHandler(sprite, running);
+
         Gdx.input.setInputProcessor(inputHandler);
     }
 
@@ -50,20 +50,5 @@ public class Luna extends ApplicationAdapter {
     public void dispose() {
         batch.dispose();
         img.dispose();
-    }
-
-    private void testTimer() {
-        running.scheduleTask(new Timer.Task() {
-            @Override
-            public void run() {
-                if (++frame > 4) {
-                    frame = 0;
-                    if (++line == 2) {
-                        line = 0;
-                    }
-                }
-                sprite.setRegion(regions[line][frame]);
-            }
-        }, 0, 1 / 20f);
     }
 }
