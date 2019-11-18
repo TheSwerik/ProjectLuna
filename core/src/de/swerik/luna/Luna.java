@@ -17,6 +17,7 @@ public class Luna extends ApplicationAdapter {
     int line = 0;
     TextureRegion[][] regions;
     Sprite sprite;
+    InputHandler inputHandler;
 
     @Override
     public void create() {
@@ -25,14 +26,16 @@ public class Luna extends ApplicationAdapter {
         regions = TextureRegion.split(img, 363, 458);
         sprite = new Sprite(regions[0][0]);
         sprite.setScale(0.25f);
+        inputHandler = new InputHandler(sprite);
         this.testTimer();
+        Gdx.input.setInputProcessor(inputHandler);
     }
 
     @Override
     public void render() {
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        this.testInput();
+        sprite.translateX(inputHandler.getMovement());
         batch.begin();
         sprite.draw(batch);
         batch.end();
@@ -42,22 +45,6 @@ public class Luna extends ApplicationAdapter {
     public void dispose() {
         batch.dispose();
         img.dispose();
-    }
-
-    private void testInput() {
-        if (Gdx.input.isKeyPressed(Input.Keys.LEFT) || Gdx.input.isKeyPressed(Input.Keys.A)) {
-            if (sprite.getX() > -100) {
-                sprite.translateX(-5f);
-            }
-            if (!sprite.isFlipX()) {
-                sprite.flip(true, false);
-            }
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) || Gdx.input.isKeyPressed(Input.Keys.D)) {
-            if (sprite.getX() < 1000) {
-                sprite.translateX(5f);
-            }
-        }
     }
 
     private void testTimer() {
