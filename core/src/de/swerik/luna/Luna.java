@@ -2,7 +2,6 @@ package de.swerik.luna;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -18,6 +17,7 @@ public class Luna extends ApplicationAdapter {
     TextureRegion[][] regions;
     Sprite sprite;
     InputHandler inputHandler;
+    Timer running;
 
     @Override
     public void create() {
@@ -26,8 +26,10 @@ public class Luna extends ApplicationAdapter {
         regions = TextureRegion.split(img, 363, 458);
         sprite = new Sprite(regions[0][0]);
         sprite.setScale(0.25f);
-        inputHandler = new InputHandler(sprite);
+        running = new Timer();
         this.testTimer();
+        running.stop();
+        inputHandler = new InputHandler(sprite,running);
         Gdx.input.setInputProcessor(inputHandler);
     }
 
@@ -51,7 +53,7 @@ public class Luna extends ApplicationAdapter {
     }
 
     private void testTimer() {
-        Timer.schedule(new Timer.Task() {
+        running.scheduleTask(new Timer.Task() {
             @Override
             public void run() {
                 if (++frame > 4) {

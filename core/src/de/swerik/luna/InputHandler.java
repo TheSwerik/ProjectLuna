@@ -4,14 +4,17 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.utils.Timer;
 
 public class InputHandler implements InputProcessor {
     Sprite sprite;
     float movement = 0f;
     boolean movingLeft=false;
+    Timer running;
 
-    public InputHandler(Sprite sprite) {
+    public InputHandler(Sprite sprite, Timer running) {
         this.sprite = sprite;
+        this.running = running;
     }
 
     public float getMovement() {
@@ -60,11 +63,17 @@ public class InputHandler implements InputProcessor {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        if(button== Input.Buttons.LEFT){
+            running.start();
+        }
         return false;
     }
 
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+        if(button== Input.Buttons.LEFT){
+            running.stop();
+        }
         return false;
     }
 
