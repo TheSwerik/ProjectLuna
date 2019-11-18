@@ -7,7 +7,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.utils.Timer;
 
 public class Luna extends ApplicationAdapter {
     SpriteBatch batch;
@@ -17,7 +16,7 @@ public class Luna extends ApplicationAdapter {
     TextureRegion[][] regions;
     Sprite sprite;
     InputHandler inputHandler;
-    Animation running;
+    Animation runningAnimation;
 
     @Override
     public void create() {
@@ -27,8 +26,8 @@ public class Luna extends ApplicationAdapter {
         sprite = new Sprite(regions[0][0]);
         sprite.setScale(0.25f);
 
-        running = new Animation(sprite, regions);
-        inputHandler = new InputHandler(sprite, running);
+        runningAnimation = new Animation(sprite, regions);
+        inputHandler = new InputHandler(sprite, runningAnimation);
 
         Gdx.input.setInputProcessor(inputHandler);
     }
