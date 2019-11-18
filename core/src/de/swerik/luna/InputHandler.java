@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 public class InputHandler implements InputProcessor {
     Sprite sprite;
     float movement = 0f;
+    boolean movingLeft=false;
 
     public InputHandler(Sprite sprite) {
         this.sprite = sprite;
@@ -16,20 +17,22 @@ public class InputHandler implements InputProcessor {
     public float getMovement() {
         return movement;
     }
+    public boolean isMovingLeft() {
+        return movingLeft;
+    }
 
     @Override
     public boolean keyDown(int keycode) {
         if (keycode == Input.Keys.LEFT || keycode == Input.Keys.A) {
             if (sprite.getX() > -100) {
                 movement = -5f;
-            }
-            if (!sprite.isFlipX()) {
-                sprite.flip(true, false);
+                movingLeft=true;
             }
         }
         if (keycode == Input.Keys.RIGHT || keycode == Input.Keys.D) {
             if (sprite.getX() < 1000) {
                 movement = 5f;
+                movingLeft=false;
             }
         }
         return true;

@@ -36,6 +36,9 @@ public class Luna extends ApplicationAdapter {
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         sprite.translateX(inputHandler.getMovement());
+        if (!sprite.isFlipX()) {
+            sprite.flip(inputHandler.isMovingLeft(), false);
+        }
         batch.begin();
         sprite.draw(batch);
         batch.end();
