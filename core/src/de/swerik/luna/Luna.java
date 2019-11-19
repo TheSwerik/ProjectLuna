@@ -3,10 +3,16 @@ package de.swerik.luna;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.maps.MapLayer;
+import com.badlogic.gdx.maps.MapObject;
+import com.badlogic.gdx.maps.tiled.*;
+import com.badlogic.gdx.maps.tiled.renderers.OrthoCachedTiledMapRenderer;
+import com.badlogic.gdx.math.Matrix4;
 
 public class Luna extends ApplicationAdapter {
     SpriteBatch batch;
@@ -18,16 +24,22 @@ public class Luna extends ApplicationAdapter {
     InputHandler inputHandler;
     Animation runningAnimation;
 
+    TiledMap tm;
+    TiledMapRenderer tmr;
+
     @Override
     public void create() {
         batch = new SpriteBatch();
-        img = new Texture("ninjaboy/Running.png");
+        img = new Texture("Sprites/ninjaboy/Running.png");
         regions = TextureRegion.split(img, 363, 458);
         sprite = new Sprite(regions[0][0]);
         sprite.setScale(0.25f);
 
         runningAnimation = new Animation(sprite, regions);
         inputHandler = new InputHandler(sprite, runningAnimation);
+
+        tm = new TmxMapLoader().load("Maps/TMX/Test.tmx");
+        tmr = new OrthoCachedTiledMapRenderer(tm);
 
         Gdx.input.setInputProcessor(inputHandler);
     }
@@ -40,6 +52,10 @@ public class Luna extends ApplicationAdapter {
         if (!sprite.isFlipX()) {
             sprite.flip(inputHandler.isMovingLeft(), false);
         }
+
+//        tmr.setView(camera);
+        tmr.render();
+
         batch.begin();
         sprite.draw(batch);
         batch.end();
@@ -49,6 +65,7 @@ public class Luna extends ApplicationAdapter {
     public void dispose() {
         batch.dispose();
         img.dispose();
+        tm.dispose();
         System.exit(0);
     }
 }
