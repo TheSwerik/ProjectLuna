@@ -3,6 +3,8 @@ package de.swerik.luna;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.audio.AudioDevice;
+import com.badlogic.gdx.audio.AudioRecorder;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -21,8 +23,8 @@ public class InputHandler implements InputProcessor {
     public InputHandler(Sprite sprite, Animation animation) {
         this.sprite = sprite;
         this.animation = animation;
-        sound = Gdx.audio.newSound(Gdx.files.internal("Sounds/Marco Bros. Banana.wav"));
-        music = Gdx.audio.newMusic(Gdx.files.internal("Music/Marco Bros. Overworld.wav"));
+        sound = Gdx.audio.newSound(Gdx.files.internal("Sounds/Marco Bros. Banana.wav"));    //dont forget dispose
+        music = Gdx.audio.newMusic(Gdx.files.internal("Music/Marco Bros. Overworld.wav"));  //dont forget dispose
     }
 
     public float getMovement() {
@@ -60,6 +62,22 @@ public class InputHandler implements InputProcessor {
             else
                 music.stop();
             music.setVolume(0.2f);
+        }
+        if (keycode == Input.Keys.R) {
+            int samplingRate = 48000;
+            final short[] data = new short[samplingRate];
+            final AudioRecorder rec = Gdx.audio.newAudioRecorder(samplingRate, true);
+            final AudioDevice player = Gdx.audio.newAudioDevice(samplingRate, true);
+
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    rec.read(data, 0, data.length);
+                    rec.dispose();
+                    player.writeSamples(data, 0, data.length);
+                    player.dispose();
+                }
+            }).start();
         }
         return true;
     }
