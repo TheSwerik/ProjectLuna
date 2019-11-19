@@ -8,10 +8,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
@@ -32,6 +29,7 @@ public class Luna extends Game {
 
     BitmapFont font;
 
+    ParticleEffect effect = new ParticleEffect();
 
     @Override
     public void create() {
@@ -52,35 +50,46 @@ public class Luna extends Game {
         font = new BitmapFont();
         font.setColor(Color.BLUE);
 
-        setScreen(new MenuScreen(this));
+//        setScreen(new MenuScreen(this));
+
+        effect.load(Gdx.files.internal("particles/TestFlame.p"), Gdx.files.internal("particles/"));
+        effect.start();
+        effect.setPosition(200f,200f);
 
         Gdx.input.setInputProcessor(inputHandler);
     }
 
     //you need to remove render here for screens to work
-//    @Override
-//    public void render() {
-//        Gdx.gl.glClearColor(1, 1, 1, 1);
-//        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-//        sprite.translateX(inputHandler.getMovement());
-//        if (!sprite.isFlipX()) {
-//            sprite.flip(inputHandler.isMovingLeft(), false);
-//        }
-//
-//        tmr.setView(camera);
-//        tmr.render();
-//
-//        camera.position.x = sprite.getX() + sprite.getOriginX();
-//        camera.position.y = sprite.getY() + sprite.getOriginY();
-//        camera.zoom = 1000f;
-//        camera.update();
-//        batch.setProjectionMatrix(camera.combined);
-//
-//        batch.begin();
-//        sprite.draw(batch);
-//        font.draw(batch, "Hello, this works.", 200, 200);
-//        batch.end();
-//    }
+    int delta=0;
+    @Override
+    public void render() {
+        delta+=10;
+        Gdx.gl.glClearColor(0.4f, 0.4f, 0.4f, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        sprite.translateX(inputHandler.getMovement());
+        effect.setPosition(sprite.getX(),sprite.getY());
+        if (!sprite.isFlipX()) {
+            sprite.flip(inputHandler.isMovingLeft(), false);
+        }
+
+        tmr.setView(camera);
+        tmr.render();
+
+        camera.position.x = sprite.getX() + sprite.getOriginX();
+        camera.position.y = sprite.getY() + sprite.getOriginY();
+        camera.zoom = 1000f;
+        camera.update();
+        batch.setProjectionMatrix(camera.combined);
+
+        batch.begin();
+        sprite.draw(batch);
+        font.draw(batch, "Hello, this works.", 200, 200);
+        effect.draw(batch,Gdx.graphics.getDeltaTime());
+        batch.end();
+        if(effect.isComplete()){
+            effect.reset();
+        }
+    }
 
     @Override
     public void dispose() {
