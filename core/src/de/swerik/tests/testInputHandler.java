@@ -1,4 +1,4 @@
-package de.swerik.luna;
+package de.swerik.tests;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -12,22 +12,21 @@ import com.badlogic.gdx.graphics.PixmapIO;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.utils.BufferUtils;
 import com.badlogic.gdx.utils.ScreenUtils;
-import de.swerik.luna.Animation;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class InputHandler implements InputProcessor {
+public class testInputHandler implements InputProcessor {
     Sprite sprite;
     float movement = 0f;
     boolean movingLeft = false;
-    Animation animation;
+    testAnimation animation;
     Sound sound;
     long id;
 
     Music music;
 
-    public InputHandler(Sprite sprite, Animation animation) {
+    public testInputHandler(Sprite sprite, testAnimation animation) {
         this.sprite = sprite;
         this.animation = animation;
         sound = Gdx.audio.newSound(Gdx.files.internal("Sounds/Marco Bros. Banana.wav"));    //dont forget dispose

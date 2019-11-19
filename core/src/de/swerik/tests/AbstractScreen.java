@@ -1,4 +1,4 @@
-package de.swerik.luna;
+package de.swerik.tests;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Screen;

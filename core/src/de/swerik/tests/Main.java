@@ -1,6 +1,6 @@
-package de.swerik.luna;
+package de.swerik.tests;
 
-import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
@@ -12,13 +12,13 @@ import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthoCachedTiledMapRenderer;
 
-public class Luna extends ApplicationAdapter {
+public class Main extends Game {
     SpriteBatch batch;
     Texture img;
     TextureRegion[][] regions;
     Sprite sprite;
-    InputHandler inputHandler;
-    Animation runningAnimation;
+    testInputHandler inputHandler;
+    testAnimation runningAnimation;
 
     TiledMap tm;
     TiledMapRenderer tmr;
@@ -37,8 +37,8 @@ public class Luna extends ApplicationAdapter {
         sprite = new Sprite(regions[0][0]);
         sprite.setScale(0.25f);
 
-        runningAnimation = new Animation(sprite, regions);
-        inputHandler = new InputHandler(sprite, runningAnimation);
+        runningAnimation = new testAnimation(sprite, regions);
+        inputHandler = new testInputHandler(sprite, runningAnimation);
 
         tm = new TmxMapLoader().load("Maps/TMX/Test.tmx");
         tmr = new OrthoCachedTiledMapRenderer(tm);
@@ -47,6 +47,8 @@ public class Luna extends ApplicationAdapter {
 
         font = new BitmapFont();
         font.setColor(Color.BLUE);
+
+//        setScreen(new MenuScreen(this));
 
         effect.load(Gdx.files.internal("particles/TestFlame.p"), Gdx.files.internal("particles/"));
         effect.start();

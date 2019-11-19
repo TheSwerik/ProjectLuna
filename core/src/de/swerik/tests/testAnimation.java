@@ -1,15 +1,17 @@
-package de.swerik.luna;
+package de.swerik.tests;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Timer;
 
-public class Animation {
+import javax.swing.plaf.synth.Region;
+
+public class testAnimation {
     Timer animation;
     int frame = 0;
     int line = 0;
 
-    public Animation(final Sprite spriteSheet, final TextureRegion[][] regions) {
+    public testAnimation(final Sprite spriteSheet, final TextureRegion[][] regions) {
         animation = new Timer();
         animation.scheduleTask(new Timer.Task() {
             @Override
