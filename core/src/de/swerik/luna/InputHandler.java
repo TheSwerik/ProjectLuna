@@ -7,8 +7,17 @@ import com.badlogic.gdx.audio.AudioDevice;
 import com.badlogic.gdx.audio.AudioRecorder;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.PixmapIO;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.utils.BufferUtils;
+import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.Timer;
+
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class InputHandler implements InputProcessor {
     Sprite sprite;
@@ -78,6 +87,13 @@ public class InputHandler implements InputProcessor {
                     player.dispose();
                 }
             }).start();
+        }
+        if (keycode == Input.Keys.K) {
+            byte[] pixel = ScreenUtils.getFrameBufferPixels(0, 0, Gdx.graphics.getBackBufferWidth(), Gdx.graphics.getBackBufferHeight(), true);
+            Pixmap pixmap = new Pixmap(Gdx.graphics.getBackBufferWidth(), Gdx.graphics.getBackBufferHeight(), Pixmap.Format.RGBA8888);
+            BufferUtils.copy(pixel, 0, pixmap.getPixels(), pixel.length);
+            PixmapIO.writePNG(Gdx.files.local("screenshots/screenshot " + new SimpleDateFormat("yyyy.MM.dd HH.mm.ss").format(new Date()) + ".png"), pixmap);
+            pixmap.dispose();
         }
         return true;
     }

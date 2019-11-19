@@ -60,10 +60,8 @@ public class Luna extends Game {
     }
 
     //you need to remove render here for screens to work
-    int delta=0;
     @Override
     public void render() {
-        delta+=10;
         Gdx.gl.glClearColor(0.4f, 0.4f, 0.4f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         sprite.translateX(inputHandler.getMovement());
