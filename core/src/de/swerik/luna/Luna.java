@@ -2,6 +2,7 @@ package de.swerik.luna;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -18,8 +19,6 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthoCachedTiledMapRenderer;
 public class Luna extends ApplicationAdapter {
     SpriteBatch batch;
     Texture img;
-    int frame = 0;
-    int line = 0;
     TextureRegion[][] regions;
     Sprite sprite;
     InputHandler inputHandler;
@@ -31,6 +30,7 @@ public class Luna extends ApplicationAdapter {
     OrthographicCamera camera;
 
     BitmapFont font;
+
 
     @Override
     public void create() {
@@ -50,6 +50,7 @@ public class Luna extends ApplicationAdapter {
 
         font = new BitmapFont();
         font.setColor(Color.BLUE);
+
 
         Gdx.input.setInputProcessor(inputHandler);
     }

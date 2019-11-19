@@ -3,23 +3,32 @@ package de.swerik.luna;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.utils.Timer;
 
 public class InputHandler implements InputProcessor {
     Sprite sprite;
     float movement = 0f;
-    boolean movingLeft=false;
+    boolean movingLeft = false;
     Animation animation;
+    Sound sound;
+    long id;
+
+    Music music;
 
     public InputHandler(Sprite sprite, Animation animation) {
         this.sprite = sprite;
         this.animation = animation;
+        sound = Gdx.audio.newSound(Gdx.files.internal("Sounds/Marco Bros. Banana.wav"));
+        music = Gdx.audio.newMusic(Gdx.files.internal("Music/Marco Bros. Overworld.wav"));
     }
 
     public float getMovement() {
         return movement;
     }
+
     public boolean isMovingLeft() {
         return movingLeft;
     }
@@ -29,14 +38,28 @@ public class InputHandler implements InputProcessor {
         if (keycode == Input.Keys.LEFT || keycode == Input.Keys.A) {
             if (sprite.getX() > -100) {
                 movement = -5f;
-                movingLeft=true;
+                movingLeft = true;
             }
         }
         if (keycode == Input.Keys.RIGHT || keycode == Input.Keys.D) {
             if (sprite.getX() < 1000) {
                 movement = 5f;
-                movingLeft=false;
+                movingLeft = false;
             }
+        }
+        if (keycode == Input.Keys.F) {
+            id = sound.loop();
+            sound.setVolume(id, 0.2f);
+        }
+        if (keycode == Input.Keys.P) {
+            music.pause();
+        }
+        if (keycode == Input.Keys.M) {
+            if (!music.isPlaying())
+                music.play();
+            else
+                music.stop();
+            music.setVolume(0.2f);
         }
         return true;
     }
@@ -53,6 +76,9 @@ public class InputHandler implements InputProcessor {
                 movement = 0f;
             }
         }
+        if (keycode == Input.Keys.F) {
+            sound.stop(id);
+        }
         return true;
     }
 
@@ -63,7 +89,7 @@ public class InputHandler implements InputProcessor {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        if(button== Input.Buttons.LEFT){
+        if (button == Input.Buttons.LEFT) {
             animation.start();
         }
         return false;
@@ -71,7 +97,7 @@ public class InputHandler implements InputProcessor {
 
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-        if(button== Input.Buttons.LEFT){
+        if (button == Input.Buttons.LEFT) {
             animation.stop();
         }
         return false;
