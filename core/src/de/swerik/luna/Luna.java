@@ -49,5 +49,6 @@ public class Luna extends ApplicationAdapter {
     public void dispose() {
         batch.dispose();
         img.dispose();
+        System.exit(0);
     }
 }
