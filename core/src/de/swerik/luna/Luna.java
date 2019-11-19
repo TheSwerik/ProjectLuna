@@ -1,6 +1,7 @@
 package de.swerik.luna;
 
 import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
@@ -16,7 +17,7 @@ import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthoCachedTiledMapRenderer;
 
-public class Luna extends ApplicationAdapter {
+public class Luna extends Game {
     SpriteBatch batch;
     Texture img;
     TextureRegion[][] regions;
@@ -51,33 +52,35 @@ public class Luna extends ApplicationAdapter {
         font = new BitmapFont();
         font.setColor(Color.BLUE);
 
+        setScreen(new MenuScreen(this));
 
         Gdx.input.setInputProcessor(inputHandler);
     }
 
-    @Override
-    public void render() {
-        Gdx.gl.glClearColor(1, 1, 1, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        sprite.translateX(inputHandler.getMovement());
-        if (!sprite.isFlipX()) {
-            sprite.flip(inputHandler.isMovingLeft(), false);
-        }
-
-        tmr.setView(camera);
-        tmr.render();
-
-        camera.position.x = sprite.getX() + sprite.getOriginX();
-        camera.position.y = sprite.getY() + sprite.getOriginY();
-        camera.zoom = 1000f;
-        camera.update();
-        batch.setProjectionMatrix(camera.combined);
-
-        batch.begin();
-        sprite.draw(batch);
-        font.draw(batch, "Hello, this works.", 200, 200);
-        batch.end();
-    }
+    //you need to remove render here for screens to work
+//    @Override
+//    public void render() {
+//        Gdx.gl.glClearColor(1, 1, 1, 1);
+//        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+//        sprite.translateX(inputHandler.getMovement());
+//        if (!sprite.isFlipX()) {
+//            sprite.flip(inputHandler.isMovingLeft(), false);
+//        }
+//
+//        tmr.setView(camera);
+//        tmr.render();
+//
+//        camera.position.x = sprite.getX() + sprite.getOriginX();
+//        camera.position.y = sprite.getY() + sprite.getOriginY();
+//        camera.zoom = 1000f;
+//        camera.update();
+//        batch.setProjectionMatrix(camera.combined);
+//
+//        batch.begin();
+//        sprite.draw(batch);
+//        font.draw(batch, "Hello, this works.", 200, 200);
+//        batch.end();
+//    }
 
     @Override
     public void dispose() {
