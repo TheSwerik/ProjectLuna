@@ -1,10 +1,8 @@
 package de.swerik.luna;
 
 import android.os.Bundle;
-
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
-import de.swerik.tests.Main;
 
 public class AndroidLauncher extends AndroidApplication {
 	@Override
