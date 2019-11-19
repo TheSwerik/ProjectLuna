@@ -2,17 +2,18 @@ package de.swerik.luna;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.maps.MapLayer;
-import com.badlogic.gdx.maps.MapObject;
-import com.badlogic.gdx.maps.tiled.*;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
+import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthoCachedTiledMapRenderer;
-import com.badlogic.gdx.math.Matrix4;
 
 public class Luna extends ApplicationAdapter {
     SpriteBatch batch;
@@ -26,6 +27,10 @@ public class Luna extends ApplicationAdapter {
 
     TiledMap tm;
     TiledMapRenderer tmr;
+
+    OrthographicCamera camera;
+
+    BitmapFont font;
 
     @Override
     public void create() {
@@ -41,6 +46,11 @@ public class Luna extends ApplicationAdapter {
         tm = new TmxMapLoader().load("Maps/TMX/Test.tmx");
         tmr = new OrthoCachedTiledMapRenderer(tm);
 
+        camera = new OrthographicCamera(1, (float) Gdx.graphics.getHeight() / Gdx.graphics.getWidth());
+
+        font = new BitmapFont();
+        font.setColor(Color.BLUE);
+
         Gdx.input.setInputProcessor(inputHandler);
     }
 
@@ -53,11 +63,18 @@ public class Luna extends ApplicationAdapter {
             sprite.flip(inputHandler.isMovingLeft(), false);
         }
 
-//        tmr.setView(camera);
+        tmr.setView(camera);
         tmr.render();
+
+        camera.position.x = sprite.getX() + sprite.getOriginX();
+        camera.position.y = sprite.getY() + sprite.getOriginY();
+        camera.zoom = 1000f;
+        camera.update();
+        batch.setProjectionMatrix(camera.combined);
 
         batch.begin();
         sprite.draw(batch);
+        font.draw(batch, "Hello, this works.", 200, 200);
         batch.end();
     }
 
