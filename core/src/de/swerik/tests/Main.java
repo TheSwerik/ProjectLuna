@@ -21,7 +21,7 @@ public class Main extends Game {
     testAnimation runningAnimation;
 
     TiledMap tm;
-    TiledMapRenderer tmr;
+    TiledMapRenderer tmr;//test
 
     OrthographicCamera camera;
 
