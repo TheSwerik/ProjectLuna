@@ -32,7 +32,7 @@ public class Luna extends ApplicationAdapter {
     @Override
     public void create() {
         batch = new SpriteBatch();
-        img = new Texture("Sprites/ninjaboy/Running.png");
+        img = new Texture("sprites/ninjaboy/Running.png");
         regions = TextureRegion.split(img, 363, 458);
         sprite = new Sprite(regions[0][0]);
         sprite.setScale(0.25f);
@@ -40,7 +40,7 @@ public class Luna extends ApplicationAdapter {
         runningAnimation = new Animation(sprite, regions);
         inputHandler = new InputHandler(sprite, runningAnimation);
 
-        tm = new TmxMapLoader().load("Maps/TMX/Test.tmx");
+        tm = new TmxMapLoader().load("maps/tmx/Test.tmx");
         tmr = new OrthoCachedTiledMapRenderer(tm);
 
         camera = new OrthographicCamera(1, (float) Gdx.graphics.getHeight() / Gdx.graphics.getWidth());

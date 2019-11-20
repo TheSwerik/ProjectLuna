@@ -30,8 +30,8 @@ public class InputHandler implements InputProcessor {
     public InputHandler(Sprite sprite, Animation animation) {
         this.sprite = sprite;
         this.animation = animation;
-        sound = Gdx.audio.newSound(Gdx.files.internal("Sounds/Marco Bros. Banana.wav"));    //dont forget dispose
-        music = Gdx.audio.newMusic(Gdx.files.internal("Music/Marco Bros. Overworld.wav"));  //dont forget dispose
+        sound = Gdx.audio.newSound(Gdx.files.internal("sounds/Marco Bros. Banana.wav"));    //dont forget dispose
+        music = Gdx.audio.newMusic(Gdx.files.internal("music/Marco Bros. Overworld.wav"));  //dont forget dispose
     }
 
     public float getMovement() {
