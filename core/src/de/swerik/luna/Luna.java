@@ -13,21 +13,21 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthoCachedTiledMapRenderer;
 
 public class Luna extends ApplicationAdapter {
-    SpriteBatch batch;
-    Texture img;
-    TextureRegion[][] regions;
-    Sprite sprite;
-    InputHandler inputHandler;
-    Animation runningAnimation;
+    private SpriteBatch batch;
+    private Texture img;
+    private TextureRegion[][] regions;
+    private Sprite sprite;
+    private InputHandler inputHandler;
+    private  Animation runningAnimation;
 
-    TiledMap tm;
-    TiledMapRenderer tmr;
+    private TiledMap tm;
+    private TiledMapRenderer tmr;
 
-    OrthographicCamera camera;
+    private OrthographicCamera camera;
 
-    BitmapFont font;
+    private BitmapFont font;
 
-    ParticleEffect effect = new ParticleEffect();
+    private ParticleEffect effect = new ParticleEffect();
 
     @Override
     public void create() {
@@ -90,6 +90,7 @@ public class Luna extends ApplicationAdapter {
         batch.dispose();
         img.dispose();
         tm.dispose();
+        effect.dispose();
         System.exit(0);
     }
 }
