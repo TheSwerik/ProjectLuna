@@ -18,7 +18,7 @@ public class Main extends Game {
     TextureRegion[][] regions;
     Sprite sprite;
     testInputHandler inputHandler;
-    testAnimation runningAnimation;//test
+    testAnimation runningAnimation;
 
     TiledMap tm;
     TiledMapRenderer tmr;
