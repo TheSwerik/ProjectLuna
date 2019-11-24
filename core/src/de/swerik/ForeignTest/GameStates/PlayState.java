@@ -1,6 +1,7 @@
 package de.swerik.ForeignTest.GameStates;
 
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import de.swerik.ForeignTest.Entities.Asteroid;
 import de.swerik.ForeignTest.Entities.Bullet;
 import de.swerik.ForeignTest.Entities.Player;
 import de.swerik.ForeignTest.Managers.GameKeys;
@@ -14,6 +15,7 @@ public class PlayState extends GameState {
 
     private Player player;
     private ArrayList<Bullet> bullets;
+    private ArrayList<Asteroid> asteroids;
 
     public PlayState(GameStateManager gsm) {
         super(gsm);
@@ -23,6 +25,7 @@ public class PlayState extends GameState {
     public void init() {
         sr = new ShapeRenderer();
         bullets = new ArrayList<>();
+        asteroids = new ArrayList<>();
         player = new Player(bullets);
     }
 
@@ -42,6 +45,15 @@ public class PlayState extends GameState {
                 i--;
             }
         }
+
+        //update Asteroids
+        for (int i = 0; i < asteroids.size(); i++) {
+            asteroids.get(i).update(delta);
+            if (asteroids.get(i).shouldRemove()) {
+                asteroids.remove(i);
+                i--;
+            }
+        }
     }
 
     @Override
@@ -52,6 +64,11 @@ public class PlayState extends GameState {
         //draw Bullets
         for (int i = 0; i < bullets.size(); i++) {
             bullets.get(i).draw(sr);
+        }
+
+        //draw Asteroids
+        for (int i = 0; i < asteroids.size(); i++) {
+            asteroids.get(i).draw(sr);
         }
     }
 
