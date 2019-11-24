@@ -1,8 +1,9 @@
 package de.swerik.ForeignTest.Entities;
 
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import de.swerik.ForeignTest.ForeignGame;
 
-public class SpaceObject {
+public abstract class SpaceObject {
 
     protected float x;
     protected float y;
@@ -34,4 +35,7 @@ public class SpaceObject {
             y = 0;
         }
     }
+
+    public abstract void update(float delta);
+    public abstract void draw(ShapeRenderer sr);
 }
