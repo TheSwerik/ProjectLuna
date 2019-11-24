@@ -53,6 +53,11 @@ public class MenuScreen extends AbstractScreen {
         ip = new TextArea("", skin);
         msg = new TextArea("", skin);
         button = new TextButton("Senden", skin);
+        messageReceived.setPosition(100, 100);
+        myIP.setPosition(100, 150);
+        ip.setPosition(100, 200);
+        msg.setPosition(100, 250);
+        button.setPosition(100, 300);
 
         group.addActor(messageReceived);
         group.addActor(myIP);
@@ -79,8 +84,8 @@ public class MenuScreen extends AbstractScreen {
         batch.setProjectionMatrix(camera.combined);
 
         batch.begin();
-        font.draw(batch, "press to start", WIDTH / 2f - 20f, HEIGHT / 3f * 2f);
         stage.draw();
+        font.draw(batch, "press to start", WIDTH / 2f - 20f, HEIGHT / 3f * 2f);
         batch.end();
 
         if (Gdx.input.isButtonJustPressed(Input.Buttons.RIGHT)) {
