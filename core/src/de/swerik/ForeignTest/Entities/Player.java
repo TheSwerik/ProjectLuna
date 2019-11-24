@@ -239,4 +239,19 @@ public class Player extends SpaceObject {
                 MathUtils.sin(radians + 2.8f)
         );
     }
+
+    public void reset() {
+        x = ForeignGame.WIDTH / 2f;
+        y = ForeignGame.HEIGHT / 2f;
+        setShape();
+        hit = dead = false;
+    }
+
+    public boolean isDead() {
+        return dead;
+    }
+
+    public boolean isHit() {
+        return hit;
+    }
 }

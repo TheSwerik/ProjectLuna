@@ -45,6 +45,10 @@ public class PlayState extends GameState {
 
         //update Player
         player.update(delta);
+        if (player.isDead()) {
+            player.reset();
+            return;
+        }
 
         //update Bullets
         for (int i = 0; i < bullets.size(); i++) {
@@ -128,14 +132,16 @@ public class PlayState extends GameState {
 
     private void checkCollisions() {
         // Player-Asteroid collision
-        for (int i = 0; i < asteroids.size(); i++) {
-            Asteroid a = asteroids.get(i);
-            // if Player intersects asteroid
-            if (a.intersects(player)) {
-                player.hit();
-                asteroids.remove(i);
-                splitAsteroids(a);
-                break;
+        if (!player.isHit()) {
+            for (int i = 0; i < asteroids.size(); i++) {
+                Asteroid a = asteroids.get(i);
+                // if Player intersects asteroid
+                if (a.intersects(player)) {
+                    player.hit();
+                    asteroids.remove(i);
+                    splitAsteroids(a);
+                    break;
+                }
             }
         }
 
