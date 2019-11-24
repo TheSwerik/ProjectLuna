@@ -10,8 +10,6 @@ import de.swerik.ForeignTest.Managers.GameKeys;
 import de.swerik.ForeignTest.Managers.GameStateManager;
 
 import java.util.ArrayList;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class PlayState extends GameState {
 
@@ -76,13 +74,13 @@ public class PlayState extends GameState {
         player.draw(sr);
 
         //draw Bullets
-        for (int i = 0; i < bullets.size(); i++) {
-            bullets.get(i).draw(sr);
+        for (Bullet bullet : bullets) {
+            bullet.draw(sr);
         }
 
         //draw Asteroids
-        for (int i = 0; i < asteroids.size(); i++) {
-            asteroids.get(i).draw(sr);
+        for (Asteroid asteroid : asteroids) {
+            asteroid.draw(sr);
         }
     }
 
@@ -135,7 +133,7 @@ public class PlayState extends GameState {
             // if Player intersects asteroid
             if (a.intersects(player)) {
                 player.hit();
-                asteroids.remove(i--);
+                asteroids.remove(i);
                 splitAsteroids(a);
                 break;
             }
@@ -149,7 +147,7 @@ public class PlayState extends GameState {
                 //if asteroid contains bullet b
                 if (a.contains(b.getX(), b.getY())) {
                     bullets.remove(i--);
-                    asteroids.remove(j--);
+                    asteroids.remove(j);
                     splitAsteroids(a);
                     break;
                 }

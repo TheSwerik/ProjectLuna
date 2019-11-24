@@ -4,6 +4,8 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import de.swerik.ForeignTest.ForeignGame;
 
+import java.awt.geom.Line2D;
+import java.awt.geom.Point2D;
 import java.util.ArrayList;
 
 public class Player extends SpaceObject {
@@ -23,6 +25,15 @@ public class Player extends SpaceObject {
     private ArrayList<Bullet> bullets;
     private final int MAX_BULLETS = 4;
 
+    private boolean hit;
+    private boolean dead;
+
+    private float hitTimer;
+    private float hitTime;
+
+    private Line2D.Float[] hitLines;
+    private Point2D.Float[] hitLinesVector;
+
     public Player(ArrayList<Bullet> bullets) {
         x = ForeignGame.WIDTH / 2f;
         y = ForeignGame.HEIGHT / 2f;
@@ -41,6 +52,10 @@ public class Player extends SpaceObject {
         rotationSpeed = 3;
 
         this.bullets = bullets;
+
+        hit = false;
+        hitTimer = 0;
+        hitTime = 2;
     }
 
     private void setShape() {
@@ -88,6 +103,24 @@ public class Player extends SpaceObject {
     }
 
     public void update(float delta) {
+        //check if hit
+        if (hit) {
+            hitTimer += delta;
+            if (hitTimer > hitTime) {
+                dead = true;
+                hitTimer = 0;
+            }
+            for (int i = 0; i < hitLines.length; i++) {
+                hitLines[i].setLine(
+                        hitLines[i].x1 + hitLinesVector[i].x * 10 * delta,
+                        hitLines[i].y1 + hitLinesVector[i].y * 10 * delta,
+                        hitLines[i].x2 + hitLinesVector[i].x * 10 * delta,
+                        hitLines[i].y2 + hitLinesVector[i].y * 10 * delta
+                );
+            }
+            return;
+        }
+
         //turning
         if (left) {
             radians += rotationSpeed * delta;
@@ -140,6 +173,20 @@ public class Player extends SpaceObject {
 
         sr.begin(ShapeRenderer.ShapeType.Line);
 
+        //check if hit
+        if (hit) {
+            for (Line2D.Float hitLine : hitLines) {
+                sr.line(
+                        hitLine.x1,
+                        hitLine.y1,
+                        hitLine.x2,
+                        hitLine.y2
+                );
+            }
+            sr.end();
+            return;
+        }
+
         //draw Ship
         for (int i = 0, j = shapeX.length - 1;
              i < shapeX.length;
@@ -160,6 +207,36 @@ public class Player extends SpaceObject {
     }
 
     public void hit() {
+        if (hit) {
+            return;
+        }
+        hit = true;
+        dx = dy = 0;
+        left = right = up = false;
 
+        hitLines = new Line2D.Float[4];
+        for (int i = 0, j = hitLines.length - 1;
+             i < hitLines.length;
+             j = i++) {
+            hitLines[i] = new Line2D.Float(shapeX[i], shapeY[i], shapeX[j], shapeY[j]);
+        }
+
+        hitLinesVector = new Point2D.Float[4];
+        hitLinesVector[0] = new Point2D.Float(
+                MathUtils.cos(radians + 1.5f),
+                MathUtils.sin(radians + 1.5f)
+        );
+        hitLinesVector[1] = new Point2D.Float(
+                MathUtils.cos(radians - 1.5f),
+                MathUtils.sin(radians - 1.5f)
+        );
+        hitLinesVector[2] = new Point2D.Float(
+                MathUtils.cos(radians - 2.8f),
+                MathUtils.sin(radians - 2.8f)
+        );
+        hitLinesVector[3] = new Point2D.Float(
+                MathUtils.cos(radians + 2.8f),
+                MathUtils.sin(radians + 2.8f)
+        );
     }
 }

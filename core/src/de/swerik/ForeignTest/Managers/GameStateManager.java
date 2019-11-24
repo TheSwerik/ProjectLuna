@@ -19,7 +19,7 @@ public class GameStateManager {
             currentGameState.dispose();
         }
         if (state == MENU) {
-
+            //TODO menu
         }
         if (state == PLAY) {
             currentGameState = new PlayState(this);
