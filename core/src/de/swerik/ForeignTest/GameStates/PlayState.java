@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import de.swerik.ForeignTest.Entities.Asteroid;
 import de.swerik.ForeignTest.Entities.Bullet;
+import de.swerik.ForeignTest.Entities.Particle;
 import de.swerik.ForeignTest.Entities.Player;
 import de.swerik.ForeignTest.ForeignGame;
 import de.swerik.ForeignTest.Managers.GameKeys;
@@ -18,6 +19,7 @@ public class PlayState extends GameState {
     private Player player;
     private ArrayList<Bullet> bullets;
     private ArrayList<Asteroid> asteroids;
+    private ArrayList<Particle> particles;
 
     private int level;
     private int totalAsteroids;
@@ -36,6 +38,8 @@ public class PlayState extends GameState {
         asteroids = new ArrayList<>();
         level = 1;
         spawnAsteroids();
+
+        particles = new ArrayList<>();
     }
 
     @Override
@@ -68,6 +72,15 @@ public class PlayState extends GameState {
             }
         }
 
+        //update Particles
+        for (int i = 0; i < particles.size(); i++) {
+            particles.get(i).update(delta);
+            if (particles.get(i).shouldRemove()) {
+                particles.remove(i);
+                i--;
+            }
+        }
+
         //check collision
         checkCollisions();
     }
@@ -86,6 +99,11 @@ public class PlayState extends GameState {
         for (Asteroid asteroid : asteroids) {
             asteroid.draw(sr);
         }
+
+        //draw Particles
+        for (Particle particle : particles) {
+            particle.draw(sr);
+        }
     }
 
     @Override
@@ -101,6 +119,12 @@ public class PlayState extends GameState {
     @Override
     public void dispose() {
 
+    }
+
+    private void createParticles(float x, float y) {
+        for (int i = 0; i < 6; i++) {
+            particles.add(new Particle(x, y));
+        }
     }
 
     private void spawnAsteroids() {
@@ -162,6 +186,7 @@ public class PlayState extends GameState {
     }
 
     private void splitAsteroids(Asteroid a) {
+        createParticles(a.getX(), a.getY());
         numAsteroidsLeft--;
         if (a.getType() == Asteroid.LARGE) {
             asteroids.add(new Asteroid(a.getX(), a.getY(), Asteroid.MEDIUM));
