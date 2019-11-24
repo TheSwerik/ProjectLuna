@@ -57,7 +57,7 @@ public class testInputHandler implements InputProcessor {
     public boolean keyDown(int keycode) {
         if (keycode == Input.Keys.LEFT || keycode == Input.Keys.A) {
             if (body != null) {
-                body.setLinearVelocity(-100f, -10f);
+                body.setLinearVelocity(-100f + body.getLinearVelocity().x, body.getLinearVelocity().y);
             }
             if (sprite.getX() > -100) {
                 movement = -5f;
@@ -66,7 +66,7 @@ public class testInputHandler implements InputProcessor {
         }
         if (keycode == Input.Keys.RIGHT || keycode == Input.Keys.D) {
             if (body != null) {
-                body.setLinearVelocity(100f, -10f);
+                body.setLinearVelocity(100f + body.getLinearVelocity().x, body.getLinearVelocity().y);
             }
             if (sprite.getX() < 1000) {
                 movement = 5f;
@@ -75,7 +75,7 @@ public class testInputHandler implements InputProcessor {
         }
         if (keycode == Input.Keys.UP || keycode == Input.Keys.W) {
             if (body != null) {
-                body.setLinearVelocity(0f, 100f);
+                body.setLinearVelocity(body.getLinearVelocity().x, 100f + body.getLinearVelocity().y);
             }
         }
         if (keycode == Input.Keys.F) {
@@ -116,7 +116,7 @@ public class testInputHandler implements InputProcessor {
             pixmap.dispose();
         }
         if (keycode == Input.Keys.CONTROL_RIGHT) {
-            body.setAngularVelocity(50f);
+            body.setAngularVelocity(500f + body.getAngularVelocity());
         }
         return true;
     }

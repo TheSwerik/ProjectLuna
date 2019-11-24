@@ -41,7 +41,10 @@ public class GameScreen extends AbstractScreen {
     private static Body body;
 
     private static Body bodyEdge;
-    private  EdgeShape edgeShape;
+    private EdgeShape edgeShape;
+
+    private Sprite sprite2;
+    private static Body body2;
 
     public GameScreen(Game game) {
         super(game);
@@ -75,6 +78,7 @@ public class GameScreen extends AbstractScreen {
         FixtureDef fd = new FixtureDef();
         fd.shape = shape;
         fd.density = 1000f;
+        fd.restitution = 1f;
         Fixture fixture = body.createFixture(fd);
         shape.dispose();
 
@@ -95,6 +99,24 @@ public class GameScreen extends AbstractScreen {
         bodyEdge.createFixture(fixtureBoden);
         edgeShape.dispose();
 
+        //Object 2
+        Texture img2 = new Texture("sprites/zombie/male/Idle (1).png");
+        sprite2 = new Sprite(img2);
+        sprite2.setScale(0.25f);
+        sprite2.setPosition(sprite.getX(), 250);
+        BodyDef bodyDef2 = new BodyDef();
+        bodyDef2.type = BodyDef.BodyType.DynamicBody;
+        bodyDef2.position.set(sprite2.getX(), sprite2.getY());
+        body2 = world.createBody(bodyDef2);
+        PolygonShape shape2 = new PolygonShape();
+        shape2.setAsBox(sprite2.getWidth() / 2, sprite2.getHeight() / 2);
+        FixtureDef fd2 = new FixtureDef();
+        fd2.shape = shape2;
+        fd2.density = 1000f;
+        fd2.restitution = 1f;
+        body2.createFixture(fd2);
+        shape2.dispose();
+
         inputHandler = new InputHandler(sprite, runningAnimation, body);
 
         Gdx.input.setInputProcessor(inputHandler);
@@ -109,6 +131,11 @@ public class GameScreen extends AbstractScreen {
     public void render(float delta) {
         world.step(delta, 5, 2);
         sprite.setPosition(body.getPosition().x, body.getPosition().y);
+        sprite.setRotation((float) Math.toDegrees(body.getAngle()));
+
+        sprite2.setPosition(body2.getPosition().x, body2.getPosition().y);
+        sprite2.setRotation((float) Math.toDegrees(body2.getAngle()));
+
         Gdx.gl.glClearColor(0.4f, 0.4f, 0.4f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         sprite.translateX(inputHandler.getMovement());
@@ -131,6 +158,7 @@ public class GameScreen extends AbstractScreen {
 
         batch.begin();
         sprite.draw(batch);
+        sprite2.draw(batch);
         font.draw(batch, "Hello, this works.", 200, 200);
         effect.draw(batch, Gdx.graphics.getDeltaTime());
         batch.end();
