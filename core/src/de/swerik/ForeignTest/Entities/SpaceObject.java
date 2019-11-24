@@ -36,14 +36,36 @@ public abstract class SpaceObject {
         }
     }
 
+    public boolean contains(float x, float y) {
+        boolean b = false;
+        for (int i = 0, j = shapeX.length - 1; i < shapeX.length; j = i++) {
+            if ((shapeY[i] > y) != (shapeY[j] > y)
+                    && (x < (shapeX[j] - shapeX[i])
+                    * (y - shapeY[i]) / (shapeY[j] - shapeY[i])
+                    + shapeX[i])) {
+                b = !b;
+            }
+        }
+        return b;
+    }
+
     public abstract void update(float delta);
+
     public abstract void draw(ShapeRenderer sr);
 
-    public float getX(){
+    public float getX() {
         return x;
     }
 
-    public float getY(){
+    public float getY() {
         return y;
+    }
+
+    public float[] getShapeX() {
+        return shapeX;
+    }
+
+    public float[] getShapeY() {
+        return shapeY;
     }
 }

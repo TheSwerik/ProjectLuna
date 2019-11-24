@@ -63,6 +63,9 @@ public class PlayState extends GameState {
                 i--;
             }
         }
+
+        //check collision
+        checkCollisions();
     }
 
     @Override
@@ -117,6 +120,34 @@ public class PlayState extends GameState {
             } while (dist < 100);
 
             asteroids.add(new Asteroid(x, y, Asteroid.LARGE));
+        }
+    }
+
+    private void checkCollisions() {
+        // Bullet-Asteroid collision
+        for (int i = 0; i < bullets.size(); i++) {
+            Bullet b = bullets.get(i);
+            for (int j = 0; j < asteroids.size(); j++) {
+                Asteroid a = asteroids.get(j);
+                //if asteroid contains bullet b
+                if (a.contains(b.getX(), b.getY())) {
+                    bullets.remove(i--);
+                    asteroids.remove(j--);
+                    splitAsteroids(a);
+                    break;
+                }
+            }
+        }
+    }
+
+    private void splitAsteroids(Asteroid a) {
+        numAsteroidsLeft--;
+        if (a.getType() == Asteroid.LARGE) {
+            asteroids.add(new Asteroid(a.getX(), a.getY(), Asteroid.MEDIUM));
+            asteroids.add(new Asteroid(a.getX(), a.getY(), Asteroid.MEDIUM));
+        } else if (a.getType() == Asteroid.MEDIUM) {
+            asteroids.add(new Asteroid(a.getX(), a.getY(), Asteroid.SMALL));
+            asteroids.add(new Asteroid(a.getX(), a.getY(), Asteroid.SMALL));
         }
     }
 }
