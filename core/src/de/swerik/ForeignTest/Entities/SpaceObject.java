@@ -49,6 +49,17 @@ public abstract class SpaceObject {
         return b;
     }
 
+    public boolean intersects(SpaceObject other) {
+        float[] sx = other.getShapeX();
+        float[] sy = other.getShapeY();
+        for (int i = 0; i < sx.length; i++) {
+            if (contains(sx[i], sy[i])) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public abstract void update(float delta);
 
     public abstract void draw(ShapeRenderer sr);

@@ -158,4 +158,8 @@ public class Player extends SpaceObject {
 
         sr.end();
     }
+
+    public void hit() {
+
+    }
 }
