@@ -7,12 +7,15 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import de.swerik.ForeignTest.Managers.GameInputProcessor;
 import de.swerik.ForeignTest.Managers.GameKeys;
+import de.swerik.ForeignTest.Managers.GameStateManager;
 
 public class ForeignGame implements ApplicationListener {
     public static int WIDTH = 1280;
     public static int HEIGHT = 720;
 
     public static OrthographicCamera cam;
+
+    private GameStateManager gsm;
 
     @Override
     public void create() {
@@ -24,6 +27,8 @@ public class ForeignGame implements ApplicationListener {
         cam.update();
 
         Gdx.input.setInputProcessor(new GameInputProcessor());
+
+        gsm = new GameStateManager();
     }
 
     @Override
@@ -50,6 +55,9 @@ public class ForeignGame implements ApplicationListener {
             System.out.println("ENTER");
         }
         */
+
+        gsm.update(Gdx.graphics.getDeltaTime());
+        gsm.draw();
 
         GameKeys.update();
     }
