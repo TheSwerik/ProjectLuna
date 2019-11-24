@@ -57,7 +57,7 @@ public class Asteroid extends SpaceObject {
         float angle = 0;
         for (int i = 0; i < numPoints; i++) {
             shapeX[i] = x + MathUtils.cos(angle + radians) * dists[i];
-            shapeY[i] = x + MathUtils.sin(angle + radians) * dists[i];
+            shapeY[i] = y + MathUtils.sin(angle + radians) * dists[i];
             angle += 2 * Math.PI / numPoints;
         }
     }

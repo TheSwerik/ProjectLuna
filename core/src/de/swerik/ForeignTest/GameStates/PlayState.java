@@ -10,6 +10,8 @@ import de.swerik.ForeignTest.Managers.GameKeys;
 import de.swerik.ForeignTest.Managers.GameStateManager;
 
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class PlayState extends GameState {
 
@@ -106,6 +108,9 @@ public class PlayState extends GameState {
         totalAsteroids = numToSpawn * 7;
         numAsteroidsLeft = totalAsteroids;
 
+        System.out.println(numToSpawn);
+        System.out.println(totalAsteroids);
+
         for (int i = 0; i < numToSpawn; i++) {
             float dist;
             float x;
@@ -129,10 +134,10 @@ public class PlayState extends GameState {
             Asteroid a = asteroids.get(i);
             // if Player intersects asteroid
             if (a.intersects(player)) {
-               player.hit();
-               asteroids.remove(i--);
-               splitAsteroids(a);
-               break;
+                player.hit();
+                asteroids.remove(i--);
+                splitAsteroids(a);
+                break;
             }
         }
 
