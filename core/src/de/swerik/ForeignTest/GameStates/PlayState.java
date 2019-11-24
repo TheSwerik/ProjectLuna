@@ -1,9 +1,11 @@
 package de.swerik.ForeignTest.GameStates;
 
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.MathUtils;
 import de.swerik.ForeignTest.Entities.Asteroid;
 import de.swerik.ForeignTest.Entities.Bullet;
 import de.swerik.ForeignTest.Entities.Player;
+import de.swerik.ForeignTest.ForeignGame;
 import de.swerik.ForeignTest.Managers.GameKeys;
 import de.swerik.ForeignTest.Managers.GameStateManager;
 
@@ -17,6 +19,10 @@ public class PlayState extends GameState {
     private ArrayList<Bullet> bullets;
     private ArrayList<Asteroid> asteroids;
 
+    private int level;
+    private int totalAsteroids;
+    private int numAsteroidsLeft;
+
     public PlayState(GameStateManager gsm) {
         super(gsm);
     }
@@ -25,8 +31,11 @@ public class PlayState extends GameState {
     public void init() {
         sr = new ShapeRenderer();
         bullets = new ArrayList<>();
-        asteroids = new ArrayList<>();
         player = new Player(bullets);
+
+        asteroids = new ArrayList<>();
+        level = 1;
+        spawnAsteroids();
     }
 
     @Override
@@ -85,5 +94,29 @@ public class PlayState extends GameState {
     @Override
     public void dispose() {
 
+    }
+
+    private void spawnAsteroids() {
+        asteroids.clear();
+
+        int numToSpawn = 4 + level - 1;
+        totalAsteroids = numToSpawn * 7;
+        numAsteroidsLeft = totalAsteroids;
+
+        for (int i = 0; i < numToSpawn; i++) {
+            float dist;
+            float x;
+            float y;
+            do {
+                x = MathUtils.random(ForeignGame.WIDTH);
+                y = MathUtils.random(ForeignGame.HEIGHT);
+
+                float dx = x - player.getX();
+                float dy = y - player.getY();
+                dist = (float) Math.sqrt(dx * dx + dy * dy);
+            } while (dist < 100);
+
+            asteroids.add(new Asteroid(x, y, Asteroid.LARGE));
+        }
     }
 }

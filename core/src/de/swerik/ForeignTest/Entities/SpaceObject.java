@@ -38,4 +38,12 @@ public abstract class SpaceObject {
 
     public abstract void update(float delta);
     public abstract void draw(ShapeRenderer sr);
+
+    public float getX(){
+        return x;
+    }
+
+    public float getY(){
+        return y;
+    }
 }
