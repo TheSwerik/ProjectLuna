@@ -188,6 +188,9 @@ public class GameScreen extends AbstractScreen {
         if (effect.isComplete()) {
             effect.reset();
         }
+        if (Gdx.input.isButtonJustPressed(Input.Buttons.RIGHT)) {
+            game.setScreen(new MenuScreen(game));
+        }
     }
 
     @Override
