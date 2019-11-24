@@ -40,6 +40,9 @@ public class GameScreen extends AbstractScreen {
     private static World world;
     private static Body body;
 
+    private static Body bodyEdge;
+    private  EdgeShape edgeShape;
+
     public GameScreen(Game game) {
         super(game);
         batch = new SpriteBatch();
@@ -74,6 +77,23 @@ public class GameScreen extends AbstractScreen {
         fd.density = 1000f;
         Fixture fixture = body.createFixture(fd);
         shape.dispose();
+
+        BodyDef bodenDef = new BodyDef();
+        bodenDef.type = BodyDef.BodyType.StaticBody;
+        bodenDef.position.set(0, 0);
+        FixtureDef fixtureBoden = new FixtureDef();
+
+        //Bounce Pad:
+//        fixtureBoden.restitution = 50000f;
+
+        edgeShape = new EdgeShape();
+        edgeShape.set(-Gdx.graphics.getWidth() / 2f, -Gdx.graphics.getHeight() + 445, Gdx.graphics.getWidth() / 2f, -Gdx.graphics.getHeight() + 445);
+        //functions as ceiling aswell:
+//        edgeShape.set(-Gdx.graphics.getWidth() / 2f, -Gdx.graphics.getHeight() + 800, Gdx.graphics.getWidth() / 2f, -Gdx.graphics.getHeight() + 800);
+        fixtureBoden.shape = edgeShape;
+        bodyEdge = world.createBody(bodenDef);
+        bodyEdge.createFixture(fixtureBoden);
+        edgeShape.dispose();
 
         inputHandler = new InputHandler(sprite, runningAnimation, body);
 
