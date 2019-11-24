@@ -47,6 +47,12 @@ public class PlayState extends GameState {
         //get User-input
         handleInput();
 
+        //next level
+        if (asteroids.size() == 0) {
+            level++;
+            spawnAsteroids();
+        }
+
         //update Player
         player.update(delta);
         if (player.isDead()) {
