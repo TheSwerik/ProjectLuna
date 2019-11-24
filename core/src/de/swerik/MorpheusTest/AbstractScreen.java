@@ -1,4 +1,4 @@
-package de.swerik.tests;
+package de.swerik.MorpheusTest;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Screen;

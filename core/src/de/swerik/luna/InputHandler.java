@@ -10,6 +10,7 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.PixmapIO;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.utils.BufferUtils;
 import com.badlogic.gdx.utils.ScreenUtils;
 import de.swerik.luna.Animation;
@@ -27,9 +28,12 @@ public class InputHandler implements InputProcessor {
 
     Music music;
 
-    public InputHandler(Sprite sprite, Animation animation) {
+    private Body body;
+
+    public InputHandler(Sprite sprite, Animation animation, Body body) {
         this.sprite = sprite;
         this.animation = animation;
+        this.body = body;
         sound = Gdx.audio.newSound(Gdx.files.internal("sounds/Marco Bros. Banana.wav"));    //dont forget dispose
         music = Gdx.audio.newMusic(Gdx.files.internal("music/Marco Bros. Overworld.wav"));  //dont forget dispose
     }
@@ -45,16 +49,21 @@ public class InputHandler implements InputProcessor {
     @Override
     public boolean keyDown(int keycode) {
         if (keycode == Input.Keys.LEFT || keycode == Input.Keys.A) {
+            body.setLinearVelocity(-100f, -10f);
             if (sprite.getX() > -100) {
                 movement = -5f;
                 movingLeft = true;
             }
         }
         if (keycode == Input.Keys.RIGHT || keycode == Input.Keys.D) {
+            body.setLinearVelocity(100f, -10f);
             if (sprite.getX() < 1000) {
                 movement = 5f;
                 movingLeft = false;
             }
+        }
+        if (keycode == Input.Keys.UP || keycode == Input.Keys.W) {
+            body.setLinearVelocity(0f, 100f);
         }
         if (keycode == Input.Keys.F) {
             id = sound.loop();

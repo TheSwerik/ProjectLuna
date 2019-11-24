@@ -2,8 +2,7 @@ package de.swerik.luna.desktop;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
-import de.swerik.luna.Luna;
-import de.swerik.tests.Main;
+import de.swerik.MorpheusTest.Main;
 
 public class DesktopLauncher {
     public static void main(String[] arg) {
@@ -11,7 +10,7 @@ public class DesktopLauncher {
         config.title = "Project Luna";
         config.width = 1280;
         config.height = 720;
-//        new LwjglApplication(new Main(), config);
-        new LwjglApplication(new Luna(), config);
+        new LwjglApplication(new Main(), config);
+//        new LwjglApplication(new Luna(), config);
     }
 }

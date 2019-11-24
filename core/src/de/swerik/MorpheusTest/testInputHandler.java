@@ -1,4 +1,4 @@
-package de.swerik.tests;
+package de.swerik.MorpheusTest;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -10,6 +10,7 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.PixmapIO;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.utils.BufferUtils;
 import com.badlogic.gdx.utils.ScreenUtils;
 
@@ -17,20 +18,31 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class testInputHandler implements InputProcessor {
-    Sprite sprite;
-    float movement = 0f;
-    boolean movingLeft = false;
-    testAnimation animation;
-    Sound sound;
-    long id;
+    private Sprite sprite;
+    private float movement = 0f;
+    private boolean movingLeft = false;
+    private testAnimation animation;
+    private Sound sound;
+    private long id;
 
-    Music music;
+    private Music music;
+
+    private Body body;
+
+    public testInputHandler(Sprite sprite, testAnimation animation, Body body) {
+        this.sprite = sprite;
+        this.animation = animation;
+        this.body = body;
+        sound = Gdx.audio.newSound(Gdx.files.internal("sounds/Marco Bros. Banana.wav"));    //dont forget dispose
+        music = Gdx.audio.newMusic(Gdx.files.internal("music/Marco Bros. Overworld.wav"));  //dont forget dispose
+    }
 
     public testInputHandler(Sprite sprite, testAnimation animation) {
         this.sprite = sprite;
         this.animation = animation;
-        sound = Gdx.audio.newSound(Gdx.files.internal("Sounds/Marco Bros. Banana.wav"));    //dont forget dispose
-        music = Gdx.audio.newMusic(Gdx.files.internal("Music/Marco Bros. Overworld.wav"));  //dont forget dispose
+        this.body = null;
+        sound = Gdx.audio.newSound(Gdx.files.internal("sounds/Marco Bros. Banana.wav"));    //dont forget dispose
+        music = Gdx.audio.newMusic(Gdx.files.internal("music/Marco Bros. Overworld.wav"));  //dont forget dispose
     }
 
     public float getMovement() {
@@ -44,15 +56,26 @@ public class testInputHandler implements InputProcessor {
     @Override
     public boolean keyDown(int keycode) {
         if (keycode == Input.Keys.LEFT || keycode == Input.Keys.A) {
+            if (body != null) {
+                body.setLinearVelocity(-100f, -10f);
+            }
             if (sprite.getX() > -100) {
                 movement = -5f;
                 movingLeft = true;
             }
         }
         if (keycode == Input.Keys.RIGHT || keycode == Input.Keys.D) {
+            if (body != null) {
+                body.setLinearVelocity(100f, -10f);
+            }
             if (sprite.getX() < 1000) {
                 movement = 5f;
                 movingLeft = false;
+            }
+        }
+        if (keycode == Input.Keys.UP || keycode == Input.Keys.W) {
+            if (body != null) {
+                body.setLinearVelocity(0f, 100f);
             }
         }
         if (keycode == Input.Keys.F) {

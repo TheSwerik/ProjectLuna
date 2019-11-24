@@ -1,7 +1,8 @@
-package de.swerik.luna;
+package de.swerik.MorpheusTest;
 
-import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -13,8 +14,13 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthoCachedTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import de.swerik.luna.Animation;
+import de.swerik.luna.InputHandler;
 
-public class Luna extends ApplicationAdapter {
+import static de.swerik.MorpheusTest.Main.HEIGHT;
+import static de.swerik.MorpheusTest.Main.WIDTH;
+
+public class GameScreen extends AbstractScreen {
     private SpriteBatch batch;
     private Texture img;
     private TextureRegion[][] regions;
@@ -34,8 +40,8 @@ public class Luna extends ApplicationAdapter {
     private static World world;
     private static Body body;
 
-    @Override
-    public void create() {
+    public GameScreen(Game game) {
+        super(game);
         batch = new SpriteBatch();
         img = new Texture("sprites/ninjaboy/Running.png");
         regions = TextureRegion.split(img, 363, 458);
@@ -65,7 +71,7 @@ public class Luna extends ApplicationAdapter {
         shape.setAsBox(sprite.getWidth() / 2, sprite.getHeight() / 2);
         FixtureDef fd = new FixtureDef();
         fd.shape = shape;
-        fd.density = 10f;
+        fd.density = 100f;
         Fixture fixture = body.createFixture(fd);
         shape.dispose();
 
@@ -74,10 +80,14 @@ public class Luna extends ApplicationAdapter {
         Gdx.input.setInputProcessor(inputHandler);
     }
 
-    //you need to remove render here for screens to work
     @Override
-    public void render() {
-        world.step(16, 5, 2);
+    public void show() {
+
+    }
+
+    @Override
+    public void render(float delta) {
+        world.step(delta, 5, 2);
         sprite.setPosition(body.getPosition().x, body.getPosition().y);
         Gdx.gl.glClearColor(0.4f, 0.4f, 0.4f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -90,8 +100,10 @@ public class Luna extends ApplicationAdapter {
         tmr.setView(camera);
         tmr.render();
 
-        camera.position.x = sprite.getX() + sprite.getOriginX();
-        camera.position.y = sprite.getY() + sprite.getOriginY();
+//        camera.position.x = sprite.getX() + sprite.getOriginX();
+//        camera.position.y = sprite.getY() + sprite.getOriginY();
+        camera.position.x = WIDTH/2f;
+        camera.position.y = HEIGHT/2f;
         camera.zoom = 1000f;
         camera.update();
         batch.setProjectionMatrix(camera.combined);
@@ -108,11 +120,27 @@ public class Luna extends ApplicationAdapter {
     }
 
     @Override
+    public void resize(int width, int height) {
+
+    }
+
+    @Override
+    public void pause() {
+
+    }
+
+    @Override
+    public void hide() {
+
+    }
+
+    @Override
     public void dispose() {
         batch.dispose();
         img.dispose();
         tm.dispose();
         effect.dispose();
+        Gdx.app.exit();
         System.exit(0);
     }
 }
