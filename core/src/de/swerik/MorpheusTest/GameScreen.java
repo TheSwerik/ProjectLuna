@@ -66,7 +66,7 @@ public class GameScreen extends AbstractScreen {
 
         effect.load(Gdx.files.internal("particles/TestFlame.p"), Gdx.files.internal("particles/"));
         effect.start();
-        effect.setPosition(200f, 200f);
+        effect.setPosition(600f, 200f);
 
         world = new World(new Vector2(0, -98f), true);
         BodyDef bodyDef = new BodyDef();
@@ -74,11 +74,11 @@ public class GameScreen extends AbstractScreen {
         bodyDef.position.set(sprite.getX(), sprite.getY());
         body = world.createBody(bodyDef);
         PolygonShape shape = new PolygonShape();
-        shape.setAsBox(sprite.getWidth() / 2, sprite.getHeight() / 2);
+        shape.setAsBox(sprite.getWidth() / 8, sprite.getHeight() / 8);
         FixtureDef fd = new FixtureDef();
         fd.shape = shape;
         fd.density = 1000f;
-        fd.restitution = 1f;
+        fd.restitution = 1f; // bouncy-ness
         Fixture fixture = body.createFixture(fd);
         shape.dispose();
 
@@ -88,10 +88,10 @@ public class GameScreen extends AbstractScreen {
         FixtureDef fixtureBoden = new FixtureDef();
 
         //Bounce Pad:
-//        fixtureBoden.restitution = 50000f;
+//        fixtureBoden.restitution = -1f;
 
         edgeShape = new EdgeShape();
-        edgeShape.set(-Gdx.graphics.getWidth() / 2f, -Gdx.graphics.getHeight() + 445, Gdx.graphics.getWidth() / 2f, -Gdx.graphics.getHeight() + 445);
+        edgeShape.set(-Gdx.graphics.getWidth() / 2f, -Gdx.graphics.getHeight() + 600, Gdx.graphics.getWidth() / 2f, -Gdx.graphics.getHeight() + 600);
         //functions as ceiling aswell:
 //        edgeShape.set(-Gdx.graphics.getWidth() / 2f, -Gdx.graphics.getHeight() + 800, Gdx.graphics.getWidth() / 2f, -Gdx.graphics.getHeight() + 800);
         fixtureBoden.shape = edgeShape;
@@ -103,19 +103,43 @@ public class GameScreen extends AbstractScreen {
         Texture img2 = new Texture("sprites/zombie/male/Idle (1).png");
         sprite2 = new Sprite(img2);
         sprite2.setScale(0.25f);
-        sprite2.setPosition(sprite.getX(), 250);
+        sprite2.setPosition(sprite.getX(), 600);
         BodyDef bodyDef2 = new BodyDef();
         bodyDef2.type = BodyDef.BodyType.DynamicBody;
         bodyDef2.position.set(sprite2.getX(), sprite2.getY());
         body2 = world.createBody(bodyDef2);
         PolygonShape shape2 = new PolygonShape();
-        shape2.setAsBox(sprite2.getWidth() / 2, sprite2.getHeight() / 2);
+        shape2.setAsBox(sprite2.getWidth() / 8f, sprite2.getHeight() / 8f);
         FixtureDef fd2 = new FixtureDef();
         fd2.shape = shape2;
         fd2.density = 1000f;
-        fd2.restitution = 1f;
+        fd2.restitution = 1f; // bouncy-ness
         body2.createFixture(fd2);
         shape2.dispose();
+
+        world.setContactListener(new ContactListener() {
+            @Override
+            public void beginContact(Contact contact) {
+                if (contact.getFixtureA().getBody() == body && contact.getFixtureB().getBody() == body2
+                        || contact.getFixtureB().getBody() == body && contact.getFixtureA().getBody() == body2) {
+                    effect.setPosition(sprite.getX(), sprite.getY());
+                }
+            }
+
+            @Override
+            public void endContact(Contact contact) {
+            }
+
+            @Override
+            public void preSolve(Contact contact, Manifold oldManifold) {
+
+            }
+
+            @Override
+            public void postSolve(Contact contact, ContactImpulse impulse) {
+
+            }
+        });
 
         inputHandler = new InputHandler(sprite, runningAnimation, body);
 
@@ -139,7 +163,6 @@ public class GameScreen extends AbstractScreen {
         Gdx.gl.glClearColor(0.4f, 0.4f, 0.4f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         sprite.translateX(inputHandler.getMovement());
-        effect.setPosition(sprite.getX(), sprite.getY());
         if (!sprite.isFlipX()) {
             sprite.flip(inputHandler.isMovingLeft(), false);
         }
