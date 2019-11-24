@@ -71,7 +71,7 @@ public class GameScreen extends AbstractScreen {
         shape.setAsBox(sprite.getWidth() / 2, sprite.getHeight() / 2);
         FixtureDef fd = new FixtureDef();
         fd.shape = shape;
-        fd.density = 100f;
+        fd.density = 1000f;
         Fixture fixture = body.createFixture(fd);
         shape.dispose();
 
@@ -100,10 +100,10 @@ public class GameScreen extends AbstractScreen {
         tmr.setView(camera);
         tmr.render();
 
-//        camera.position.x = sprite.getX() + sprite.getOriginX();
-//        camera.position.y = sprite.getY() + sprite.getOriginY();
-        camera.position.x = WIDTH/2f;
-        camera.position.y = HEIGHT/2f;
+        camera.position.x = sprite.getX() + sprite.getOriginX();
+        camera.position.y = sprite.getY() + sprite.getOriginY();
+//        camera.position.x = WIDTH/2f;
+//        camera.position.y = HEIGHT/2f;
         camera.zoom = 1000f;
         camera.update();
         batch.setProjectionMatrix(camera.combined);

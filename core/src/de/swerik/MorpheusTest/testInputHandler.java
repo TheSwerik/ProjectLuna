@@ -115,6 +115,9 @@ public class testInputHandler implements InputProcessor {
             PixmapIO.writePNG(Gdx.files.local("screenshots/screenshot " + new SimpleDateFormat("yyyy.MM.dd HH.mm.ss").format(new Date()) + ".png"), pixmap);
             pixmap.dispose();
         }
+        if (keycode == Input.Keys.CONTROL_RIGHT) {
+            body.setAngularVelocity(50f);
+        }
         return true;
     }
 
