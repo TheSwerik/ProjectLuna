@@ -4,7 +4,7 @@ My very own Game in LibGDX.
 
 ## Getting Started
 
-I am creating this Game in my spare time. Join me on my Journey: [Youtube DevLog](https://bit.ly/LunaDevLog)
+I am creating this Game in my spare time. [Join me on my Journey.](https://www.youtube.com/playlist?list=PLtI1XL0JbwNVuc_NFfeb-x_rIB5XhzhF4)
 
 ## Built With
 
