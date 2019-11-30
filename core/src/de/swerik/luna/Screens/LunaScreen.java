@@ -34,7 +34,7 @@ public abstract class LunaScreen implements Screen {
 
     @Override
     public void pause() {
-
+        System.out.println("aSs");
     }
 
     @Override

@@ -14,33 +14,33 @@ public class Luna extends Game {
     public static final int V_HEIGHT = 1080;
 
     private Screen currentScreen = Screen.MENU;
-//    private Screen currentScreen = Screen.GAME;
-private LunaScreen screen;
+    //    private Screen currentScreen = Screen.GAME;
+    private LunaScreen screen;
 
     @Override
     public void create() {
         this.switchScreen();
     }
 
-    public void setScreen(int screen) {
+    public void setCurrentScreen(int screen) {
         currentScreen = Screen.values()[screen];
         this.switchScreen();
     }
 
-    public void setScreen(Screen screen) {
+    public void setCurrentScreen(Screen screen) {
         currentScreen = screen;
         this.switchScreen();
     }
 
     private void switchScreen() {
 //        screen.dispose();
-        switch (currentScreen){
-            case MENU:
-                this.setScreen(new MainMenu());
-                break;
+        switch (currentScreen) {
             case GAME:
-//                this.setScreen(new Game());
+//                screen=new Game();
                 break;
+            case MENU:
+            default:
+                screen=new MainMenu();
         }
     }
 
@@ -60,7 +60,7 @@ private LunaScreen screen;
     @Override
     public void render() {
         this.screen.update(Gdx.graphics.getDeltaTime());
-        Gdx.gl30.glClearColor(0,0,0,1);
+        Gdx.gl30.glClearColor(0, 0, 0, 1);
         Gdx.gl30.glClear(GL30.GL_COLOR_BUFFER_BIT);
         this.screen.render();
     }
