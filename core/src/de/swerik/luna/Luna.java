@@ -58,7 +58,7 @@ private LunaScreen screen;
 
     @Override
     public void render() {
-        this.screen.render();
         this.screen.update(Gdx.graphics.getDeltaTime());
+        this.screen.render();
     }
 }
