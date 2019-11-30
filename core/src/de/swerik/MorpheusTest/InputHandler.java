@@ -1,4 +1,4 @@
-package de.swerik.luna;
+package de.swerik.MorpheusTest;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -13,7 +13,6 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.utils.BufferUtils;
 import com.badlogic.gdx.utils.ScreenUtils;
-import de.swerik.luna.Animation;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

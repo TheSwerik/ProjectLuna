@@ -1,4 +1,4 @@
-package de.swerik.luna;
+package de.swerik.MorpheusTest;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;

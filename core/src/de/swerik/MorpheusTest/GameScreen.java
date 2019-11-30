@@ -14,11 +14,6 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthoCachedTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
-import de.swerik.luna.Animation;
-import de.swerik.luna.InputHandler;
-
-import static de.swerik.MorpheusTest.Main.HEIGHT;
-import static de.swerik.MorpheusTest.Main.WIDTH;
 
 public class GameScreen extends AbstractScreen {
     private SpriteBatch batch;
