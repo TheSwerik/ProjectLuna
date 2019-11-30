@@ -2,6 +2,7 @@ package de.swerik.luna;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.GL30;
 import de.swerik.luna.Screens.LunaScreen;
 import de.swerik.luna.Screens.MainMenu;
 import de.swerik.luna.Screens.Screen;
@@ -58,6 +59,8 @@ private LunaScreen screen;
 
     @Override
     public void render() {
+        Gdx.gl30.glClearColor(0,0,0,1);
+        Gdx.gl30.glClear(GL30.GL_COLOR_BUFFER_BIT);
         this.screen.update(Gdx.graphics.getDeltaTime());
         this.screen.render();
     }
