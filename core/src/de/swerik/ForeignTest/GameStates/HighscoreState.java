@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import de.swerik.ForeignTest.ForeignGame;
 import de.swerik.ForeignTest.Managers.GameKeys;
 import de.swerik.ForeignTest.Managers.GameStateManager;
+import de.swerik.ForeignTest.Managers.Save;
 
 public class HighscoreState extends GameState {
 
@@ -35,6 +36,10 @@ public class HighscoreState extends GameState {
         parameter.size = 56;
         titleFont = gen.generateFont(parameter);
         titleFont.setColor(Color.WHITE);
+
+        Save.load();
+        highscores = Save.gd.getHighscores();
+        names = Save.gd.getNames();
     }
 
     @Override
@@ -52,7 +57,18 @@ public class HighscoreState extends GameState {
         titleLayout.setText(titleFont, title);
         titleFont.draw(batch, titleLayout, (ForeignGame.WIDTH - titleLayout.width) / 2, ForeignGame.HEIGHT - 40);
 
-        //Draw Scoews
+        float maxOffset = highscores.length * 40;
+        //Draw Scores
+        for (int i = 0; i < highscores.length; i++) {
+            GlyphLayout highscoreLayout = new GlyphLayout();
+            highscoreLayout.setText(font, String.format(
+                    "%2d. %7s %s",
+                    i + 1,
+                    highscores[i],
+                    names[i]
+            ));
+            font.draw(batch, highscoreLayout, (ForeignGame.WIDTH - highscoreLayout.width) / 2, ForeignGame.HEIGHT / 2f + maxOffset / 2 - 40 * i);
+        }
 
         batch.end();
     }
