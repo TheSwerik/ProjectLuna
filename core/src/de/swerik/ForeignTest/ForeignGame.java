@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import de.swerik.ForeignTest.Managers.GameInputProcessor;
 import de.swerik.ForeignTest.Managers.GameKeys;
 import de.swerik.ForeignTest.Managers.GameStateManager;
+import de.swerik.ForeignTest.Managers.Jukebox;
 
 public class ForeignGame implements ApplicationListener {
     public static int WIDTH = 1280;
@@ -28,6 +29,16 @@ public class ForeignGame implements ApplicationListener {
         Gdx.input.setInputProcessor(new GameInputProcessor());
 
         gsm = new GameStateManager();
+
+        Jukebox.load("asteroidSounds/explode.ogg", "explode");
+        Jukebox.load("asteroidSounds/extralife.ogg", "extralife");
+        Jukebox.load("asteroidSounds/largesaucer.ogg", "largesaucer");
+        Jukebox.load("asteroidSounds/pulsehigh.ogg", "pulsehigh");
+        Jukebox.load("asteroidSounds/pulselow.ogg", "pulselow");
+        Jukebox.load("asteroidSounds/saucershoot.ogg", "saucershoot");
+        Jukebox.load("asteroidSounds/shoot.ogg", "shoot");
+        Jukebox.load("asteroidSounds/smallsaucer.ogg", "smallsaucer");
+        Jukebox.load("asteroidSounds/thruster.ogg", "thruster");
     }
 
     @Override
