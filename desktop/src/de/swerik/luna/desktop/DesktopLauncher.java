@@ -7,9 +7,16 @@ import de.swerik.luna.Luna;
 public class DesktopLauncher {
     public static void main(String[] arg) {
         LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-        config.title = "Project Luna";
-        config.width = 1920;
-        config.height = 1080;
+        config.title = Luna.TITLE;
+        config.width = Luna.V_WIDTH;
+        config.height = Luna.V_HEIGHT;
+        config.x = -1;
+        config.y = -1;
+        config.useGL30 = true;
+//        config.addIcon();
+//        config.fullscreen = true;
+//        config.vSyncEnabled = true;
+//        config.foregroundFPS = 60;
 //        config.resizable = false;
         new LwjglApplication(new Luna(), config);
 
