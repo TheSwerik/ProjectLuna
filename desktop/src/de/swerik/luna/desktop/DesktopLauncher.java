@@ -12,8 +12,8 @@ public class DesktopLauncher {
     public static void main(String[] arg) {
         LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
         config.title = "Project Luna";
-        config.width = 1280;
-        config.height = 720;
+        config.width = 1920;
+        config.height = 1080;
         switch (test) {
             case 1:
                 new LwjglApplication(new Luna(), config);
