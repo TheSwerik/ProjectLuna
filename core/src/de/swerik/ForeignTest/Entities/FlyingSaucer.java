@@ -30,9 +30,6 @@ public class FlyingSaucer extends SpaceObject {
     public static final int LEFT = 0;
     public static final int RIGHT = 1;
 
-//    private int numPoints;
-//    private float[] dists;
-
     private boolean remove;
 
     private int score;
@@ -146,7 +143,7 @@ public class FlyingSaucer extends SpaceObject {
         setShape();
 
         //check if remove
-        if (direction == RIGHT && x > ForeignGame.HEIGHT ||
+        if (direction == RIGHT && x > ForeignGame.WIDTH ||
                 direction == LEFT && x < 0) {
             remove = true;
         }
