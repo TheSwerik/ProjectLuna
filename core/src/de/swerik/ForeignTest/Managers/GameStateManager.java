@@ -1,6 +1,8 @@
 package de.swerik.ForeignTest.Managers;
 
 import de.swerik.ForeignTest.GameStates.GameState;
+import de.swerik.ForeignTest.GameStates.HighscoreState;
+import de.swerik.ForeignTest.GameStates.MenuState;
 import de.swerik.ForeignTest.GameStates.PlayState;
 
 public class GameStateManager {
@@ -9,9 +11,10 @@ public class GameStateManager {
 
     public static final int MENU = 0;
     public static final int PLAY = 12321;
+    public static final int HIGHSCORE = 3541321;
 
     public GameStateManager() {
-        setState(PLAY);
+        setState(MENU);
     }
 
     public void setState(int state) {
@@ -19,10 +22,13 @@ public class GameStateManager {
             currentGameState.dispose();
         }
         if (state == MENU) {
-            //TODO menu
+            currentGameState = new MenuState(this);
         }
         if (state == PLAY) {
             currentGameState = new PlayState(this);
+        }
+        if (state == HIGHSCORE) {
+            currentGameState = new HighscoreState(this);
         }
     }
 
