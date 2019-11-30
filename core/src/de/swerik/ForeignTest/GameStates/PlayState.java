@@ -44,6 +44,8 @@ public class PlayState extends GameState {
     private float fsTimer;
     private float fsTime;
 
+    private ArrayList<SpaceObject> collisionList;
+
     public PlayState(GameStateManager gsm) {
         super(gsm);
     }
@@ -77,6 +79,8 @@ public class PlayState extends GameState {
         enemyBullets = new ArrayList<>();
         fsTimer = 0;
         fsTime = 15;
+
+        collisionList = new ArrayList<>();
     }
 
     @Override
@@ -101,6 +105,9 @@ public class PlayState extends GameState {
             }
             player.reset();
             player.loseLife();
+            flyingSaucer = null;
+            Jukebox.stop("smallsaucer");
+            Jukebox.stop("largesaucer");
             return;
         }
 
@@ -271,36 +278,135 @@ public class PlayState extends GameState {
     }
 
     private void checkCollisions() {
-        // Player-Asteroid collision
-        if (!player.isHit()) {
-            for (int i = 0; i < asteroids.size(); i++) {
-                Asteroid a = asteroids.get(i);
-                // if Player intersects asteroid
-                if (a.intersects(player)) {
-                    player.hit();
-                    asteroids.remove(i);
-                    splitAsteroids(a);
-                    Jukebox.play("explode", 0.3f);
-                    break;
-                }
-            }
-        }
+        //Fill collisionList
+        collisionList = new ArrayList<>();
+        collisionList.add(player);
+        collisionList.add(flyingSaucer);
+        collisionList.addAll(asteroids);
+        collisionList.addAll(bullets);
+        collisionList.addAll(enemyBullets);
 
-        // Bullet-Asteroid collision
-        for (int i = 0; i < bullets.size(); i++) {
-            Bullet b = bullets.get(i);
-            for (int j = 0; j < asteroids.size(); j++) {
-                Asteroid a = asteroids.get(j);
-                //if asteroid contains bullet b
-                if (a.contains(b.getX(), b.getY())) {
-                    bullets.remove(i--);
-                    asteroids.remove(j);
-                    splitAsteroids(a);
-                    Jukebox.play("explode", 0.3f);
+        //check collisionLoop
+        for (int i = 0; i < collisionList.size(); i++) {
+            for (int j = i; j < collisionList.size(); j++) {
+                if ((collisionList.get(i) instanceof Player && collisionList.get(j) instanceof Asteroid) ||
+                        (collisionList.get(j) instanceof Player && collisionList.get(i) instanceof Asteroid)) {
+                    // Player-Asteroid
+                    Player player;
+                    Asteroid asteroid;
+                    if (collisionList.get(i) instanceof Player) {
+                        player = (Player) collisionList.get(i);
+                        asteroid = (Asteroid) collisionList.get(j);
+                    } else {
+                        player = (Player) collisionList.get(j);
+                        asteroid = (Asteroid) collisionList.get(i);
+                    }
+                    // Player-Asteroid collision
+                    if (!player.isHit()) {
+                        // if Player intersects asteroid
+                        if (asteroid.intersects(player)) {
+                            player.hit();
+                            asteroids.remove(asteroid);
+                            splitAsteroids(asteroid);
+                            Jukebox.play("explode", 0.3f);
+                            break;
+                        }
+                    }
+                } else if ((collisionList.get(i) instanceof Bullet && bullets.contains(collisionList.get(i)) && collisionList.get(j) instanceof Asteroid) ||
+                        (collisionList.get(j) instanceof Bullet && bullets.contains(collisionList.get(j)) && collisionList.get(i) instanceof Asteroid)) {
+                    // PlayerBullet-Asteroid
+                    Bullet bullet;
+                    Asteroid asteroid;
+                    if (collisionList.get(i) instanceof Bullet) {
+                        bullet = (Bullet) collisionList.get(i);
+                        asteroid = (Asteroid) collisionList.get(j);
+                    } else {
+                        bullet = (Bullet) collisionList.get(j);
+                        asteroid = (Asteroid) collisionList.get(i);
+                    }
+                    // Bullet-Asteroid collision
+                    //if asteroid contains bullet b
+                    if (asteroid.contains(bullet.getX(), bullet.getY())) {
+                        bullets.remove(bullet);
+                        asteroids.remove(asteroid);
+                        splitAsteroids(asteroid);
+                        Jukebox.play("explode", 0.3f);
 
-                    // increment score
-                    player.addScore(a.getScore());
-                    break;
+                        // increment score
+                        player.addScore(asteroid.getScore());
+                        break;
+                    }
+                } else if ((collisionList.get(i) instanceof Player && collisionList.get(j) instanceof FlyingSaucer) ||
+                        (collisionList.get(j) instanceof Player && collisionList.get(i) instanceof FlyingSaucer)) {
+                    // Player-Saucer
+                    Player player;
+                    FlyingSaucer saucer;
+                    if (collisionList.get(i) instanceof Player) {
+                        player = (Player) collisionList.get(i);
+                        saucer = (FlyingSaucer) collisionList.get(j);
+                    } else {
+                        player = (Player) collisionList.get(j);
+                        saucer = (FlyingSaucer) collisionList.get(i);
+                    }
+                    // Player-Asteroid collision
+                    if (!player.isHit()) {
+                        // if Player intersects asteroid
+                        if (saucer.intersects(player)) {
+                            player.hit();
+                            flyingSaucer = null;
+                            Jukebox.stop("smallsaucer");
+                            Jukebox.stop("largesaucer");
+                            Jukebox.play("explode", 0.3f);
+                            break;
+                        }
+                    }
+                } else if ((collisionList.get(i) instanceof Bullet && bullets.contains(collisionList.get(i)) && collisionList.get(j) instanceof FlyingSaucer) ||
+                        (collisionList.get(j) instanceof Bullet && bullets.contains(collisionList.get(j)) && collisionList.get(i) instanceof FlyingSaucer)) {
+                    // PlayerBullet-Saucer
+                    Bullet bullet;
+                    FlyingSaucer saucer;
+                    if (collisionList.get(i) instanceof Bullet) {
+                        bullet = (Bullet) collisionList.get(i);
+                        saucer = (FlyingSaucer) collisionList.get(j);
+                    } else {
+                        bullet = (Bullet) collisionList.get(j);
+                        saucer = (FlyingSaucer) collisionList.get(i);
+                    }
+                    // Bullet-FlyingSaucer collision
+                    //if FlyingSaucer contains bullet b
+                    if (saucer.contains(bullet.getX(), bullet.getY())) {
+                        bullets.remove(bullet);
+                        flyingSaucer = null;
+                        Jukebox.stop("smallsaucer");
+                        Jukebox.stop("largesaucer");
+                        Jukebox.play("explode", 0.3f);
+
+                        // increment score
+                        player.addScore(saucer.getScore());
+                        break;
+                    }
+                } else if ((collisionList.get(i) instanceof Bullet && enemyBullets.contains(collisionList.get(i)) && collisionList.get(j) instanceof Player) ||
+                        (collisionList.get(j) instanceof Bullet && enemyBullets.contains(collisionList.get(j)) && collisionList.get(i) instanceof Player)) {
+                    // Player-SaucerBullet
+                    Bullet bullet;
+                    Player player;
+                    if (collisionList.get(i) instanceof Bullet) {
+                        bullet = (Bullet) collisionList.get(i);
+                        player = (Player) collisionList.get(j);
+                    } else {
+                        bullet = (Bullet) collisionList.get(j);
+                        player = (Player) collisionList.get(i);
+                    }
+                    // Bullet-Player collision
+                    if (!player.isHit()) {
+                        // if Player intersects asteroid
+                        if (player.contains(bullet.getX(), bullet.getY())) {
+                            player.hit();
+                            enemyBullets.remove(bullet);
+                            Jukebox.play("explode", 0.3f);
+                            break;
+                        }
+                    }
                 }
             }
         }
