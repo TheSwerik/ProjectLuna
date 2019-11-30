@@ -38,7 +38,7 @@ public class Jukebox {
         sounds.get(name).stop();
     }
 
-    public static void stopAll(String name) {
+    public static void stopAll() {
         for (Sound s : sounds.values()) {
             s.stop();
         }
