@@ -90,6 +90,7 @@ public class ForeignGame implements ApplicationListener {
 
     @Override
     public void dispose() {
+        gsm.dispose();
         Gdx.app.exit();
         System.exit(0);
     }

@@ -89,7 +89,6 @@ public class PlayState extends GameState {
         if (player.isDead()) {
             if (player.getExtraLives() == 0) {
                 Jukebox.stopAll();
-                assert Save.gd != null: "gd is null";
                 Save.gd.setTentScore(player.getScore());
                 gsm.setState(GameStateManager.GAMEOVER);
                 return;
@@ -179,17 +178,21 @@ public class PlayState extends GameState {
 
     @Override
     public void handleInput() {
-        player.setLeft(GameKeys.isDown(GameKeys.LEFT));
-        player.setRight(GameKeys.isDown(GameKeys.RIGHT));
-        player.setUp(GameKeys.isDown(GameKeys.UP));
-        if (GameKeys.isPressed(GameKeys.SPACE)) {
-            player.shoot();
+        if (!player.isHit()) {
+            player.setLeft(GameKeys.isDown(GameKeys.LEFT));
+            player.setRight(GameKeys.isDown(GameKeys.RIGHT));
+            player.setUp(GameKeys.isDown(GameKeys.UP));
+            if (GameKeys.isPressed(GameKeys.SPACE)) {
+                player.shoot();
+            }
         }
     }
 
     @Override
     public void dispose() {
-
+        batch.dispose();
+        font.dispose();
+        sr.dispose();
     }
 
     private void createParticles(float x, float y) {
