@@ -6,10 +6,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
-import de.swerik.ForeignTest.Entities.Asteroid;
-import de.swerik.ForeignTest.Entities.Bullet;
-import de.swerik.ForeignTest.Entities.Particle;
-import de.swerik.ForeignTest.Entities.Player;
+import de.swerik.ForeignTest.Entities.*;
 import de.swerik.ForeignTest.ForeignGame;
 import de.swerik.ForeignTest.Managers.GameKeys;
 import de.swerik.ForeignTest.Managers.GameStateManager;
@@ -42,6 +39,11 @@ public class PlayState extends GameState {
     private float bgTimer;
     private boolean playLowPulse;
 
+    private FlyingSaucer flyingSaucer;
+    private ArrayList<Bullet> enemyBullets;
+    private float fsTimer;
+    private float fsTime;
+
     public PlayState(GameStateManager gsm) {
         super(gsm);
     }
@@ -71,6 +73,10 @@ public class PlayState extends GameState {
         currentDelay = maxDelay;
         bgTimer = maxDelay;
         playLowPulse = true;
+
+        enemyBullets = new ArrayList<>();
+        fsTimer = 0;
+        fsTime = 15;
     }
 
     @Override
@@ -103,6 +109,34 @@ public class PlayState extends GameState {
             bullets.get(i).update(delta);
             if (bullets.get(i).shouldRemove()) {
                 bullets.remove(i);
+                i--;
+            }
+        }
+
+        //update FlyingSaucer
+        if (flyingSaucer == null) {
+            fsTimer += delta;
+            if (fsTimer >= fsTime) {
+                fsTimer = 0;
+                flyingSaucer = new FlyingSaucer(MathUtils.random(100) % 2,
+                        MathUtils.random(100) % 2,
+                        player,
+                        enemyBullets);
+            }
+        } else {
+            flyingSaucer.update(delta);
+            if (flyingSaucer.shouldRemove()) {
+                flyingSaucer = null;
+                Jukebox.stop("smallsaucer");
+                Jukebox.stop("largesaucer");
+            }
+        }
+
+        //update SaucerBullets
+        for (int i = 0; i < enemyBullets.size(); i++) {
+            enemyBullets.get(i).update(delta);
+            if (enemyBullets.get(i).shouldRemove()) {
+                enemyBullets.remove(i);
                 i--;
             }
         }
@@ -150,6 +184,16 @@ public class PlayState extends GameState {
 
         //draw Bullets
         for (Bullet bullet : bullets) {
+            bullet.draw(sr);
+        }
+
+        //draw FlyingSaucer
+        if (flyingSaucer != null) {
+            flyingSaucer.draw(sr);
+        }
+
+        //draw SaucerBullets
+        for (Bullet bullet : enemyBullets) {
             bullet.draw(sr);
         }
 
