@@ -32,6 +32,8 @@ public class PlayState extends GameState {
     private SpriteBatch batch;
     private BitmapFont font;
 
+    private Player hudPlayer;
+
     public PlayState(GameStateManager gsm) {
         super(gsm);
     }
@@ -53,6 +55,8 @@ public class PlayState extends GameState {
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
         parameter.size = 20;
         font = gen.generateFont(parameter);
+
+        hudPlayer = new Player(null);
     }
 
     @Override
@@ -130,6 +134,12 @@ public class PlayState extends GameState {
         batch.begin();
         font.draw(batch, Long.toString(player.getScore()), 40, ForeignGame.HEIGHT - 40);
         batch.end();
+
+        //draw lives
+        for (int i = 0; i < player.getExtraLives(); i++) {
+            hudPlayer.setPosition(45 + 15 * i, ForeignGame.HEIGHT - 80);
+            hudPlayer.draw(sr);
+        }
     }
 
     @Override

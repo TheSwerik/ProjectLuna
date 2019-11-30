@@ -64,6 +64,11 @@ public abstract class SpaceObject {
 
     public abstract void draw(ShapeRenderer sr);
 
+    public void setPosition(float x, float y) {
+        this.x = x;
+        this.y = y;
+    }
+
     public float getX() {
         return x;
     }
