@@ -3,6 +3,7 @@ package de.swerik.ForeignTest.Entities;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import de.swerik.ForeignTest.ForeignGame;
+import de.swerik.ForeignTest.Managers.Jukebox;
 
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
@@ -100,6 +101,11 @@ public class Player extends SpaceObject {
     }
 
     public void setUp(boolean b) {
+        if (b && !up && !hit) {
+            Jukebox.loop("thruster", 0.05f);
+        } else if (!b) {
+            Jukebox.stop("thruster");
+        }
         up = b;
     }
 
@@ -108,6 +114,7 @@ public class Player extends SpaceObject {
             return;
         }
         bullets.add(new Bullet(x, y, radians));
+        Jukebox.play("shoot", 0.1f);
     }
 
     public void update(float delta) {
@@ -133,6 +140,7 @@ public class Player extends SpaceObject {
         if (score >= requiredScore) {
             extraLives++;
             requiredScore += 10000;
+            Jukebox.play("extralife", 0.5f);
         }
 
         //turning
@@ -227,6 +235,7 @@ public class Player extends SpaceObject {
         hit = true;
         dx = dy = 0;
         left = right = up = false;
+        Jukebox.stop("thruster");
 
         hitLines = new Line2D.Float[4];
         for (int i = 0, j = hitLines.length - 1;
