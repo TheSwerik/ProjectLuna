@@ -1,5 +1,9 @@
 package de.swerik.ForeignTest.GameStates;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import de.swerik.ForeignTest.Entities.Asteroid;
@@ -25,6 +29,9 @@ public class PlayState extends GameState {
     private int totalAsteroids;
     private int numAsteroidsLeft;
 
+    private SpriteBatch batch;
+    private BitmapFont font;
+
     public PlayState(GameStateManager gsm) {
         super(gsm);
     }
@@ -40,6 +47,12 @@ public class PlayState extends GameState {
         spawnAsteroids();
 
         particles = new ArrayList<>();
+
+        batch = new SpriteBatch();
+        FreeTypeFontGenerator gen = new FreeTypeFontGenerator(Gdx.files.internal("fonts/lunchds.ttf"));
+        FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        parameter.size = 20;
+        font = gen.generateFont(parameter);
     }
 
     @Override
@@ -57,6 +70,7 @@ public class PlayState extends GameState {
         player.update(delta);
         if (player.isDead()) {
             player.reset();
+            player.loseLife();
             return;
         }
 
@@ -110,6 +124,12 @@ public class PlayState extends GameState {
         for (Particle particle : particles) {
             particle.draw(sr);
         }
+
+        //draw score
+        batch.setColor(1, 1, 1, 1);
+        batch.begin();
+        font.draw(batch, Long.toString(player.getScore()), 40, ForeignGame.HEIGHT - 40);
+        batch.end();
     }
 
     @Override
@@ -185,6 +205,9 @@ public class PlayState extends GameState {
                     bullets.remove(i--);
                     asteroids.remove(j);
                     splitAsteroids(a);
+
+                    // increment score
+                    player.addScore(a.getScore());
                     break;
                 }
             }
