@@ -59,9 +59,9 @@ private LunaScreen screen;
 
     @Override
     public void render() {
+        this.screen.update(Gdx.graphics.getDeltaTime());
         Gdx.gl30.glClearColor(0,0,0,1);
         Gdx.gl30.glClear(GL30.GL_COLOR_BUFFER_BIT);
-        this.screen.update(Gdx.graphics.getDeltaTime());
         this.screen.render();
     }
 }
