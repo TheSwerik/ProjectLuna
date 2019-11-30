@@ -30,13 +30,13 @@ import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
 
-import static de.swerik.MorpheusTest.Main.WIDTH;
 import static de.swerik.MorpheusTest.Main.HEIGHT;
+import static de.swerik.MorpheusTest.Main.WIDTH;
 
+@SuppressWarnings("ALL")
 public class MenuScreen extends AbstractScreen {
     private SpriteBatch batch;
     private Camera camera;
@@ -61,14 +61,14 @@ public class MenuScreen extends AbstractScreen {
         stage = new Stage();
         Gdx.input.setInputProcessor(stage);
 
-        skin = new Skin(Gdx.files.internal("data/uiskin.json"));
+        skin = new Skin(Gdx.files.internal("tutorial/data/uiskin.json"));
 
         try {
             Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces();
             for (NetworkInterface i : Collections.list(interfaces)) {
                 for (InetAddress addr : Collections.list(i.getInetAddresses())) {
                     if (addr instanceof Inet4Address) {
-                        ipAdress = ipAdress + addr.getHostAddress() + "\n";
+                        ipAdress +=  addr.getHostAddress() + "\n";
                     }
                 }
             }
@@ -104,7 +104,7 @@ public class MenuScreen extends AbstractScreen {
         button.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                String send = "";
+                String send;
                 if (msg.getText().length() == 0) {
                     send = "Das ist ein Test. \n";
                 } else {
