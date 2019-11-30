@@ -12,7 +12,7 @@ public class AndroidLauncher extends AndroidApplication {
         super.onCreate(savedInstanceState);
         AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
 //		initialize(new Main(), config);
-		initialize(new Luna(), config);
-//        initialize(new ForeignGame(), config);
+//		initialize(new Luna(), config);
+        initialize(new ForeignGame(), config);
     }
 }
