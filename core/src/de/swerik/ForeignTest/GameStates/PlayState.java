@@ -312,8 +312,30 @@ public class PlayState extends GameState {
                             break;
                         }
                     }
-                } else if ((collisionList.get(i) instanceof Bullet && bullets.contains(collisionList.get(i)) && collisionList.get(j) instanceof Asteroid) ||
-                        (collisionList.get(j) instanceof Bullet && bullets.contains(collisionList.get(j)) && collisionList.get(i) instanceof Asteroid)) {
+                } else if ((collisionList.get(i) instanceof FlyingSaucer && collisionList.get(j) instanceof Asteroid) ||
+                        (collisionList.get(j) instanceof FlyingSaucer && collisionList.get(i) instanceof Asteroid)) {
+                    // Saucer-Asteroid
+                    FlyingSaucer flyingSaucer;
+                    Asteroid asteroid;
+                    if (collisionList.get(i) instanceof Player) {
+                        flyingSaucer = (FlyingSaucer) collisionList.get(i);
+                        asteroid = (Asteroid) collisionList.get(j);
+                    } else {
+                        flyingSaucer = (FlyingSaucer) collisionList.get(j);
+                        asteroid = (Asteroid) collisionList.get(i);
+                    }
+                    // if Saucer intersects asteroid
+                    if (asteroid.intersects(flyingSaucer)) {
+                        flyingSaucer = null;
+                        Jukebox.stop("smallsaucer");
+                        Jukebox.stop("largesaucer");
+                        asteroids.remove(asteroid);
+                        splitAsteroids(asteroid);
+                        Jukebox.play("explode", 0.3f);
+                        break;
+                    }
+                } else if ((collisionList.get(i) instanceof Bullet && collisionList.get(j) instanceof Asteroid) ||
+                        (collisionList.get(j) instanceof Bullet && collisionList.get(i) instanceof Asteroid)) {
                     // PlayerBullet-Asteroid
                     Bullet bullet;
                     Asteroid asteroid;
@@ -376,13 +398,13 @@ public class PlayState extends GameState {
                     //if FlyingSaucer contains bullet b
                     if (saucer.contains(bullet.getX(), bullet.getY())) {
                         bullets.remove(bullet);
+
+                        // increment score
+                        player.addScore(saucer.getScore());
                         flyingSaucer = null;
                         Jukebox.stop("smallsaucer");
                         Jukebox.stop("largesaucer");
                         Jukebox.play("explode", 0.3f);
-
-                        // increment score
-                        player.addScore(saucer.getScore());
                         break;
                     }
                 } else if ((collisionList.get(i) instanceof Bullet && enemyBullets.contains(collisionList.get(i)) && collisionList.get(j) instanceof Player) ||
