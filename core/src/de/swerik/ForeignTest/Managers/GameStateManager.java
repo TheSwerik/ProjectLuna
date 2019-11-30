@@ -13,8 +13,6 @@ public class GameStateManager {
 
     public GameStateManager() {
         setState(MENU);
-
-        Save.load();
     }
 
     public void setState(int state) {
@@ -41,5 +39,9 @@ public class GameStateManager {
 
     public void draw() {
         currentGameState.draw();
+    }
+
+    public void dispose() {
+        currentGameState.dispose();
     }
 }

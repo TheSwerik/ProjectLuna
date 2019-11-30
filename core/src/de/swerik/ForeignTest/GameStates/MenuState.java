@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import de.swerik.ForeignTest.ForeignGame;
 import de.swerik.ForeignTest.Managers.GameKeys;
 import de.swerik.ForeignTest.Managers.GameStateManager;
+import de.swerik.ForeignTest.Managers.Save;
 
 public class MenuState extends GameState {
 
@@ -42,6 +43,8 @@ public class MenuState extends GameState {
                 "Highscores",
                 "Quit"
         };
+
+        Save.load();
     }
 
     @Override
@@ -113,6 +116,8 @@ public class MenuState extends GameState {
 
     @Override
     public void dispose() {
-
+        batch.dispose();
+        titleFont.dispose();
+        font.dispose();
     }
 }

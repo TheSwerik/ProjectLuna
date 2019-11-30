@@ -82,6 +82,8 @@ public class HighscoreState extends GameState {
 
     @Override
     public void dispose() {
-
+        batch.dispose();
+        titleFont.dispose();
+        font.dispose();
     }
 }
