@@ -10,8 +10,9 @@ public abstract class LunaScreen implements Screen {
 
     public abstract void create();
 
-    @Override
-    public abstract void render(float delta);
+    public abstract void update(float delta);
+
+    public abstract void render();
 
     @Override
     public abstract void dispose();
@@ -39,5 +40,10 @@ public abstract class LunaScreen implements Screen {
     @Override
     public void resize(int width, int height) {
 
+    }
+
+    @Override
+    public void render(float delta) {
+        render();
     }
 }

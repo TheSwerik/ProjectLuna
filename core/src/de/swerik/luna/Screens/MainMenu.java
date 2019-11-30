@@ -11,6 +11,16 @@ public class MainMenu extends LunaScreen {
     }
 
     @Override
+    public void render() {
+
+    }
+
+    @Override
+    public void update(float delta) {
+
+    }
+
+    @Override
     public void render(float delta) {
 
     }

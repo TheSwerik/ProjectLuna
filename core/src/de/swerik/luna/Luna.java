@@ -2,6 +2,7 @@ package de.swerik.luna;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import de.swerik.luna.Screens.LunaScreen;
 import de.swerik.luna.Screens.MainMenu;
 import de.swerik.luna.Screens.Screen;
 
@@ -13,6 +14,7 @@ public class Luna extends Game {
 
     private Screen currentScreen = Screen.MENU;
 //    private Screen currentScreen = Screen.GAME;
+private LunaScreen screen;
 
     @Override
     public void create() {
@@ -52,5 +54,11 @@ public class Luna extends Game {
 
         Gdx.app.exit();
         System.exit(0);
+    }
+
+    @Override
+    public void render() {
+        this.screen.render();
+        this.screen.update(Gdx.graphics.getDeltaTime());
     }
 }
