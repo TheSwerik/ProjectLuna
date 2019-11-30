@@ -3,17 +3,42 @@ package de.swerik.luna;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import de.swerik.luna.Screens.MainMenu;
+import de.swerik.luna.Screens.Screen;
 
 public class Luna extends Game {
 
     public static final String TITLE = "Project Luna";
     public static final int V_WIDTH = 1920;
     public static final int V_HEIGHT = 1080;
-    public static final int SCALE = 1;
+
+    private Screen currentScreen = Screen.MENU;
+//    private Screen currentScreen = Screen.GAME;
 
     @Override
     public void create() {
-        this.setScreen(new MainMenu());
+        this.switchScreen();
+    }
+
+    public void setScreen(int screen) {
+        currentScreen = Screen.values()[screen];
+        this.switchScreen();
+    }
+
+    public void setScreen(Screen screen) {
+        currentScreen = screen;
+        this.switchScreen();
+    }
+
+    private void switchScreen() {
+//        screen.dispose();
+        switch (currentScreen){
+            case MENU:
+                this.setScreen(new MainMenu());
+                break;
+            case GAME:
+//                this.setScreen(new Game());
+                break;
+        }
     }
 
     @Override
