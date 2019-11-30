@@ -1,6 +1,7 @@
 package de.swerik.luna.Screens;
 
 public class MainMenu extends LunaScreen {
+
     public MainMenu() {
         super();
     }
@@ -17,11 +18,6 @@ public class MainMenu extends LunaScreen {
 
     @Override
     public void update(float delta) {
-
-    }
-
-    @Override
-    public void render(float delta) {
 
     }
 
