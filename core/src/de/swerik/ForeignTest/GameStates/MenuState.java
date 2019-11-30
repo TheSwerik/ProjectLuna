@@ -6,10 +6,15 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.MathUtils;
+import de.swerik.ForeignTest.Entities.Asteroid;
 import de.swerik.ForeignTest.ForeignGame;
 import de.swerik.ForeignTest.Managers.GameKeys;
 import de.swerik.ForeignTest.Managers.GameStateManager;
 import de.swerik.ForeignTest.Managers.Save;
+
+import java.util.ArrayList;
 
 public class MenuState extends GameState {
 
@@ -21,6 +26,9 @@ public class MenuState extends GameState {
 
     private int currentItem;
     private String[] menuItems;
+
+    private ArrayList<Asteroid> asteroids;
+    private ShapeRenderer sr;
 
     public MenuState(GameStateManager gsm) {
         super(gsm);
@@ -45,15 +53,34 @@ public class MenuState extends GameState {
         };
 
         Save.load();
+
+        asteroids = new ArrayList<>();
+        spawnAsteroids();
+        sr = new ShapeRenderer();
     }
 
     @Override
     public void update(float delta) {
         handleInput();
+
+        //update Asteroids
+        for (int i = 0; i < asteroids.size(); i++) {
+            asteroids.get(i).update(delta);
+            if (asteroids.get(i).shouldRemove()) {
+                asteroids.remove(i);
+                i--;
+            }
+        }
     }
 
     @Override
     public void draw() {
+        //draw Asteroids
+        sr.setProjectionMatrix(ForeignGame.cam.combined);
+        for (Asteroid asteroid : asteroids) {
+            asteroid.draw(sr);
+        }
+
         batch.setProjectionMatrix(ForeignGame.cam.combined);
         batch.begin();
 
@@ -119,5 +146,28 @@ public class MenuState extends GameState {
         batch.dispose();
         titleFont.dispose();
         font.dispose();
+        sr.dispose();
+    }
+
+    private void spawnAsteroids() {
+        asteroids.clear();
+
+        int numToSpawn = 10;
+
+        for (int i = 0; i < numToSpawn; i++) {
+            float dist;
+            float x;
+            float y;
+            do {
+                x = MathUtils.random(ForeignGame.WIDTH);
+                y = MathUtils.random(ForeignGame.HEIGHT);
+
+                float dx = x;
+                float dy = y;
+                dist = (float) Math.sqrt(dx * dx + dy * dy);
+            } while (dist < 100);
+
+            asteroids.add(new Asteroid(x, y, Asteroid.LARGE));
+        }
     }
 }
