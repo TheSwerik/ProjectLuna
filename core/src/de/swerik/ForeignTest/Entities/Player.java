@@ -261,6 +261,11 @@ public class Player extends SpaceObject {
         hit = dead = false;
     }
 
+    public void setPosition(float x, float y) {
+        super.setPosition(x, y);
+        setShape();
+    }
+
     public boolean isDead() {
         return dead;
     }
