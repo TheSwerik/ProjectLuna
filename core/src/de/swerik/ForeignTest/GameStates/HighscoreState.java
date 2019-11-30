@@ -18,6 +18,9 @@ public class HighscoreState extends GameState {
 
     private final String title = "Highscores";
 
+    private long[] highscores;
+    private String[] names;
+
     public HighscoreState(GameStateManager gsm) {
         super(gsm);
     }
@@ -56,7 +59,7 @@ public class HighscoreState extends GameState {
 
     @Override
     public void handleInput() {
-        if (GameKeys.isPressed(GameKeys.ESCAPE)) {
+        if (GameKeys.isPressed(GameKeys.ESCAPE) || GameKeys.isPressed(GameKeys.ENTER)) {
             gsm.setState(GameStateManager.MENU);
         }
     }

@@ -139,6 +139,8 @@ public class PlayState extends GameState {
 
     @Override
     public void draw() {
+        batch.setProjectionMatrix(ForeignGame.cam.combined);
+        sr.setProjectionMatrix(ForeignGame.cam.combined);
         //draw Player
         player.draw(sr);
 

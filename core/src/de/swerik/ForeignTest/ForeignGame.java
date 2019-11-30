@@ -19,11 +19,12 @@ public class ForeignGame implements ApplicationListener {
 
     @Override
     public void create() {
-        WIDTH = Gdx.graphics.getWidth();
-        HEIGHT = Gdx.graphics.getHeight();
+//        WIDTH = Gdx.graphics.getWidth();
+//        HEIGHT = Gdx.graphics.getHeight();
 
         cam = new OrthographicCamera(WIDTH, HEIGHT);
         cam.translate(WIDTH / 2f, HEIGHT / 2f);
+        cam.zoom = 1f;
         cam.update();
 
         Gdx.input.setInputProcessor(new GameInputProcessor());
