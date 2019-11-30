@@ -7,7 +7,7 @@ import de.swerik.MorpheusTest.Main;
 import de.swerik.luna.Luna;
 
 public class DesktopLauncher {
-    private static final byte test = 3;
+    private static final byte test = 1;
 
     public static void main(String[] arg) {
         LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
