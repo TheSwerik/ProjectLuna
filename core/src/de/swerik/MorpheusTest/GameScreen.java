@@ -20,8 +20,8 @@ public class GameScreen extends AbstractScreen {
     private Texture img;
     private TextureRegion[][] regions;
     private Sprite sprite;
-    private InputHandler inputHandler;
-    private Animation runningAnimation;
+    private testInputHandler inputHandler;
+    private testAnimation runningAnimation;
 
     private TiledMap tm;
     private TiledMapRenderer tmr;
@@ -32,7 +32,7 @@ public class GameScreen extends AbstractScreen {
 
     private ParticleEffect effect = new ParticleEffect();
 
-    private static World world;
+    private World world;
     private static Body body;
 
     private static Body bodyEdge;
@@ -44,14 +44,14 @@ public class GameScreen extends AbstractScreen {
     public GameScreen(Game game) {
         super(game);
         batch = new SpriteBatch();
-        img = new Texture("sprites/ninjaboy/Running.png");
+        img = new Texture("placeholder/sprites/ninjaboy/Running.png");
         regions = TextureRegion.split(img, 363, 458);
         sprite = new Sprite(regions[0][0]);
         sprite.setScale(0.25f);
 
-        runningAnimation = new Animation(sprite, regions);
+        runningAnimation = new testAnimation(sprite, regions);
 
-        tm = new TmxMapLoader().load("maps/tmx/Test.tmx");
+        tm = new TmxMapLoader().load("placeholder/maps/tmx/Test.tmx");
         tmr = new OrthoCachedTiledMapRenderer(tm);
 
         camera = new OrthographicCamera(1, (float) Gdx.graphics.getHeight() / Gdx.graphics.getWidth());
@@ -59,7 +59,7 @@ public class GameScreen extends AbstractScreen {
         font = new BitmapFont();
         font.setColor(Color.BLUE);
 
-        effect.load(Gdx.files.internal("particles/TestFlame.p"), Gdx.files.internal("particles/"));
+        effect.load(Gdx.files.internal("placeholder/particles/TestFlame.p"), Gdx.files.internal("placeholder/particles/"));
         effect.start();
         effect.setPosition(600f, 200f);
 
@@ -95,7 +95,7 @@ public class GameScreen extends AbstractScreen {
         edgeShape.dispose();
 
         //Object 2
-        Texture img2 = new Texture("sprites/zombie/male/Idle (1).png");
+        Texture img2 = new Texture("placeholder/sprites/zombie/male/Idle (1).png");
         sprite2 = new Sprite(img2);
         sprite2.setScale(0.25f);
         sprite2.setPosition(sprite.getX(), 600);
@@ -136,7 +136,7 @@ public class GameScreen extends AbstractScreen {
             }
         });
 
-        inputHandler = new InputHandler(sprite, runningAnimation, body);
+        inputHandler = new testInputHandler(sprite, runningAnimation, body);
 
         Gdx.input.setInputProcessor(inputHandler);
     }

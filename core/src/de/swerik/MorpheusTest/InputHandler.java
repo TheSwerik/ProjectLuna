@@ -16,6 +16,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 public class InputHandler implements InputProcessor {
     Sprite sprite;
@@ -33,8 +34,8 @@ public class InputHandler implements InputProcessor {
         this.sprite = sprite;
         this.animation = animation;
         this.body = body;
-        sound = Gdx.audio.newSound(Gdx.files.internal("sounds/Marco Bros. Banana.wav"));    //dont forget dispose
-        music = Gdx.audio.newMusic(Gdx.files.internal("music/Marco Bros. Overworld.wav"));  //dont forget dispose
+        sound = Gdx.audio.newSound(Gdx.files.internal("placeholder/sounds/Marco Bros. Banana.wav"));    //dont forget dispose
+        music = Gdx.audio.newMusic(Gdx.files.internal("placeholder/music/Marco Bros. Overworld.wav"));  //dont forget dispose
     }
 
     public float getMovement() {
@@ -98,7 +99,7 @@ public class InputHandler implements InputProcessor {
             byte[] pixel = ScreenUtils.getFrameBufferPixels(0, 0, Gdx.graphics.getBackBufferWidth(), Gdx.graphics.getBackBufferHeight(), true);
             Pixmap pixmap = new Pixmap(Gdx.graphics.getBackBufferWidth(), Gdx.graphics.getBackBufferHeight(), Pixmap.Format.RGBA8888);
             BufferUtils.copy(pixel, 0, pixmap.getPixels(), pixel.length);
-            PixmapIO.writePNG(Gdx.files.local("screenshots/screenshot " + new SimpleDateFormat("yyyy.MM.dd HH.mm.ss").format(new Date()) + ".png"), pixmap);
+            PixmapIO.writePNG(Gdx.files.local("tutorial/screenshots/screenshot " + new SimpleDateFormat("yyyy.MM.dd HH.mm.ss", Locale.GERMANY).format(new Date()) + ".png"), pixmap);
             pixmap.dispose();
         }
         return true;
