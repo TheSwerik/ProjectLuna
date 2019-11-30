@@ -49,6 +49,7 @@ public class GameData implements Serializable {
     public void addHighscore(long newScore, String name) {
         if (isHighscore(newScore)) {
             highscores[MAX_SCORES - 1] = newScore;
+            names[MAX_SCORES - 1] = name;
             //unreliable:
 //            Arrays.sort(highscores);
 //            for (int i = MAX_SCORES - 1; i > 0; i--) {
@@ -77,6 +78,19 @@ public class GameData implements Serializable {
 
                 j = j - 1;
             }
+        }
+
+        //swap from lowest to highest
+        for (int i = 0; i < MAX_SCORES; i++) {
+            if (i >= MAX_SCORES - i) {
+                return;
+            }
+            long temp = highscores[MAX_SCORES - 1 - i];
+            highscores[MAX_SCORES - 1 - i] = highscores[i];
+            highscores[i] = temp;
+            String tempS = names[MAX_SCORES - 1 - i];
+            names[MAX_SCORES - 1 - i] = names[i];
+            names[i] = tempS;
         }
     }
 }

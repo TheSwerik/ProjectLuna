@@ -14,6 +14,7 @@ import de.swerik.ForeignTest.ForeignGame;
 import de.swerik.ForeignTest.Managers.GameKeys;
 import de.swerik.ForeignTest.Managers.GameStateManager;
 import de.swerik.ForeignTest.Managers.Jukebox;
+import de.swerik.ForeignTest.Managers.Save;
 
 import java.util.ArrayList;
 
@@ -87,7 +88,11 @@ public class PlayState extends GameState {
         player.update(delta);
         if (player.isDead()) {
             if (player.getExtraLives() == 0) {
-                gsm.setState(GameStateManager.MENU);
+                Jukebox.stopAll();
+                assert Save.gd != null: "gd is null";
+                Save.gd.setTentScore(player.getScore());
+                gsm.setState(GameStateManager.GAMEOVER);
+                return;
             }
             player.reset();
             player.loseLife();
@@ -200,9 +205,6 @@ public class PlayState extends GameState {
         totalAsteroids = numToSpawn * 7;
         numAsteroidsLeft = totalAsteroids;
         currentDelay = maxDelay;
-
-        System.out.println(numToSpawn);
-        System.out.println(totalAsteroids);
 
         for (int i = 0; i < numToSpawn; i++) {
             float dist;
