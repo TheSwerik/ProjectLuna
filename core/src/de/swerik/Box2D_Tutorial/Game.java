@@ -2,9 +2,9 @@ package de.swerik.Box2D_Tutorial;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL30;
-import de.swerik.Box2D_Tutorial.Screens.GameScreen;
-import de.swerik.Box2D_Tutorial.Screens.MainMenu;
-import de.swerik.Box2D_Tutorial.Screens.Screen;
+import de.swerik.Box2D_Tutorial.handlers.GameStateManager;
+import de.swerik.Box2D_Tutorial.states.GameState;
+import de.swerik.Box2D_Tutorial.states.State;
 
 public class Game extends com.badlogic.gdx.Game {
 
@@ -12,35 +12,14 @@ public class Game extends com.badlogic.gdx.Game {
     public static final int V_WIDTH = 1920;
     public static final int V_HEIGHT = 1080;
 
-    private Screen currentScreen = Screen.MENU;
-    //    private Screen currentScreen = Screen.GAME;
-    private GameScreen screen;
+    private State currentScreen = State.MENU;
+    private GameState screen;
+
+    private GameStateManager gsm;
 
     @Override
     public void create() {
-        this.switchScreen();
-    }
-
-    public void setCurrentScreen(int screen) {
-        currentScreen = Screen.values()[screen];
-        this.switchScreen();
-    }
-
-    public void setCurrentScreen(Screen screen) {
-        currentScreen = screen;
-        this.switchScreen();
-    }
-
-    private void switchScreen() {
-//        screen.dispose();
-        switch (currentScreen) {
-            case GAME:
-//                screen=new Game();
-                break;
-            case MENU:
-            default:
-                screen=new MainMenu();
-        }
+        gsm = new GameStateManager(this, screen);
     }
 
     @Override
@@ -62,5 +41,9 @@ public class Game extends com.badlogic.gdx.Game {
         Gdx.gl30.glClearColor(0, 0, 0, 1);
         Gdx.gl30.glClear(GL30.GL_COLOR_BUFFER_BIT);
         this.screen.render();
+    }
+
+    public GameStateManager getGsm() {
+        return gsm;
     }
 }
