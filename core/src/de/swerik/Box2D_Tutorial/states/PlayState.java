@@ -83,7 +83,7 @@ public class PlayState extends GameState {
     @Override
     public void update(float delta) {
         handleInput();
-        world.step(delta, 6, 2);
+        world.step(Game.STEP, 6, 2);
 
         //remove crystals
         Array<Body> bodies = cl.getRemoveList();
