@@ -1,6 +1,11 @@
 package de.swerik.Box2D_Tutorial.states;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
+import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import de.swerik.Box2D_Tutorial.Game;
@@ -23,6 +28,10 @@ public class PlayState extends GameState {
 
     private MyContactListener cl;
 
+    private TiledMap map;
+    private float tileSize;
+    private OrthogonalTiledMapRenderer tmr;
+
     public PlayState(GameStateManager gsm) {
         super(gsm);
     }
@@ -34,19 +43,9 @@ public class PlayState extends GameState {
         debugRenderer = new Box2DDebugRenderer();
         debugRenderer.setDrawContacts(true);
 
-        //create Platform
         BodyDef bdef = new BodyDef();
-        bdef.position.set(960 / PPM, 540 / PPM);
-        bdef.type = BodyDef.BodyType.StaticBody;
-        Body body = world.createBody(bdef);
-
         PolygonShape shape = new PolygonShape();
-        shape.setAsBox(300 / PPM, 20 / PPM);
         FixtureDef fdef = new FixtureDef();
-        fdef.shape = shape;
-        fdef.filter.categoryBits = Variables.BIT_GROUND;
-        fdef.filter.maskBits = Variables.BIT_PLAYER;
-        body.createFixture(fdef).setUserData("ground");
 
         //create Player
         bdef.position.set(960 / PPM, 1000 / PPM);
@@ -55,7 +54,7 @@ public class PlayState extends GameState {
         shape.setAsBox(20 / PPM, 20 / PPM);
         fdef.shape = shape;
         fdef.filter.categoryBits = Variables.BIT_PLAYER;   // category
-        fdef.filter.maskBits = Variables.BIT_GROUND;    // can collide with
+        fdef.filter.maskBits = Variables.BIT_RED;    // can collide with
         playerBody.createFixture(fdef).setUserData("player");
 
         //create foot sensor
@@ -69,6 +68,52 @@ public class PlayState extends GameState {
         //converted cam
         b2dCam = new OrthographicCamera();
         b2dCam.setToOrtho(false, Game.V_WIDTH / PPM, Game.V_HEIGHT / PPM);
+
+        map = new TmxMapLoader().load("tutorial/maps/bunny.tmx");
+        tmr = new OrthogonalTiledMapRenderer(map);
+
+        TiledMapTileLayer layer = (TiledMapTileLayer) map.getLayers().get("red");
+        tileSize = layer.getTileWidth();
+
+        //go through all cells
+        for (int row = 0; row < layer.getHeight(); row++) {
+            for (int col = 0; col < layer.getWidth(); col++) {
+                Cell cell = layer.getCell(col, row);
+
+                //check if cell exists
+                if (cell == null || cell.getTile() == null) {
+                    continue;
+                }
+
+                //create body + fixture
+                bdef.type = BodyDef.BodyType.StaticBody;
+                bdef.position.set(
+                        (col + 0.5f) * tileSize / PPM,
+                        (row + 0.5f) * tileSize / PPM
+                );
+                ChainShape cShape = new ChainShape();
+                Vector2[] v = new Vector2[3];
+                v[0] = new Vector2(
+                        -tileSize / 2 / PPM,
+                        -tileSize / 2 / PPM
+                );
+                v[1] = new Vector2(
+                        -tileSize / 2 / PPM,
+                        tileSize / 2 / PPM
+                );
+                v[2] = new Vector2(
+                        tileSize / 2 / PPM,
+                        tileSize / 2 / PPM
+                );
+                cShape.createChain(v);
+                fdef.friction = 0;
+                fdef.shape = cShape;
+                fdef.filter.categoryBits = Variables.BIT_RED;   // category
+                fdef.filter.maskBits = Variables.BIT_PLAYER;    // can collide with
+                fdef.isSensor = false;
+                world.createBody(bdef).createFixture(fdef).setUserData("Tile");
+            }
+        }
     }
 
     @Override
@@ -80,6 +125,10 @@ public class PlayState extends GameState {
     @Override
     public void render() {
         debugRenderer.render(world, b2dCam.combined);
+
+        //draw map
+        tmr.setView(cam);
+        tmr.render();
 
         sb.setProjectionMatrix(b2dCam.combined);
         sb.begin();
