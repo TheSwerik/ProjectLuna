@@ -1,10 +1,8 @@
 package de.swerik.Box2D_Tutorial;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL30;
 import de.swerik.Box2D_Tutorial.handlers.GameStateManager;
 import de.swerik.Box2D_Tutorial.states.GameState;
-import de.swerik.Box2D_Tutorial.states.State;
 
 public class Game extends com.badlogic.gdx.Game {
 
@@ -12,7 +10,6 @@ public class Game extends com.badlogic.gdx.Game {
     public static final int V_WIDTH = 1920;
     public static final int V_HEIGHT = 1080;
 
-    private State currentScreen = State.MENU;
     private GameState screen;
 
     private GameStateManager gsm;
@@ -37,10 +34,8 @@ public class Game extends com.badlogic.gdx.Game {
 
     @Override
     public void render() {
-        this.screen.update(Gdx.graphics.getDeltaTime());
-        Gdx.gl30.glClearColor(0, 0, 0, 1);
-        Gdx.gl30.glClear(GL30.GL_COLOR_BUFFER_BIT);
-        this.screen.render();
+        gsm.update();
+        gsm.render();
     }
 
     public GameStateManager getGsm() {

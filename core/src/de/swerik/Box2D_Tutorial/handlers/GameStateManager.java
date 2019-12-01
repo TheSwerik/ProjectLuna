@@ -4,7 +4,6 @@ import de.swerik.Box2D_Tutorial.Game;
 import de.swerik.Box2D_Tutorial.states.GameState;
 import de.swerik.Box2D_Tutorial.states.MainMenu;
 import de.swerik.Box2D_Tutorial.states.PlayState;
-import de.swerik.Box2D_Tutorial.states.State;
 
 import java.util.Stack;
 
@@ -14,32 +13,50 @@ public class GameStateManager {
     private Stack<GameState> gameStates;
 
     private GameState currentState;
-    private State currState;
+
+    public static final int PLAY = 1;
+    public static final int MENU = 2;
 
     public GameStateManager(Game game, GameState currentState) {
         this.game = game;
         this.currentState = currentState;
+        gameStates = new Stack<>();
+        pushState(PLAY);
     }
 
-    public void setCurrentScreen(int screen) {
-        currState = State.values()[screen];
-        this.setState();
+    public void update() {
+
     }
 
-    public void setCurrentScreen(State screen) {
-        currState = screen;
-        this.setState();
+    public void render() {
+
     }
 
-    private void setState() {
-//        screen.dispose();
-        switch (currState) {
-            case GAME:
-                currentState = new PlayState(game, this);
-                break;
+    private GameState getState(int state) {
+        switch (state) {
+            case PLAY:
+                return new PlayState(this);
             case MENU:
             default:
-                currentState = new MainMenu(game, this);
+                return new MainMenu(this);
         }
+    }
+
+    public void setState(int state) {
+        popState();
+        pushState(state);
+    }
+
+    public void pushState(int state) {
+        gameStates.push(getState(state));
+    }
+
+    public void popState() {
+        GameState g = gameStates.pop();
+        g.dispose();
+    }
+
+    public Game game() {
+        return game;
     }
 }

@@ -15,8 +15,8 @@ public abstract class GameState implements Screen {
     protected OrthographicCamera cam;
     protected OrthographicCamera hudCam;
 
-    public GameState(Game game, GameStateManager gsm) {
-        this.game = game;
+    public GameState( GameStateManager gsm) {
+        this.game = gsm.game();
         this.gsm = gsm;
         create();
     }
@@ -26,6 +26,8 @@ public abstract class GameState implements Screen {
     public abstract void update(float delta);
 
     public abstract void render();
+
+    public abstract void handleInput();
 
     @Override
     public abstract void dispose();
