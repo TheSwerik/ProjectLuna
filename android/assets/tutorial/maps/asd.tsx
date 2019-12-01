@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tileset version="1.2" tiledversion="1.3.0" name="asd" tilewidth="128" tileheight="128" tilecount="20" columns="0">
+<tileset version="1.2" tiledversion="1.3.0" name="asd" tilewidth="128" tileheight="128" tilecount="21" columns="0">
  <grid orientation="orthogonal" width="1" height="1"/>
  <tile id="0">
   <image width="128" height="128" source="../../placeholder/tilesets/winter/Tiles/1.png"/>
@@ -60,5 +60,8 @@
  </tile>
  <tile id="19">
   <image width="101" height="101" source="../../placeholder/tilesets/winter/Object/IceBox.png"/>
+ </tile>
+ <tile id="20">
+  <image width="97" height="78" source="../../placeholder/tilesets/winter/Object/Crystal.png"/>
  </tile>
 </tileset>

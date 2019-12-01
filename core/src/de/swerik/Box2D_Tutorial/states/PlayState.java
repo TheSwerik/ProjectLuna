@@ -1,6 +1,8 @@
 package de.swerik.Box2D_Tutorial.states;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.maps.MapLayer;
+import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
@@ -8,7 +10,9 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.utils.Array;
 import de.swerik.Box2D_Tutorial.Game;
+import de.swerik.Box2D_Tutorial.entities.Crystal;
 import de.swerik.Box2D_Tutorial.entities.Player;
 import de.swerik.Box2D_Tutorial.handlers.GameStateManager;
 import de.swerik.Box2D_Tutorial.handlers.MyContactListener;
@@ -19,6 +23,8 @@ import static de.swerik.Box2D_Tutorial.handlers.Variables.PPM;
 
 
 public class PlayState extends GameState {
+
+    public static final boolean DEBUG = false;
 
     private World world;
     private Box2DDebugRenderer debugRenderer;
@@ -33,6 +39,8 @@ public class PlayState extends GameState {
 
     private Player player;
 
+    private Array<Crystal> crystals;
+
     public PlayState(GameStateManager gsm) {
         super(gsm);
     }
@@ -44,15 +52,13 @@ public class PlayState extends GameState {
         world.setContactListener(cl = new MyContactListener());
         debugRenderer = new Box2DDebugRenderer();
         debugRenderer.setDrawContacts(true);
-        BodyDef bdef = new BodyDef();
-        PolygonShape shape = new PolygonShape();
-        FixtureDef fdef = new FixtureDef();
 
         //create res
         res.loadTexture("ninjaboy/Running.png", "runningSheet");
+        res.loadTexture("../tilesets/winter/Object/Crystal.png", "crystal");
 
         //create Player
-        createPlayer(bdef, shape, fdef);
+        createPlayer();
 
         //converted cam
         b2dCam = new OrthographicCamera();
@@ -60,9 +66,12 @@ public class PlayState extends GameState {
 
         //Map stuff
         createTiles();
-        createLayer(bdef, fdef, "red");
-        createLayer(bdef, fdef, "green");
-        createLayer(bdef, fdef, "blue");
+        createLayer("red");
+        createLayer("green");
+        createLayer("blue");
+
+        //create Crystals
+        createCrystals();
     }
 
     @Override
@@ -70,11 +79,17 @@ public class PlayState extends GameState {
         handleInput();
         world.step(delta, 8, 3);
         player.update(delta);
+
+        for (Crystal c : crystals) {
+            c.update(delta);
+        }
     }
 
     @Override
     public void render() {
-        debugRenderer.render(world, b2dCam.combined);
+        if (DEBUG) {
+            debugRenderer.render(world, b2dCam.combined);
+        }
 
         //draw map
         tmr.setView(cam);
@@ -83,6 +98,9 @@ public class PlayState extends GameState {
         //draw player
         sb.setProjectionMatrix(cam.combined);
         player.render(sb);
+        for (Crystal c : crystals) {
+            c.render(sb);
+        }
     }
 
     @Override
@@ -99,7 +117,11 @@ public class PlayState extends GameState {
         res.dispose();
     }
 
-    private void createPlayer(BodyDef bdef, PolygonShape shape, FixtureDef fdef) {
+    private void createPlayer() {
+        BodyDef bdef = new BodyDef();
+        FixtureDef fdef = new FixtureDef();
+        PolygonShape shape = new PolygonShape();
+
         //create Player
         bdef.position.set(960 / PPM, 1000 / PPM);
         bdef.type = BodyDef.BodyType.DynamicBody;
@@ -112,7 +134,7 @@ public class PlayState extends GameState {
         body.createFixture(fdef).setUserData("player");
 
         //create foot sensor
-        shape.setAsBox(363 * 0.15f / PPM, 5 / PPM, new Vector2(0, -458 * 0.15f / PPM), 0);
+        shape.setAsBox(363 * 0.1f / PPM, 5 / PPM, new Vector2(0, -458 * 0.15f / PPM), 0);
 //        fdef.shape = shape;
 //        fdef.filter.categoryBits = Variables.BIT_PLAYER;   // category
 //        fdef.filter.maskBits = Variables.BIT_GROUND;    // can collide with
@@ -131,7 +153,10 @@ public class PlayState extends GameState {
         tileSize = (int) map.getProperties().get("tilewidth");
     }
 
-    private void createLayer(BodyDef bdef, FixtureDef fdef, String layerName) {
+    private void createLayer(String layerName) {
+        BodyDef bdef = new BodyDef();
+        FixtureDef fdef = new FixtureDef();
+
         TiledMapTileLayer layer = (TiledMapTileLayer) map.getLayers().get(layerName);
 
         //go through all cells
@@ -172,6 +197,34 @@ public class PlayState extends GameState {
                 fdef.isSensor = false;
                 world.createBody(bdef).createFixture(fdef).setUserData(layerName);
             }
+        }
+    }
+
+    private void createCrystals() {
+        crystals = new Array<>();
+
+        MapLayer layer = map.getLayers().get("crystals");
+
+        BodyDef bdef = new BodyDef();
+        FixtureDef fdef = new FixtureDef();
+        PolygonShape shape = new PolygonShape();
+        shape.setAsBox(97 / 2f / PPM, 78 / 2f / PPM);
+        fdef.shape = shape;
+        fdef.isSensor = true;
+        fdef.filter.categoryBits = Variables.BIT_Crystal;
+        fdef.filter.maskBits = Variables.BIT_PLAYER;
+
+        for (MapObject mo : layer.getObjects()) {
+            bdef.type = BodyDef.BodyType.StaticBody;
+            bdef.position.set(
+                    (float) mo.getProperties().get("x") / PPM,
+                    (float) mo.getProperties().get("y") / PPM
+            );
+            Body body = world.createBody(bdef);
+            body.createFixture(fdef);
+            Crystal c = new Crystal(body);
+            crystals.add(c);
+            body.setUserData(c);
         }
     }
 }

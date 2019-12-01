@@ -13,7 +13,7 @@ public class B2DSprite {
     protected Animation animation;
     protected float width;
     protected float height;
-    protected float scale;
+    protected float scale = 1;
 
     public B2DSprite(Body body) {
         this.body = body;
