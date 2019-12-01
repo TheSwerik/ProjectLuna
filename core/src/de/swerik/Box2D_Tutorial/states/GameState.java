@@ -23,6 +23,14 @@ public abstract class GameState implements Screen {
         cam = new OrthographicCamera();
         hudCam = new OrthographicCamera();
 
+        cam.position.set(Game.V_WIDTH / 2f, Game.V_HEIGHT / 2f, 0);
+        cam.setToOrtho(false, Game.V_WIDTH, Game.V_HEIGHT);
+        cam.update();
+
+        hudCam.position.set(Game.V_WIDTH / 2f, Game.V_HEIGHT / 2f, 0);
+        hudCam.setToOrtho(false, Game.V_WIDTH, Game.V_HEIGHT);
+        hudCam.update();
+
         create();
     }
 
