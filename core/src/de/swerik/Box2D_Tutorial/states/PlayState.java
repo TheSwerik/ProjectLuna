@@ -103,6 +103,13 @@ public class PlayState extends GameState {
 
     @Override
     public void render() {
+        //cam should follow player
+        cam.position.set(new Vector2(
+                player.getPosition().x * PPM + Game.V_WIDTH / 7f,
+                player.getPosition().y * PPM + Game.V_HEIGHT / 7f
+        ), 0);
+        cam.update();
+
         if (DEBUG) {
             debugRenderer.render(world, b2dCam.combined);
         }
@@ -126,7 +133,7 @@ public class PlayState extends GameState {
     public void handleInput() {
         if (MyInput.isButton1JustPressed()) {
             if (cl.isPlayerOnGround()) {
-                player.getBody().applyForceToCenter(0, 420, true);
+                player.getBody().applyForceToCenter(0, 500, true);
             }
         }
         if (MyInput.isButton2JustPressed()) {
@@ -147,7 +154,7 @@ public class PlayState extends GameState {
         //create Player
         bdef.position.set(100 / PPM, 500 / PPM);
         bdef.type = BodyDef.BodyType.DynamicBody;
-        bdef.linearVelocity.set(1, 0);
+        bdef.linearVelocity.set(3, 0);
         Body body = world.createBody(bdef);
         shape.setAsBox(363 * 0.15f / PPM, 458 * 0.15f / PPM);
         fdef.shape = shape;
