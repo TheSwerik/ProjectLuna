@@ -7,7 +7,7 @@ import java.util.HashMap;
 
 public class Content {
 
-    private HashMap<String, Texture> textures;
+    private HashMap<String, Texture> textures;  //TODO Maybe Use texture packer instead
 
     public Content() {
         textures = new HashMap<>();

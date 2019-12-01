@@ -35,14 +35,14 @@ public class Game extends com.badlogic.gdx.Game {
 
     @Override
     public void render() {
-        accum += Gdx.graphics.getDeltaTime();
-        while (accum >= STEP) {
+//        accum += Gdx.graphics.getDeltaTime();
+//        while (accum >= STEP) {
             Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
             Gdx.gl.glClearColor(0, 0, 0, 1);
-            accum -= STEP;
-            gsm.update(STEP);
+//            accum -= STEP;
+            gsm.update(Gdx.graphics.getDeltaTime());
             gsm.render();
-        }
+//        }
     }
 
     public GameStateManager getGsm() {
