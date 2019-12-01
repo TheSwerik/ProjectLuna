@@ -78,6 +78,16 @@ public class PlayState extends GameState {
     public void update(float delta) {
         handleInput();
         world.step(delta, 8, 3);
+
+        //remove crystals
+        Array<Body> bodies = cl.getRemoveList();
+        for (Body b : bodies) {
+            crystals.removeValue((Crystal) b.getUserData(), true);
+            world.destroyBody(b);
+            player.collectCrystal();
+        }
+        bodies.clear();
+
         player.update(delta);
 
         for (Crystal c : crystals) {
@@ -107,7 +117,7 @@ public class PlayState extends GameState {
     public void handleInput() {
         if (MyInput.isButtonJustPressed()) {
             if (cl.isPlayerOnGround()) {
-                player.getBody().applyForceToCenter(0, 400, true);
+                player.getBody().applyForceToCenter(0, 420, true);
             }
         }
     }
@@ -123,14 +133,14 @@ public class PlayState extends GameState {
         PolygonShape shape = new PolygonShape();
 
         //create Player
-        bdef.position.set(960 / PPM, 1000 / PPM);
+        bdef.position.set(100 / PPM, 500 / PPM);
         bdef.type = BodyDef.BodyType.DynamicBody;
         bdef.linearVelocity.set(1, 0);
         Body body = world.createBody(bdef);
         shape.setAsBox(363 * 0.15f / PPM, 458 * 0.15f / PPM);
         fdef.shape = shape;
         fdef.filter.categoryBits = Variables.BIT_PLAYER;   // category
-        fdef.filter.maskBits = Variables.BIT_RED | Variables.BIT_GREEN | Variables.BIT_BLUE;    // can collide with
+        fdef.filter.maskBits = Variables.BIT_RED | Variables.BIT_Crystal;    // can collide with
         body.createFixture(fdef).setUserData("player");
 
         //create foot sensor
@@ -221,7 +231,7 @@ public class PlayState extends GameState {
                     (float) mo.getProperties().get("y") / PPM
             );
             Body body = world.createBody(bdef);
-            body.createFixture(fdef);
+            body.createFixture(fdef).setUserData("crystal");
             Crystal c = new Crystal(body);
             crystals.add(c);
             body.setUserData(c);
