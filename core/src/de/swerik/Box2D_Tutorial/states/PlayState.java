@@ -13,6 +13,7 @@ import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
 import de.swerik.Box2D_Tutorial.Game;
 import de.swerik.Box2D_Tutorial.entities.Crystal;
+import de.swerik.Box2D_Tutorial.entities.HUD;
 import de.swerik.Box2D_Tutorial.entities.Player;
 import de.swerik.Box2D_Tutorial.handlers.GameStateManager;
 import de.swerik.Box2D_Tutorial.handlers.MyContactListener;
@@ -41,6 +42,8 @@ public class PlayState extends GameState {
 
     private Array<Crystal> crystals;
 
+    private HUD hud;
+
     public PlayState(GameStateManager gsm) {
         super(gsm);
     }
@@ -56,6 +59,7 @@ public class PlayState extends GameState {
         //create res
         res.loadTexture("ninjaboy/Running.png", "runningSheet");
         res.loadTexture("../tilesets/winter/Object/Crystal.png", "crystal");
+        res.loadTexture("../../tutorial/res/images/hud.png", "hud");
 
         //create Player
         createPlayer();
@@ -72,12 +76,14 @@ public class PlayState extends GameState {
 
         //create Crystals
         createCrystals();
+
+        hud = new HUD(player);
     }
 
     @Override
     public void update(float delta) {
         handleInput();
-        world.step(delta, 8, 3);
+        world.step(delta, 6, 2);
 
         //remove crystals
         Array<Body> bodies = cl.getRemoveList();
@@ -111,14 +117,20 @@ public class PlayState extends GameState {
         for (Crystal c : crystals) {
             c.render(sb);
         }
+
+        sb.setProjectionMatrix(hudCam.combined);
+        hud.render(sb);
     }
 
     @Override
     public void handleInput() {
-        if (MyInput.isButtonJustPressed()) {
+        if (MyInput.isButton1JustPressed()) {
             if (cl.isPlayerOnGround()) {
                 player.getBody().applyForceToCenter(0, 420, true);
             }
+        }
+        if (MyInput.isButton2JustPressed()) {
+            switchBlocks();
         }
     }
 
@@ -236,5 +248,33 @@ public class PlayState extends GameState {
             crystals.add(c);
             body.setUserData(c);
         }
+    }
+
+    private void switchBlocks() {
+        Filter filter = player.getBody().getFixtureList().first().getFilterData();
+        short bits = filter.maskBits;
+
+        //switch to next color
+        // red -> green -> blue -> red
+        if ((bits & Variables.BIT_RED) != 0) {
+            bits &= ~Variables.BIT_RED;
+            bits |= Variables.BIT_GREEN;
+        } else if ((bits & Variables.BIT_GREEN) != 0) {
+            bits &= ~Variables.BIT_GREEN;
+            bits |= Variables.BIT_BLUE;
+        } else if ((bits & Variables.BIT_BLUE) != 0) {
+            bits &= ~Variables.BIT_BLUE;
+            bits |= Variables.BIT_RED;
+        }
+
+        //set new MaskBits
+        filter.maskBits = bits;
+        player.getBody().getFixtureList().first().setFilterData(filter);
+
+        //set new MaskBits for foot
+        filter = player.getBody().getFixtureList().get(1).getFilterData();
+        bits &= ~Variables.BIT_Crystal;
+        filter.maskBits = bits;
+        player.getBody().getFixtureList().get(1).setFilterData(filter);
     }
 }
