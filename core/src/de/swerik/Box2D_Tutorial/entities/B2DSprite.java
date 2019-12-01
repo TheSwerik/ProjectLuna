@@ -13,6 +13,7 @@ public class B2DSprite {
     protected Animation animation;
     protected float width;
     protected float height;
+    protected float scale;
 
     public B2DSprite(Body body) {
         this.body = body;
@@ -21,8 +22,8 @@ public class B2DSprite {
 
     public void setAnimation(TextureRegion[] reg, float delay) {
         animation.setFrames(reg, delay);
-        width = reg[0].getRegionWidth();
-        height = reg[0].getRegionHeight();
+        width = reg[0].getRegionWidth() * scale;
+        height = reg[0].getRegionHeight() * scale;
     }
 
     public void update(float delta) {
@@ -34,7 +35,9 @@ public class B2DSprite {
         sb.draw(
                 animation.getFrame(),
                 body.getPosition().x * Variables.PPM - width / 2,
-                body.getPosition().y * Variables.PPM - height / 2
+                body.getPosition().y * Variables.PPM - height / 2,
+                width,
+                height
         );
         sb.end();
     }

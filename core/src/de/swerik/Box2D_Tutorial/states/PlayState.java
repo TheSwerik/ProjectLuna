@@ -103,15 +103,16 @@ public class PlayState extends GameState {
         //create Player
         bdef.position.set(960 / PPM, 1000 / PPM);
         bdef.type = BodyDef.BodyType.DynamicBody;
+        bdef.linearVelocity.set(1, 0);
         Body body = world.createBody(bdef);
-        shape.setAsBox(20 / PPM, 20 / PPM);
+        shape.setAsBox(363 * 0.15f / PPM, 458 * 0.15f / PPM);
         fdef.shape = shape;
         fdef.filter.categoryBits = Variables.BIT_PLAYER;   // category
         fdef.filter.maskBits = Variables.BIT_RED | Variables.BIT_GREEN | Variables.BIT_BLUE;    // can collide with
         body.createFixture(fdef).setUserData("player");
 
         //create foot sensor
-        shape.setAsBox(8 / PPM, 8 / PPM, new Vector2(0, -20 / PPM), 0);
+        shape.setAsBox(363 * 0.15f / PPM, 5 / PPM, new Vector2(0, -458 * 0.15f / PPM), 0);
 //        fdef.shape = shape;
 //        fdef.filter.categoryBits = Variables.BIT_PLAYER;   // category
 //        fdef.filter.maskBits = Variables.BIT_GROUND;    // can collide with
@@ -120,6 +121,8 @@ public class PlayState extends GameState {
 
         //create player
         player = new Player(body);
+
+        body.setUserData(player);
     }
 
     private void createTiles() {
