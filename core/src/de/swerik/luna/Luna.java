@@ -17,6 +17,8 @@ public class Luna extends Game {
     //    private Screen currentScreen = Screen.GAME;
     private LunaScreen screen;
 
+    //TODO look into Stage Scene2d
+
     @Override
     public void create() {
         this.switchScreen();
@@ -40,7 +42,7 @@ public class Luna extends Game {
                 break;
             case MENU:
             default:
-                screen=new MainMenu();
+                screen = new MainMenu();
         }
     }
 
