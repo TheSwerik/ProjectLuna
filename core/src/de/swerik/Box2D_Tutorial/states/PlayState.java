@@ -5,8 +5,7 @@ import de.swerik.Box2D_Tutorial.handlers.GameStateManager;
 public class PlayState extends GameState {
 
 
-
-    public PlayState(  GameStateManager gsm) {
+    public PlayState(GameStateManager gsm) {
         super(gsm);
     }
 
@@ -22,7 +21,11 @@ public class PlayState extends GameState {
 
     @Override
     public void render() {
+        sb.setProjectionMatrix(cam.combined);
+        sb.begin();
 
+
+        sb.end();
     }
 
     @Override

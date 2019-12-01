@@ -10,6 +10,9 @@ public class Game extends com.badlogic.gdx.Game {
     public static final int V_WIDTH = 1920;
     public static final int V_HEIGHT = 1080;
 
+    public static final float STEP = 1 / 60f;
+    private float accum;
+
     private GameState screen;
 
     private GameStateManager gsm;
@@ -21,21 +24,19 @@ public class Game extends com.badlogic.gdx.Game {
 
     @Override
     public void dispose() {
-        super.dispose();
-        // super.dispose() calls screen.hide()
-        // NOT screen.dispose()
-
-        // that would call screen.dispose():
-        this.screen.dispose();
-
+        gsm.dispose();
         Gdx.app.exit();
         System.exit(0);
     }
 
     @Override
     public void render() {
-        gsm.update();
-        gsm.render();
+        accum += Gdx.graphics.getDeltaTime();
+        while (accum >= STEP) {
+            accum -= STEP;
+            gsm.update(STEP);
+            gsm.render();
+        }
     }
 
     public GameStateManager getGsm() {
