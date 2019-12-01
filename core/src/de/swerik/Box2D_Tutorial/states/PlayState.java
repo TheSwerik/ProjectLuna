@@ -5,6 +5,8 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import de.swerik.Box2D_Tutorial.Game;
 import de.swerik.Box2D_Tutorial.handlers.GameStateManager;
+import de.swerik.Box2D_Tutorial.handlers.MyContactListener;
+import de.swerik.Box2D_Tutorial.handlers.Variables;
 
 import static de.swerik.Box2D_Tutorial.handlers.Variables.PPM;
 
@@ -23,6 +25,7 @@ public class PlayState extends GameState {
     @Override
     public void create() {
         world = new World(new Vector2(0, -9.81f), true);
+        world.setContactListener(new MyContactListener());
         debugRenderer = new Box2DDebugRenderer();
         debugRenderer.setDrawContacts(true);
 
@@ -36,7 +39,9 @@ public class PlayState extends GameState {
         shape.setAsBox(300 / PPM, 20 / PPM);
         FixtureDef fdef = new FixtureDef();
         fdef.shape = shape;
-        body.createFixture(fdef);
+        fdef.filter.categoryBits = Variables.BIT_GROUND;
+        fdef.filter.maskBits = Variables.BIT_BOX | Variables.BIT_BALL;
+        body.createFixture(fdef).setUserData("ground");
 
         //create falling Box
         bdef.position.set(960 / PPM, 1000 / PPM);
@@ -44,13 +49,25 @@ public class PlayState extends GameState {
         body = world.createBody(bdef);
         shape.setAsBox(20 / PPM, 20 / PPM);
         fdef.shape = shape;
-        body.createFixture(fdef);
+        fdef.filter.categoryBits = Variables.BIT_BOX;   // category
+        fdef.filter.maskBits = Variables.BIT_GROUND;    // can collide with
+        body.createFixture(fdef).setUserData("box");
 
         //converted cam
         b2dCam = new OrthographicCamera();
         b2dCam.setToOrtho(false, Game.V_WIDTH / PPM, Game.V_HEIGHT / PPM);
 
-        //converted cam
+        //create ball
+        bdef.position.set(930 / PPM, 900 / PPM);
+        body = world.createBody(bdef);
+        CircleShape cShape = new CircleShape();
+        cShape.setRadius(20f / PPM);
+        fdef.shape = cShape;
+        fdef.filter.categoryBits = Variables.BIT_BALL;
+        fdef.filter.maskBits = Variables.BIT_GROUND;
+        body.createFixture(fdef).setUserData("ball");
+
+
     }
 
     @Override
