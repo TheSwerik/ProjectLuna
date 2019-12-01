@@ -3,6 +3,7 @@ package de.swerik.Box2D_Tutorial;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL30;
 import de.swerik.Box2D_Tutorial.handlers.GameStateManager;
+import de.swerik.Box2D_Tutorial.handlers.MyInput;
 import de.swerik.Box2D_Tutorial.states.GameState;
 
 public class Game extends com.badlogic.gdx.Game {
@@ -21,6 +22,7 @@ public class Game extends com.badlogic.gdx.Game {
     @Override
     public void create() {
         gsm = new GameStateManager(this, screen);
+        Gdx.input.setInputProcessor(new MyInput());
     }
 
     @Override

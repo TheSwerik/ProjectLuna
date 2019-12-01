@@ -6,6 +6,7 @@ import com.badlogic.gdx.physics.box2d.*;
 import de.swerik.Box2D_Tutorial.Game;
 import de.swerik.Box2D_Tutorial.handlers.GameStateManager;
 import de.swerik.Box2D_Tutorial.handlers.MyContactListener;
+import de.swerik.Box2D_Tutorial.handlers.MyInput;
 import de.swerik.Box2D_Tutorial.handlers.Variables;
 
 import static de.swerik.Box2D_Tutorial.handlers.Variables.PPM;
@@ -18,6 +19,10 @@ public class PlayState extends GameState {
 
     private OrthographicCamera b2dCam;
 
+    private Body playerBody;
+
+    private MyContactListener cl;
+
     public PlayState(GameStateManager gsm) {
         super(gsm);
     }
@@ -25,7 +30,7 @@ public class PlayState extends GameState {
     @Override
     public void create() {
         world = new World(new Vector2(0, -9.81f), true);
-        world.setContactListener(new MyContactListener());
+        world.setContactListener(cl = new MyContactListener());
         debugRenderer = new Box2DDebugRenderer();
         debugRenderer.setDrawContacts(true);
 
@@ -40,38 +45,35 @@ public class PlayState extends GameState {
         FixtureDef fdef = new FixtureDef();
         fdef.shape = shape;
         fdef.filter.categoryBits = Variables.BIT_GROUND;
-        fdef.filter.maskBits = Variables.BIT_BOX | Variables.BIT_BALL;
+        fdef.filter.maskBits = Variables.BIT_PLAYER;
         body.createFixture(fdef).setUserData("ground");
 
-        //create falling Box
+        //create Player
         bdef.position.set(960 / PPM, 1000 / PPM);
         bdef.type = BodyDef.BodyType.DynamicBody;
-        body = world.createBody(bdef);
+        playerBody = world.createBody(bdef);
         shape.setAsBox(20 / PPM, 20 / PPM);
         fdef.shape = shape;
-        fdef.filter.categoryBits = Variables.BIT_BOX;   // category
+        fdef.filter.categoryBits = Variables.BIT_PLAYER;   // category
         fdef.filter.maskBits = Variables.BIT_GROUND;    // can collide with
-        body.createFixture(fdef).setUserData("box");
+        playerBody.createFixture(fdef).setUserData("player");
+
+        //create foot sensor
+        shape.setAsBox(8 / PPM, 8 / PPM, new Vector2(0, -20 / PPM), 0);
+//        fdef.shape = shape;
+//        fdef.filter.categoryBits = Variables.BIT_PLAYER;   // category
+//        fdef.filter.maskBits = Variables.BIT_GROUND;    // can collide with
+        fdef.isSensor = true;
+        playerBody.createFixture(fdef).setUserData("foot");
 
         //converted cam
         b2dCam = new OrthographicCamera();
         b2dCam.setToOrtho(false, Game.V_WIDTH / PPM, Game.V_HEIGHT / PPM);
-
-        //create ball
-        bdef.position.set(930 / PPM, 900 / PPM);
-        body = world.createBody(bdef);
-        CircleShape cShape = new CircleShape();
-        cShape.setRadius(20f / PPM);
-        fdef.shape = cShape;
-        fdef.filter.categoryBits = Variables.BIT_BALL;
-        fdef.filter.maskBits = Variables.BIT_GROUND;
-        body.createFixture(fdef).setUserData("ball");
-
-
     }
 
     @Override
     public void update(float delta) {
+        handleInput();
         world.step(delta, 8, 3);
     }
 
@@ -88,7 +90,11 @@ public class PlayState extends GameState {
 
     @Override
     public void handleInput() {
-
+        if (MyInput.isButtonJustPressed()) {
+            if (cl.isPlayerOnGround()) {
+                playerBody.applyForceToCenter(0, 400, true);
+            }
+        }
     }
 
     @Override
