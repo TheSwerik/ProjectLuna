@@ -26,10 +26,18 @@ public class PlayState extends GameState {
 
         PolygonShape shape = new PolygonShape();
         shape.setAsBox(300, 20);
-
         FixtureDef fdef = new FixtureDef();
         fdef.shape = shape;
         body.createFixture(fdef);
+
+        //create falling Box
+        bdef.position.set(960, 1000);
+        bdef.type = BodyDef.BodyType.DynamicBody;
+        body = world.createBody(bdef);
+        shape.setAsBox(20, 20);
+        fdef.shape = shape;
+        body.createFixture(fdef);
+
 
     }
 
@@ -44,7 +52,6 @@ public class PlayState extends GameState {
 
         sb.setProjectionMatrix(cam.combined);
         sb.begin();
-
 
 
         sb.end();
