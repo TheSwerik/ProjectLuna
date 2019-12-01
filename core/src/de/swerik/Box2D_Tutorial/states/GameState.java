@@ -15,9 +15,14 @@ public abstract class GameState implements Screen {
     protected OrthographicCamera cam;
     protected OrthographicCamera hudCam;
 
-    public GameState( GameStateManager gsm) {
+    public GameState(GameStateManager gsm) {
         this.game = gsm.game();
         this.gsm = gsm;
+
+        sb = new SpriteBatch();
+        cam = new OrthographicCamera();
+        hudCam = new OrthographicCamera();
+
         create();
     }
 

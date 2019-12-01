@@ -24,12 +24,16 @@ public class GameStateManager {
         pushState(PLAY);
     }
 
-    public void update() {
-
+    public void update(float delta) {
+        gameStates.peek().update(delta);
     }
 
     public void render() {
+        gameStates.peek().render();
+    }
 
+    public void dispose() {
+        gameStates.peek().dispose();
     }
 
     private GameState getState(int state) {
