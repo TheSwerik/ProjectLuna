@@ -28,5 +28,5 @@ I actually dont know what license I use or I will use, need to look into that.
 * Hat tip to anyone whose code was used
 * [German LibGDX Tutorial I watched](https://www.youtube.com/playlist?list=PLNmsVeXQZj7quaae1GG4U-8y6gxVkpq2m)
 * [English LibGDX Tutorial I watched](https://www.youtube.com/playlist?list=PL-2t7SM0vDfeZUKeM7Jm4U9utHwFS1N-C)
-* [English Box2D & Tiled Tutorial](https://www.youtube.com/playlist?list=PL-2t7SM0vDfdYJ5Pq9vxeivblbZuFvGJK)
+* [English Box2D & Tiled Tutorial I watched](https://www.youtube.com/playlist?list=PL-2t7SM0vDfdYJ5Pq9vxeivblbZuFvGJK)
 * Inspiration
