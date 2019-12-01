@@ -14,7 +14,7 @@ I am creating this Game in my spare time. [Join me on my Journey.](https://www.y
 * [LibGDX Tools](https://libgdx.badlogicgames.com/tools.html) - More Tools that I used.
 * [Placeholder Sprites](https://www.gameart2d.com/freebies.html) - The Placeholder Sprites that I used.
 
-## Versions
+## Versions 
 
 For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
 
