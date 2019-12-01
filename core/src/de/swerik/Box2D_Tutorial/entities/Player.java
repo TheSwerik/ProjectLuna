@@ -27,6 +27,7 @@ public class Player extends B2DSprite {
                 sprites[iterator++] = reg;
             }
         }
+        scale = 0.3f;
 
         //create animation
         animation.setFrames(sprites, 1 / 20f);
