@@ -21,7 +21,7 @@ For the versions available, see the [tags on this repository](https://github.com
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
-I actually dont know what license I use or I will use, need to look into that.
+I actually don't know what license I use or I will use, need to look into that.
 
 ## Acknowledgments
 
