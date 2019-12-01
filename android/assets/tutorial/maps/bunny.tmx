@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.3.0" orientation="orthogonal" renderorder="right-down" compressionlevel="-1" width="40" height="8" tilewidth="128" tileheight="128" infinite="0" nextlayerid="6" nextobjectid="1">
+<map version="1.2" tiledversion="1.3.0" orientation="orthogonal" renderorder="right-down" compressionlevel="-1" width="40" height="8" tilewidth="128" tileheight="128" infinite="0" nextlayerid="6" nextobjectid="14">
  <tileset firstgid="1" source="asd.tsx"/>
  <layer id="1" name="red" width="40" height="8">
   <data encoding="base64" compression="zlib">
@@ -16,5 +16,19 @@
    eJxjYBgFowABRIjAo2AUDBcAAAqeALU=
   </data>
  </layer>
- <objectgroup id="5" name="crystals"/>
+ <objectgroup id="5" name="crystals">
+  <object id="1" gid="21" x="242.909" y="632.939" width="97" height="78"/>
+  <object id="2" gid="21" x="430.788" y="481.424" width="97" height="78"/>
+  <object id="3" gid="21" x="576.242" y="699.606" width="97" height="78"/>
+  <object id="4" gid="21" x="164.121" y="402.636" width="97" height="78"/>
+  <object id="5" gid="21" x="527.758" y="220.818" width="97" height="78"/>
+  <object id="6" gid="21" x="924.727" y="475.364" width="97" height="78"/>
+  <object id="7" gid="21" x="1291.39" y="408.697" width="97" height="78"/>
+  <object id="8" gid="21" x="1055.03" y="223.848" width="97" height="78"/>
+  <object id="9" gid="21" x="1782.3" y="296.576" width="97" height="78"/>
+  <object id="10" gid="21" x="1518.67" y="172.333" width="97" height="78"/>
+  <object id="11" gid="21" x="2139.88" y="129.909" width="97" height="78"/>
+  <object id="12" gid="21" x="2227.76" y="348.091" width="97" height="78"/>
+  <object id="13" gid="21" x="1927.76" y="266.273" width="97" height="78"/>
+ </objectgroup>
 </map>
