@@ -4,6 +4,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import de.swerik.Box2D_Tutorial.Game;
+import de.swerik.Box2D_Tutorial.handlers.Content;
 import de.swerik.Box2D_Tutorial.handlers.GameStateManager;
 
 public abstract class GameState implements Screen {
@@ -14,6 +15,8 @@ public abstract class GameState implements Screen {
     protected SpriteBatch sb;
     protected OrthographicCamera cam;
     protected OrthographicCamera hudCam;
+
+    public static Content res;
 
     public GameState(GameStateManager gsm) {
         this.game = gsm.game();
@@ -30,6 +33,8 @@ public abstract class GameState implements Screen {
         hudCam.position.set(Game.V_WIDTH / 2f, Game.V_HEIGHT / 2f, 0);
         hudCam.setToOrtho(false, Game.V_WIDTH, Game.V_HEIGHT);
         hudCam.update();
+
+        res = new Content();
 
         create();
     }

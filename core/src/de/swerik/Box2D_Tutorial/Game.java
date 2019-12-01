@@ -23,6 +23,7 @@ public class Game extends com.badlogic.gdx.Game {
     public void create() {
         gsm = new GameStateManager(this, screen);
         Gdx.input.setInputProcessor(new MyInput());
+
     }
 
     @Override

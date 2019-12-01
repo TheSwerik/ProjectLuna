@@ -38,15 +38,69 @@ public class PlayState extends GameState {
 
     @Override
     public void create() {
+        //Setup Box2d-stuff
         world = new World(new Vector2(0, -9.81f), true);
         world.setContactListener(cl = new MyContactListener());
         debugRenderer = new Box2DDebugRenderer();
         debugRenderer.setDrawContacts(true);
-
         BodyDef bdef = new BodyDef();
         PolygonShape shape = new PolygonShape();
         FixtureDef fdef = new FixtureDef();
 
+        //create Player
+        createPlayer(bdef, shape, fdef);
+
+        //converted cam
+        b2dCam = new OrthographicCamera();
+        b2dCam.setToOrtho(false, Game.V_WIDTH / PPM, Game.V_HEIGHT / PPM);
+
+        //Map stuff
+        createTiles();
+        createLayer(bdef, fdef, "red");
+        createLayer(bdef, fdef, "green");
+        createLayer(bdef, fdef, "blue");
+
+        //create res
+        res.loadTexture("ninjaboy/Running.png", "runningSheet");
+    }
+
+    @Override
+    public void update(float delta) {
+        handleInput();
+        world.step(delta, 8, 3);
+    }
+
+    @Override
+    public void render() {
+        debugRenderer.render(world, b2dCam.combined);
+
+        //draw map
+        tmr.setView(cam);
+        tmr.render();
+
+        sb.setProjectionMatrix(b2dCam.combined);
+        sb.begin();
+
+        sb.draw(res.getTexture("runningSheet"), 0, 0);
+
+        sb.end();
+    }
+
+    @Override
+    public void handleInput() {
+        if (MyInput.isButtonJustPressed()) {
+            if (cl.isPlayerOnGround()) {
+                playerBody.applyForceToCenter(0, 400, true);
+            }
+        }
+    }
+
+    @Override
+    public void dispose() {
+        res.dispose();
+    }
+
+    private void createPlayer(BodyDef bdef, PolygonShape shape, FixtureDef fdef) {
         //create Player
         bdef.position.set(960 / PPM, 1000 / PPM);
         bdef.type = BodyDef.BodyType.DynamicBody;
@@ -54,7 +108,7 @@ public class PlayState extends GameState {
         shape.setAsBox(20 / PPM, 20 / PPM);
         fdef.shape = shape;
         fdef.filter.categoryBits = Variables.BIT_PLAYER;   // category
-        fdef.filter.maskBits = Variables.BIT_RED;    // can collide with
+        fdef.filter.maskBits = Variables.BIT_RED | Variables.BIT_GREEN | Variables.BIT_BLUE;    // can collide with
         playerBody.createFixture(fdef).setUserData("player");
 
         //create foot sensor
@@ -64,16 +118,16 @@ public class PlayState extends GameState {
 //        fdef.filter.maskBits = Variables.BIT_GROUND;    // can collide with
         fdef.isSensor = true;
         playerBody.createFixture(fdef).setUserData("foot");
+    }
 
-        //converted cam
-        b2dCam = new OrthographicCamera();
-        b2dCam.setToOrtho(false, Game.V_WIDTH / PPM, Game.V_HEIGHT / PPM);
-
+    private void createTiles() {
         map = new TmxMapLoader().load("tutorial/maps/bunny.tmx");
         tmr = new OrthogonalTiledMapRenderer(map);
+        tileSize = (int) map.getProperties().get("tilewidth");
+    }
 
-        TiledMapTileLayer layer = (TiledMapTileLayer) map.getLayers().get("red");
-        tileSize = layer.getTileWidth();
+    private void createLayer(BodyDef bdef, FixtureDef fdef, String layerName) {
+        TiledMapTileLayer layer = (TiledMapTileLayer) map.getLayers().get(layerName);
 
         //go through all cells
         for (int row = 0; row < layer.getHeight(); row++) {
@@ -108,46 +162,11 @@ public class PlayState extends GameState {
                 cShape.createChain(v);
                 fdef.friction = 0;
                 fdef.shape = cShape;
-                fdef.filter.categoryBits = Variables.BIT_RED;   // category
+                fdef.filter.categoryBits = layerName.equals("red") ? Variables.BIT_RED : layerName.equals("green") ? Variables.BIT_GREEN : Variables.BIT_BLUE;   // category
                 fdef.filter.maskBits = Variables.BIT_PLAYER;    // can collide with
                 fdef.isSensor = false;
-                world.createBody(bdef).createFixture(fdef).setUserData("Tile");
+                world.createBody(bdef).createFixture(fdef).setUserData(layerName);
             }
         }
-    }
-
-    @Override
-    public void update(float delta) {
-        handleInput();
-        world.step(delta, 8, 3);
-    }
-
-    @Override
-    public void render() {
-        debugRenderer.render(world, b2dCam.combined);
-
-        //draw map
-        tmr.setView(cam);
-        tmr.render();
-
-        sb.setProjectionMatrix(b2dCam.combined);
-        sb.begin();
-
-
-        sb.end();
-    }
-
-    @Override
-    public void handleInput() {
-        if (MyInput.isButtonJustPressed()) {
-            if (cl.isPlayerOnGround()) {
-                playerBody.applyForceToCenter(0, 400, true);
-            }
-        }
-    }
-
-    @Override
-    public void dispose() {
-
     }
 }
