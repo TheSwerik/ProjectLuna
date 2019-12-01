@@ -9,6 +9,7 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import de.swerik.Box2D_Tutorial.Game;
+import de.swerik.Box2D_Tutorial.entities.Player;
 import de.swerik.Box2D_Tutorial.handlers.GameStateManager;
 import de.swerik.Box2D_Tutorial.handlers.MyContactListener;
 import de.swerik.Box2D_Tutorial.handlers.MyInput;
@@ -24,13 +25,13 @@ public class PlayState extends GameState {
 
     private OrthographicCamera b2dCam;
 
-    private Body playerBody;
-
     private MyContactListener cl;
 
     private TiledMap map;
     private float tileSize;
     private OrthogonalTiledMapRenderer tmr;
+
+    private Player player;
 
     public PlayState(GameStateManager gsm) {
         super(gsm);
@@ -47,6 +48,9 @@ public class PlayState extends GameState {
         PolygonShape shape = new PolygonShape();
         FixtureDef fdef = new FixtureDef();
 
+        //create res
+        res.loadTexture("ninjaboy/Running.png", "runningSheet");
+
         //create Player
         createPlayer(bdef, shape, fdef);
 
@@ -59,15 +63,13 @@ public class PlayState extends GameState {
         createLayer(bdef, fdef, "red");
         createLayer(bdef, fdef, "green");
         createLayer(bdef, fdef, "blue");
-
-        //create res
-        res.loadTexture("ninjaboy/Running.png", "runningSheet");
     }
 
     @Override
     public void update(float delta) {
         handleInput();
         world.step(delta, 8, 3);
+        player.update(delta);
     }
 
     @Override
@@ -78,19 +80,16 @@ public class PlayState extends GameState {
         tmr.setView(cam);
         tmr.render();
 
-        sb.setProjectionMatrix(b2dCam.combined);
-        sb.begin();
-
-        sb.draw(res.getTexture("runningSheet"), 0, 0);
-
-        sb.end();
+        //draw player
+        sb.setProjectionMatrix(cam.combined);
+        player.render(sb);
     }
 
     @Override
     public void handleInput() {
         if (MyInput.isButtonJustPressed()) {
             if (cl.isPlayerOnGround()) {
-                playerBody.applyForceToCenter(0, 400, true);
+                player.getBody().applyForceToCenter(0, 400, true);
             }
         }
     }
@@ -104,12 +103,12 @@ public class PlayState extends GameState {
         //create Player
         bdef.position.set(960 / PPM, 1000 / PPM);
         bdef.type = BodyDef.BodyType.DynamicBody;
-        playerBody = world.createBody(bdef);
+        Body body = world.createBody(bdef);
         shape.setAsBox(20 / PPM, 20 / PPM);
         fdef.shape = shape;
         fdef.filter.categoryBits = Variables.BIT_PLAYER;   // category
         fdef.filter.maskBits = Variables.BIT_RED | Variables.BIT_GREEN | Variables.BIT_BLUE;    // can collide with
-        playerBody.createFixture(fdef).setUserData("player");
+        body.createFixture(fdef).setUserData("player");
 
         //create foot sensor
         shape.setAsBox(8 / PPM, 8 / PPM, new Vector2(0, -20 / PPM), 0);
@@ -117,7 +116,10 @@ public class PlayState extends GameState {
 //        fdef.filter.categoryBits = Variables.BIT_PLAYER;   // category
 //        fdef.filter.maskBits = Variables.BIT_GROUND;    // can collide with
         fdef.isSensor = true;
-        playerBody.createFixture(fdef).setUserData("foot");
+        body.createFixture(fdef).setUserData("foot");
+
+        //create player
+        player = new Player(body);
     }
 
     private void createTiles() {
