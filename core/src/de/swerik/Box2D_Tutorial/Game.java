@@ -1,6 +1,7 @@
 package de.swerik.Box2D_Tutorial;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.GL30;
 import de.swerik.Box2D_Tutorial.handlers.GameStateManager;
 import de.swerik.Box2D_Tutorial.states.GameState;
 
@@ -33,6 +34,8 @@ public class Game extends com.badlogic.gdx.Game {
     public void render() {
         accum += Gdx.graphics.getDeltaTime();
         while (accum >= STEP) {
+            Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
+            Gdx.gl.glClearColor(0, 0, 0, 1);
             accum -= STEP;
             gsm.update(STEP);
             gsm.render();
