@@ -19,41 +19,29 @@ public abstract class GameState implements Screen {
         this.gsm = gsm;
         batch = new SpriteBatch();
         shapeRenderer = new ShapeRenderer();
-        create();
     }
 
-    public abstract void create();
+    @Override
+    public abstract void show();
+
+    @Override
+    public abstract void hide();
 
     public abstract void update(float delta);
 
     public abstract void render();
 
+    @Override
+    public abstract void pause();
+
+    @Override
+    public abstract void resume();
+
+    @Override
+    public abstract void resize(int width, int height);
+
+    @Override
     public abstract void dispose();
-
-    @Override
-    public void show() {
-
-    }
-
-    @Override
-    public void hide() {
-
-    }
-
-    @Override
-    public void resume() {
-
-    }
-
-    @Override
-    public void pause() {
-
-    }
-
-    @Override
-    public void resize(int width, int height) {
-
-    }
 
     @Override
     public void render(float delta) {

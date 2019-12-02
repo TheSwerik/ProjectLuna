@@ -10,11 +10,6 @@ public class MainMenu extends GameState {
     }
 
     @Override
-    public void create() {
-
-    }
-
-    @Override
     public void update(float delta) {
 
     }
@@ -22,6 +17,31 @@ public class MainMenu extends GameState {
     @Override
     public void render() {
         System.out.println("MENU");
+
+    }
+
+    @Override
+    public void show() {
+
+    }
+
+    @Override
+    public void hide() {
+
+    }
+
+    @Override
+    public void resume() {
+
+    }
+
+    @Override
+    public void pause() {
+
+    }
+
+    @Override
+    public void resize(int width, int height) {
 
     }
 

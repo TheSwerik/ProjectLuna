@@ -10,17 +10,37 @@ public class PlayState extends GameState {
     }
 
     @Override
-    public void create() {
-        System.out.println("test");
-    }
-
-    @Override
     public void update(float delta) {
 
     }
 
     @Override
     public void render() {
+
+    }
+
+    @Override
+    public void show() {
+
+    }
+
+    @Override
+    public void hide() {
+
+    }
+
+    @Override
+    public void resume() {
+
+    }
+
+    @Override
+    public void pause() {
+
+    }
+
+    @Override
+    public void resize(int width, int height) {
 
     }
 

@@ -15,9 +15,18 @@ public class GameStateManager {
     private GameState currentState;
     private Luna app;
 
+    public GameState loadingScreen;
+    public GameState playState;
+    public GameState mainMenu;
+
     public GameStateManager(Luna game) {
         app = game;
         this.currentState = (GameState) game.getScreen();
+
+        playState = new PlayState(app, this);
+        loadingScreen = new LoadingScreen(app, this);
+        mainMenu = new MainMenu(app, this);
+
         this.setState(LOADING);
     }
 
@@ -27,13 +36,13 @@ public class GameStateManager {
         }
         switch (state) {
             case PLAY:
-                setState(new PlayState(app,this));
+                setState(playState);
                 break;
             case MAIN_MENU:
-                setState(new MainMenu(app,this));
+                setState(mainMenu);
                 break;
             case LOADING:
-                setState(new LoadingScreen(app,this));
+                setState(loadingScreen);
                 break;
         }
     }

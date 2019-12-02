@@ -13,11 +13,11 @@ public class LoadingScreen extends GameState {
 
     public LoadingScreen(Luna app, GameStateManager gsm) {
         super(app, gsm);
+        this.queueAssets();
     }
 
     @Override
-    public void create() {
-        this.queueAssets();
+    public void show() {
         progress = 0f;
         progressBar = new float[]{
                 0,
@@ -25,6 +25,11 @@ public class LoadingScreen extends GameState {
                 Luna.V_WIDTH,
                 30
         };
+
+    }
+
+    @Override
+    public void hide() {
     }
 
     @Override
@@ -49,6 +54,22 @@ public class LoadingScreen extends GameState {
         shapeRenderer.end();
         batch.begin();
         batch.end();
+    }
+
+
+    @Override
+    public void pause() {
+
+    }
+
+    @Override
+    public void resume() {
+
+    }
+
+    @Override
+    public void resize(int width, int height) {
+
     }
 
     @Override
