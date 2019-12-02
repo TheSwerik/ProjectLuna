@@ -18,7 +18,7 @@ public class GameStateManager {
     public GameStateManager(Luna game) {
         app = game;
         this.currentState = (GameState) game.getScreen();
-        this.setState(PLAY);
+        this.setState(LOADING);
     }
 
     public void setState(byte state) {
@@ -27,13 +27,13 @@ public class GameStateManager {
         }
         switch (state) {
             case PLAY:
-                setState(new PlayState(app));
+                setState(new PlayState(app,this));
                 break;
             case MAIN_MENU:
-                setState(new MainMenu(app));
+                setState(new MainMenu(app,this));
                 break;
             case LOADING:
-                setState(new LoadingScreen(app));
+                setState(new LoadingScreen(app,this));
                 break;
         }
     }

@@ -1,14 +1,24 @@
 package de.swerik.luna.GameState;
 
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import de.swerik.luna.Luna;
+import de.swerik.luna.Manager.GameStateManager;
 
 public abstract class GameState implements Screen {
 
     protected Luna app;
+    protected GameStateManager gsm;
 
-    public GameState(Luna app) {
+    protected SpriteBatch batch;
+    protected ShapeRenderer shapeRenderer;
+
+    public GameState(Luna app, GameStateManager gsm) {
         this.app = app;
+        this.gsm = gsm;
+        batch = new SpriteBatch();
+        shapeRenderer = new ShapeRenderer();
         create();
     }
 

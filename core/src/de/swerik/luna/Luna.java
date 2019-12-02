@@ -19,8 +19,8 @@ public class Luna extends Game {
 
     @Override
     public void create() {
-        gameStateManager = new GameStateManager(this);
         assets = new AssetManager();
+        gameStateManager = new GameStateManager(this);
     }
 
     @Override
