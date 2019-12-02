@@ -3,9 +3,8 @@ package de.swerik.luna;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL30;
-import de.swerik.luna.Screens.LunaScreen;
-import de.swerik.luna.Screens.MainMenu;
-import de.swerik.luna.Screens.Screen;
+import de.swerik.luna.GameState.GameState;
+import de.swerik.luna.Manager.GameStateManager;
 
 public class Luna extends Game {
 
@@ -13,37 +12,13 @@ public class Luna extends Game {
     public static final int V_WIDTH = 1920;
     public static final int V_HEIGHT = 1080;
 
-    private Screen currentScreen = Screen.MENU;
-    //    private Screen currentScreen = Screen.GAME;
-    private LunaScreen screen;
+    private GameStateManager gameStateManager;
 
     //TODO look into Stage Scene2d
 
     @Override
     public void create() {
-        this.switchScreen();
-    }
-
-    public void setCurrentScreen(int screen) {
-        currentScreen = Screen.values()[screen];
-        this.switchScreen();
-    }
-
-    public void setCurrentScreen(Screen screen) {
-        currentScreen = screen;
-        this.switchScreen();
-    }
-
-    private void switchScreen() {
-//        screen.dispose();
-        switch (currentScreen) {
-            case GAME:
-//                screen=new Game();
-                break;
-            case MENU:
-            default:
-                screen = new MainMenu();
-        }
+        gameStateManager = new GameStateManager((GameState) screen);
     }
 
     @Override
@@ -53,7 +28,7 @@ public class Luna extends Game {
         // NOT screen.dispose()
 
         // that would call screen.dispose():
-        this.screen.dispose();
+        this.gameStateManager.dispose();
 
         Gdx.app.exit();
         System.exit(0);
@@ -61,9 +36,12 @@ public class Luna extends Game {
 
     @Override
     public void render() {
-        this.screen.update(Gdx.graphics.getDeltaTime());
+        //update logic
+        this.gameStateManager.update(Gdx.graphics.getDeltaTime());
+
+        //clear frame and render
         Gdx.gl30.glClearColor(0, 0, 0, 1);
         Gdx.gl30.glClear(GL30.GL_COLOR_BUFFER_BIT);
-        this.screen.render();
+        this.gameStateManager.render();
     }
 }

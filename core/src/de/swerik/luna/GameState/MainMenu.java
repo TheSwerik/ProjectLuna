@@ -1,6 +1,6 @@
-package de.swerik.luna.Screens;
+package de.swerik.luna.GameState;
 
-public class MainMenu extends LunaScreen {
+public class MainMenu extends GameState {
 
     public MainMenu() {
         super();

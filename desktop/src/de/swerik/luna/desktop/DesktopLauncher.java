@@ -2,8 +2,6 @@ package de.swerik.luna.desktop;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
-import de.swerik.Box2D_Tutorial.Game;
-import de.swerik.ForeignTest.ForeignGame;
 import de.swerik.luna.Luna;
 
 public class DesktopLauncher {
@@ -20,10 +18,10 @@ public class DesktopLauncher {
 //        config.vSyncEnabled = true;
 //        config.foregroundFPS = 60;
 //        config.resizable = false;
-//        new LwjglApplication(new Luna(), config);
+        new LwjglApplication(new Luna(), config);
 
 //        new LwjglApplication(new Main(), config);
-        new LwjglApplication(new ForeignGame(), config);
+//        new LwjglApplication(new ForeignGame(), config);
 //        new LwjglApplication(new Game(), config);
     }
 }

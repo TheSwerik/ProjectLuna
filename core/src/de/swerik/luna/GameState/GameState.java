@@ -1,10 +1,10 @@
-package de.swerik.luna.Screens;
+package de.swerik.luna.GameState;
 
 import com.badlogic.gdx.Screen;
 
-public abstract class LunaScreen implements Screen {
+public abstract class GameState implements Screen {
 
-    public LunaScreen() {
+    public GameState() {
         create();
     }
 
@@ -14,7 +14,6 @@ public abstract class LunaScreen implements Screen {
 
     public abstract void render();
 
-    @Override
     public abstract void dispose();
 
     @Override
@@ -34,7 +33,7 @@ public abstract class LunaScreen implements Screen {
 
     @Override
     public void pause() {
-        System.out.println("aSs");
+
     }
 
     @Override
