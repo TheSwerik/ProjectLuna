@@ -31,7 +31,7 @@ public class Luna extends Game {
 
         // that would call screen.dispose():
         this.gameStateManager.dispose();
-
+        assets.dispose();
         Gdx.app.exit();
         System.exit(0);
     }

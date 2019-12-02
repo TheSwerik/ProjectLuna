@@ -74,7 +74,6 @@ public class LoadingScreen extends GameState {
 
     @Override
     public void dispose() {
-        batch.dispose();
     }
 
     private void queueAssets() {

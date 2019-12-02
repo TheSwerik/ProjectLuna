@@ -52,7 +52,11 @@ public class GameStateManager {
     }
 
     public void dispose() {
-        currentState.dispose();
+        currentState.getBatch().dispose();
+        currentState.getShapeRenderer().dispose();
+        playState.dispose();
+        loadingScreen.dispose();
+        mainMenu.dispose();
     }
 
     public void update(float delta) {

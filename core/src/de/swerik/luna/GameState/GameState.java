@@ -47,4 +47,12 @@ public abstract class GameState implements Screen {
     public void render(float delta) {
         render();
     }
+
+    public SpriteBatch getBatch() {
+        return batch;
+    }
+
+    public ShapeRenderer getShapeRenderer() {
+        return shapeRenderer;
+    }
 }
