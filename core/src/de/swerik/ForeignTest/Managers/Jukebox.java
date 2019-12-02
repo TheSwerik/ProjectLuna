@@ -11,6 +11,15 @@ public class Jukebox {
 
     static {
 //        sounds = new HashMap<String, Sound>();
+        /*
+        //Example Use-Case
+       Sound sound = Gdx.audio.newSound(Gdx.files.internal("tutorial/sounds/Beispielsound1.ogg"));
+        sounds.put("Beispielsound1", sound);
+        sound = Gdx.audio.newSound(Gdx.files.internal("tutorial/sounds/Beispielsound2.ogg"));
+        sounds.put("Beispielsound2", sound);
+        sound = Gdx.audio.newSound(Gdx.files.internal("tutorial/sounds/Beispielsound3.ogg"));
+        sounds.put("Beispielsound3", sound);
+        */
     }
 
     public static void load(String path, String name) {
