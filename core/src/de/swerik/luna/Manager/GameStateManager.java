@@ -4,6 +4,7 @@ import de.swerik.luna.GameState.GameState;
 import de.swerik.luna.GameState.LoadingScreen;
 import de.swerik.luna.GameState.MainMenu;
 import de.swerik.luna.GameState.PlayState;
+import de.swerik.luna.Luna;
 
 public class GameStateManager {
 
@@ -12,9 +13,11 @@ public class GameStateManager {
     public static final byte LOADING = 3;
 
     private GameState currentState;
+    private Luna app;
 
-    public GameStateManager(GameState currentState) {
-        this.currentState = currentState;
+    public GameStateManager(Luna game) {
+        app = game;
+        this.currentState = (GameState) game.getScreen();
         this.setState(PLAY);
     }
 
@@ -24,13 +27,13 @@ public class GameStateManager {
         }
         switch (state) {
             case PLAY:
-                setState(new PlayState());
+                setState(new PlayState(app));
                 break;
             case MAIN_MENU:
-                setState(new MainMenu());
+                setState(new MainMenu(app));
                 break;
             case LOADING:
-                setState(new LoadingScreen());
+                setState(new LoadingScreen(app));
                 break;
         }
     }

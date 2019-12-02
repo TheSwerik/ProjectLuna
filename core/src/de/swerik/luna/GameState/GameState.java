@@ -1,10 +1,14 @@
 package de.swerik.luna.GameState;
 
 import com.badlogic.gdx.Screen;
+import de.swerik.luna.Luna;
 
 public abstract class GameState implements Screen {
 
-    public GameState() {
+    protected Luna app;
+
+    public GameState(Luna app) {
+        this.app = app;
         create();
     }
 

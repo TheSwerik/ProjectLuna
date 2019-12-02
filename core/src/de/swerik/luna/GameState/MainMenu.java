@@ -1,9 +1,11 @@
 package de.swerik.luna.GameState;
 
+import de.swerik.luna.Luna;
+
 public class MainMenu extends GameState {
 
-    public MainMenu() {
-        super();
+    public MainMenu(Luna app) {
+        super(app);
     }
 
     @Override

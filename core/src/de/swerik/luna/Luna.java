@@ -2,8 +2,8 @@ package de.swerik.luna;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL30;
-import de.swerik.luna.GameState.GameState;
 import de.swerik.luna.Manager.GameStateManager;
 
 public class Luna extends Game {
@@ -13,12 +13,14 @@ public class Luna extends Game {
     public static final int V_HEIGHT = 1080;
 
     private GameStateManager gameStateManager;
+    public AssetManager assets;
 
     //TODO look into Stage Scene2d
 
     @Override
     public void create() {
-        gameStateManager = new GameStateManager((GameState) screen);
+        gameStateManager = new GameStateManager(this);
+        assets = new AssetManager();
     }
 
     @Override
