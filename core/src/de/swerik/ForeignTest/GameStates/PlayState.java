@@ -63,7 +63,7 @@ public class PlayState extends GameState {
         particles = new ArrayList<>();
 
         batch = new SpriteBatch();
-        FreeTypeFontGenerator gen = new FreeTypeFontGenerator(Gdx.files.internal("fonts/lunchds.ttf"));
+        FreeTypeFontGenerator gen = new FreeTypeFontGenerator(Gdx.files.internal("placeholder/fonts/lunchds.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
         parameter.size = 20;
         font = gen.generateFont(parameter);
@@ -317,7 +317,7 @@ public class PlayState extends GameState {
                     // Saucer-Asteroid
                     FlyingSaucer flyingSaucer;
                     Asteroid asteroid;
-                    if (collisionList.get(i) instanceof Player) {
+                    if (collisionList.get(i) instanceof FlyingSaucer) {
                         flyingSaucer = (FlyingSaucer) collisionList.get(i);
                         asteroid = (Asteroid) collisionList.get(j);
                     } else {

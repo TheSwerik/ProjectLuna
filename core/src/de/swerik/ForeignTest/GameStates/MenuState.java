@@ -37,7 +37,7 @@ public class MenuState extends GameState {
     @Override
     public void init() {
         batch = new SpriteBatch();
-        FreeTypeFontGenerator gen = new FreeTypeFontGenerator(Gdx.files.internal("fonts/lunchds.ttf"));
+        FreeTypeFontGenerator gen = new FreeTypeFontGenerator(Gdx.files.internal("placeholder/fonts/lunchds.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
         parameter.size = 20;
         font = gen.generateFont(parameter);

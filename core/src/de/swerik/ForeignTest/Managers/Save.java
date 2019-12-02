@@ -22,7 +22,7 @@ public class Save {
         if (!saveFileExists()) {
             init();
         }
-        try (ObjectInputStream in = new ObjectInputStream(new FileInputStream("saves/highscores.sav"))) {
+        try (ObjectInputStream in = new ObjectInputStream(new FileInputStream("tutorial/saves/highscores.sav"))) {
             gd = (GameData) in.readObject();
             in.close();
         } catch (IOException | ClassNotFoundException e) {
@@ -32,7 +32,7 @@ public class Save {
     }
 
     public static boolean saveFileExists() {
-        File f = new File("saves/highscores.sav");
+        File f = new File("tutorial/saves/highscores.sav");
         return f.exists();
     }
 

@@ -14,7 +14,7 @@ public class Jukebox {
     }
 
     public static void load(String path, String name) {
-        Sound sound = Gdx.audio.newSound(Gdx.files.internal("sounds/" + path));
+        Sound sound = Gdx.audio.newSound(Gdx.files.internal("tutorial/sounds/" + path));
         sounds.put(name, sound);
     }
 
