@@ -7,10 +7,10 @@ import java.util.HashMap;
 
 public class Jukebox {
 
-    private static HashMap<String, Sound> sounds;
+    private static HashMap<String, Sound> sounds = new HashMap<String, Sound>();
 
     static {
-        sounds = new HashMap<String, Sound>();
+//        sounds = new HashMap<String, Sound>();
     }
 
     public static void load(String path, String name) {

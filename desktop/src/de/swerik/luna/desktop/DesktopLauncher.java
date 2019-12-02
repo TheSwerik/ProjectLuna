@@ -23,7 +23,7 @@ public class DesktopLauncher {
 //        new LwjglApplication(new Luna(), config);
 
 //        new LwjglApplication(new Main(), config);
-//        new LwjglApplication(new ForeignGame(), config);
-        new LwjglApplication(new Game(), config);
+        new LwjglApplication(new ForeignGame(), config);
+//        new LwjglApplication(new Game(), config);
     }
 }
