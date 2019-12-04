@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.3.0" orientation="orthogonal" renderorder="right-down" compressionlevel="-1" width="40" height="8" tilewidth="128" tileheight="128" infinite="0" nextlayerid="6" nextobjectid="14">
+<map version="1.2" tiledversion="1.3.1" orientation="orthogonal" renderorder="right-down" compressionlevel="0" width="40" height="8" tilewidth="128" tileheight="128" infinite="0" nextlayerid="6" nextobjectid="14">
  <tileset firstgid="1" source="asd.tsx"/>
  <layer id="1" name="red" width="40" height="8">
   <data encoding="base64" compression="zlib">
-   eJxjYBgFo2AUDFXACMRMeDDzwDltSAAAGkAAEw==
+   eAFjYBgFoyEwGgJDNQQYgQ5nwoOZB9hjLED7WfFgtgF2HwAzcABA
   </data>
  </layer>
  <layer id="3" name="green" width="40" height="8">
   <data encoding="base64" compression="zlib">
-   eJxjYBgF9ATCSHgUEAdGw2wU0AoAAFTTAHM=
+   eAFjYBgF9AwBYaBlMExPe4eyXbDwAtGjYDQEqBkCAFTTAHM=
   </data>
  </layer>
  <layer id="4" name="blue" width="40" height="8">
   <data encoding="base64" compression="zlib">
-   eJxjYCAdiEDxYAWD3X2jYBSMFMABxKx4MBcOfSIkYEoAANEPAWI=
+   eAFjYCAdiAC1gPBgBYPdfYM13EbdNRoCgyUEYHmYGJoSNwMAs18BLQ==
   </data>
  </layer>
  <objectgroup id="5" name="crystals"/>

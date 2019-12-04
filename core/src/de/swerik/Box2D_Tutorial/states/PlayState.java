@@ -25,7 +25,7 @@ import static de.swerik.Box2D_Tutorial.handlers.Variables.PPM;
 
 public class PlayState extends GameState {
 
-    public static final boolean DEBUG = false;
+    public static final boolean DEBUG = true;
 
     private World world;
     private Box2DDebugRenderer debugRenderer;
@@ -94,6 +94,10 @@ public class PlayState extends GameState {
         }
         bodies.clear();
 
+        player.getBody().setLinearVelocity(new Vector2(5f, player.getBody().getLinearVelocity().y));
+        if (player.getBody().getPosition().y < -500 / PPM || player.getBody().getPosition().x > 5000 / PPM) {
+            player.getBody().setTransform(100 / PPM, 500 / PPM, 0);
+        }
         player.update(delta);
 
         for (Crystal c : crystals) {
@@ -109,6 +113,11 @@ public class PlayState extends GameState {
                 player.getPosition().y * PPM + Game.V_HEIGHT / 7f
         ), 0);
         cam.update();
+        b2dCam.position.set(new Vector2(
+                player.getPosition().x + Game.V_WIDTH / 7f / PPM,
+                player.getPosition().y + Game.V_HEIGHT / 7f / PPM
+        ), 0);
+        b2dCam.update();
 
         if (DEBUG) {
             debugRenderer.render(world, b2dCam.combined);
@@ -133,7 +142,8 @@ public class PlayState extends GameState {
     public void handleInput() {
         if (MyInput.isButton1JustPressed()) {
             if (cl.isPlayerOnGround()) {
-                player.getBody().applyForceToCenter(0, 500, true);
+                player.getBody().applyForceToCenter(0, 15000, true);
+                player.getBody().applyAngularImpulse(-15f, true);
             }
         }
         if (MyInput.isButton2JustPressed()) {
@@ -155,15 +165,17 @@ public class PlayState extends GameState {
         bdef.position.set(100 / PPM, 500 / PPM);
         bdef.type = BodyDef.BodyType.DynamicBody;
         bdef.linearVelocity.set(3, 0);
+        bdef.fixedRotation = false;
         Body body = world.createBody(bdef);
         shape.setAsBox(363 * 0.15f / PPM, 458 * 0.15f / PPM);
         fdef.shape = shape;
+        fdef.density = 10f;
         fdef.filter.categoryBits = Variables.BIT_PLAYER;   // category
         fdef.filter.maskBits = Variables.BIT_RED | Variables.BIT_Crystal;    // can collide with
         body.createFixture(fdef).setUserData("player");
 
         //create foot sensor
-        shape.setAsBox(363 * 0.1f / PPM, 5 / PPM, new Vector2(0, -458 * 0.15f / PPM), 0);
+        shape.setAsBox(363 * 0.16f / PPM, 458 * 0.16f / PPM, new Vector2(0, 0), 0);
 //        fdef.shape = shape;
 //        fdef.filter.categoryBits = Variables.BIT_PLAYER;   // category
 //        fdef.filter.maskBits = Variables.BIT_GROUND;    // can collide with
