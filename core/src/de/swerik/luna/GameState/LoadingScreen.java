@@ -14,6 +14,7 @@ public class LoadingScreen extends GameState {
     public LoadingScreen(Luna app, GameStateManager gsm) {
         super(app, gsm);
         this.queueAssets();
+        this.show();
     }
 
     @Override
@@ -25,7 +26,7 @@ public class LoadingScreen extends GameState {
                 Luna.V_WIDTH,
                 30
         };
-
+        System.out.println("SHOW -----------------");
     }
 
     @Override
@@ -35,7 +36,7 @@ public class LoadingScreen extends GameState {
     @Override
     public void update(float delta) {
 //        progress = app.assets.getProgress();
-        progress = MathUtils.lerp(progress, app.assets.getProgress(), 0.1f);
+        progress = MathUtils.lerp(progress, app.assets.getProgress(), 0.05f);
 
         if (app.assets.update() && MathUtils.isEqual(progress, app.assets.getProgress(), 0.001f)) {
             gsm.setState(GameStateManager.MAIN_MENU);
