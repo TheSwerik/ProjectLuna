@@ -8,6 +8,7 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
@@ -97,6 +98,7 @@ public class PlayState extends GameState {
         player.getBody().setLinearVelocity(new Vector2(5f, player.getBody().getLinearVelocity().y));
         if (player.getBody().getPosition().y < -500 / PPM || player.getBody().getPosition().x > 5000 / PPM) {
             player.getBody().setTransform(100 / PPM, 500 / PPM, 0);
+            player.getBody().setAngularVelocity( 0);
         }
         player.update(delta);
 
@@ -159,15 +161,15 @@ public class PlayState extends GameState {
     private void createPlayer() {
         BodyDef bdef = new BodyDef();
         FixtureDef fdef = new FixtureDef();
-        PolygonShape shape = new PolygonShape();
-
+        CircleShape shape = new CircleShape();
         //create Player
         bdef.position.set(100 / PPM, 500 / PPM);
         bdef.type = BodyDef.BodyType.DynamicBody;
         bdef.linearVelocity.set(3, 0);
         bdef.fixedRotation = false;
         Body body = world.createBody(bdef);
-        shape.setAsBox(363 * 0.15f / PPM, 458 * 0.15f / PPM);
+//        shape.setAsBox(363 * 0.15f / PPM, 458 * 0.15f / PPM);
+        shape.setRadius(50f / PPM);
         fdef.shape = shape;
         fdef.density = 10f;
         fdef.filter.categoryBits = Variables.BIT_PLAYER;   // category
@@ -175,7 +177,8 @@ public class PlayState extends GameState {
         body.createFixture(fdef).setUserData("player");
 
         //create foot sensor
-        shape.setAsBox(363 * 0.16f / PPM, 458 * 0.16f / PPM, new Vector2(0, 0), 0);
+//        shape.setAsBox(363 * 0.16f / PPM, 458 * 0.16f / PPM, new Vector2(0, 0), 0);
+        shape.setRadius(50.5f / PPM);
 //        fdef.shape = shape;
 //        fdef.filter.categoryBits = Variables.BIT_PLAYER;   // category
 //        fdef.filter.maskBits = Variables.BIT_GROUND;    // can collide with
