@@ -5,47 +5,40 @@ import de.swerik.luna.Manager.GameStateManager;
 
 public class PlayState extends GameState {
 
-    public PlayState(final Luna app, final GameStateManager gsm) {
+    public PlayState(Luna app, GameStateManager gsm) {
         super(app, gsm);
     }
 
     @Override
-    public void update(float delta) {
-
-    }
-
-    @Override
-    public void render() {
-
-    }
-
-    @Override
     public void show() {
-
+        setBackgroundColor(0.3f, 0, 0.5f, 1);
     }
 
     @Override
     public void hide() {
-
     }
 
     @Override
-    public void resume() {
+    public void update(float delta) {
+    }
 
+    @Override
+    public void render() {
     }
 
     @Override
     public void pause() {
+    }
 
+    @Override
+    public void resume() {
     }
 
     @Override
     public void resize(int width, int height) {
-
     }
 
     @Override
     public void dispose() {
-
     }
 }

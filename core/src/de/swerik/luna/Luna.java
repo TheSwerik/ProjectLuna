@@ -27,10 +27,4 @@ public class Luna extends Game {
         assets.dispose();
         Gdx.app.exit();
     }
-
-    @Override
-    public void render() {
-        this.gameStateManager.update(Gdx.graphics.getDeltaTime());
-        super.render();
-    }
 }

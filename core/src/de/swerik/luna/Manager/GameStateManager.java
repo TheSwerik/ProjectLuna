@@ -48,13 +48,12 @@ public class GameStateManager {
         app.setScreen(currentState = state);
     }
 
-    public void update(float delta) {
-        currentState.update(delta);
-    }
-
     public void dispose() {
+        // Dispose the SuperClass Stuff:
         currentState.getBatch().dispose();
         currentState.getShapeRenderer().dispose();
+
+        // Dispose every State:
         playState.dispose();
         loadingScreen.dispose();
         mainMenu.dispose();

@@ -10,8 +10,16 @@ public class MainMenu extends GameState {
     }
 
     @Override
-    public void update(float delta) {
+    public void show() {
+        setBackgroundColor(0.3f, 0, 0.5f, 1);
+    }
 
+    @Override
+    public void hide() {
+    }
+
+    @Override
+    public void update(float delta) {
     }
 
     @Override
@@ -19,32 +27,18 @@ public class MainMenu extends GameState {
     }
 
     @Override
-    public void show() {
-
-    }
-
-    @Override
-    public void hide() {
-
+    public void pause() {
     }
 
     @Override
     public void resume() {
-
-    }
-
-    @Override
-    public void pause() {
-
     }
 
     @Override
     public void resize(int width, int height) {
-
     }
 
     @Override
     public void dispose() {
-
     }
 }

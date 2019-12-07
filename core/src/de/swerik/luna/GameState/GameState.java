@@ -51,6 +51,10 @@ public abstract class GameState implements Screen {
 
     @Override
     public void render(float delta) {
+        //Update the state
+        update(delta);
+
+        // render the State
         Gdx.gl30.glClearColor(backgroundColor[0], backgroundColor[1], backgroundColor[2], backgroundColor[3]);
         Gdx.gl30.glClear(GL30.GL_COLOR_BUFFER_BIT);
         render();
