@@ -9,8 +9,6 @@ public class AndroidLauncher extends AndroidApplication {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
-//		initialize(new Luna(), config);
-//		initialize(new Main(), config);
-//        initialize(new ForeignGame(), config);
+		initialize(new Luna(), config);
     }
 }
