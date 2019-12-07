@@ -29,4 +29,4 @@ I actually don't know what license I use or I will use, need to look into that.
 * [German LibGDX Tutorial I watched](https://www.youtube.com/playlist?list=PLNmsVeXQZj7quaae1GG4U-8y6gxVkpq2m)
 * [English LibGDX Tutorial I watched](https://www.youtube.com/playlist?list=PL-2t7SM0vDfeZUKeM7Jm4U9utHwFS1N-C)
 * [English Box2D & Tiled Tutorial I watched](https://www.youtube.com/playlist?list=PL-2t7SM0vDfdYJ5Pq9vxeivblbZuFvGJK)
-* [English Scene2D & LibGDX Tutorial I watched](https://www.youtube.com/playlist?list=PLD_bW3UTVsEkPsT2JfVcZmAjmWByIpRvT)
+* [Many LibGDX Tutorials I watched](https://www.youtube.com/channel/UC9swZBfLu_PWphPsTuREJuw)
