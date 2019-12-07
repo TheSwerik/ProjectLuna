@@ -1,6 +1,8 @@
 package de.swerik.luna.GameState;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import de.swerik.luna.Luna;
@@ -14,12 +16,15 @@ public abstract class GameState implements Screen {
     protected final SpriteBatch batch;
     protected final ShapeRenderer shapeRenderer;
 
+    private float[] backgroundColor;
+
     public GameState(final Luna app, final GameStateManager gsm) {
         this.app = app;
         this.gsm = gsm;
 
         batch = new SpriteBatch();
         shapeRenderer = new ShapeRenderer();
+        backgroundColor = new float[]{0, 0, 0, 1};
     }
 
     @Override
@@ -46,7 +51,18 @@ public abstract class GameState implements Screen {
 
     @Override
     public void render(float delta) {
+        Gdx.gl30.glClearColor(backgroundColor[0], backgroundColor[1], backgroundColor[2], backgroundColor[3]);
+        Gdx.gl30.glClear(GL30.GL_COLOR_BUFFER_BIT);
         render();
+    }
+
+    // Setters
+
+    protected void setBackgroundColor(float red, float green, float blue, float alpha) {
+        backgroundColor[0] = red;
+        backgroundColor[1] = green;
+        backgroundColor[2] = blue;
+        backgroundColor[3] = alpha;
     }
 
     // Getters

@@ -11,6 +11,7 @@ public class LoadingScreen extends GameState {
 
     @Override
     public void show() {
+        setBackgroundColor(0.3f, 0, 0.5f, 1);
     }
 
     @Override
