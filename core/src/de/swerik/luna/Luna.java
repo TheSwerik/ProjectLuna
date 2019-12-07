@@ -15,8 +15,6 @@ public class Luna extends Game {
     private GameStateManager gameStateManager;
     public AssetManager assets;
 
-    //TODO look into Stage Scene2d
-
     @Override
     public void create() {
         assets = new AssetManager();
@@ -26,14 +24,9 @@ public class Luna extends Game {
     @Override
     public void dispose() {
         super.dispose();
-        // super.dispose() calls screen.hide()
-        // NOT screen.dispose()
-
-        // that would call screen.dispose():
         this.gameStateManager.dispose();
         assets.dispose();
         Gdx.app.exit();
-        System.exit(0);
     }
 
     @Override

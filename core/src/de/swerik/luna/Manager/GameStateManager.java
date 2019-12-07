@@ -31,9 +31,7 @@ public class GameStateManager {
     }
 
     public void setState(byte state) {
-        if (currentState != null) {
-            currentState.dispose();
-        }
+
         switch (state) {
             case PLAY:
                 setState(playState);
@@ -48,7 +46,7 @@ public class GameStateManager {
     }
 
     public void setState(GameState state) {
-        currentState = state;
+        app.setScreen(currentState = state);
     }
 
     public void dispose() {
