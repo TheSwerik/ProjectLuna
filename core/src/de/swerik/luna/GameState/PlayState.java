@@ -5,7 +5,7 @@ import de.swerik.luna.Manager.GameStateManager;
 
 public class PlayState extends GameState {
 
-    public PlayState(Luna app, GameStateManager gsm) {
+    public PlayState(final Luna app, final GameStateManager gsm) {
         super(app, gsm);
     }
 

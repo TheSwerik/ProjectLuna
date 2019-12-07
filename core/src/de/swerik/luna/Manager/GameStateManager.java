@@ -15,23 +15,22 @@ public class GameStateManager {
     private GameState currentState;
     private Luna app;
 
-    public GameState loadingScreen;
-    public GameState playState;
-    public GameState mainMenu;
+    public LoadingScreen loadingScreen;
+    public PlayState playState;
+    public MainMenu mainMenu;
 
-    public GameStateManager(Luna game) {
-        app = game;
-        this.currentState = (GameState) game.getScreen();
+    public GameStateManager(Luna app) {
+        this.app = app;
+        this.currentState = (GameState) this.app.getScreen();
 
-        playState = new PlayState(app, this);
-        loadingScreen = new LoadingScreen(app, this);
-        mainMenu = new MainMenu(app, this);
+        playState = new PlayState(this.app, this);
+        loadingScreen = new LoadingScreen(this.app, this);
+        mainMenu = new MainMenu(this.app, this);
 
         this.setState(LOADING);
     }
 
     public void setState(byte state) {
-
         switch (state) {
             case PLAY:
                 setState(playState);
@@ -49,19 +48,15 @@ public class GameStateManager {
         app.setScreen(currentState = state);
     }
 
+    public void update(float delta) {
+        currentState.update(delta);
+    }
+
     public void dispose() {
         currentState.getBatch().dispose();
         currentState.getShapeRenderer().dispose();
         playState.dispose();
         loadingScreen.dispose();
         mainMenu.dispose();
-    }
-
-    public void update(float delta) {
-        currentState.update(delta);
-    }
-
-    public void render() {
-        currentState.render();
     }
 }

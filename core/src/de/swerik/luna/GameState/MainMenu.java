@@ -5,7 +5,7 @@ import de.swerik.luna.Manager.GameStateManager;
 
 public class MainMenu extends GameState {
 
-    public MainMenu(Luna app, GameStateManager gsm) {
+    public MainMenu(final Luna app, final GameStateManager gsm) {
         super(app, gsm);
     }
 
@@ -16,8 +16,6 @@ public class MainMenu extends GameState {
 
     @Override
     public void render() {
-        System.out.println("MENU");
-
     }
 
     @Override

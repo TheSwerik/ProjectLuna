@@ -8,15 +8,16 @@ import de.swerik.luna.Manager.GameStateManager;
 
 public abstract class GameState implements Screen {
 
-    protected Luna app;
-    protected GameStateManager gsm;
+    protected final Luna app;
+    protected final GameStateManager gsm;
 
-    protected SpriteBatch batch;
-    protected ShapeRenderer shapeRenderer;
+    protected final SpriteBatch batch;
+    protected final ShapeRenderer shapeRenderer;
 
-    public GameState(Luna app, GameStateManager gsm) {
+    public GameState(final Luna app, final GameStateManager gsm) {
         this.app = app;
         this.gsm = gsm;
+
         batch = new SpriteBatch();
         shapeRenderer = new ShapeRenderer();
     }
@@ -48,6 +49,7 @@ public abstract class GameState implements Screen {
         render();
     }
 
+    // Getters
     public SpriteBatch getBatch() {
         return batch;
     }
