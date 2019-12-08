@@ -2,6 +2,7 @@ package de.swerik.luna.GameState;
 
 import de.swerik.luna.Luna;
 import de.swerik.luna.Manager.GameStateManager;
+import de.swerik.luna.Manager.LogManager;
 
 public class PlayState extends GameState {
 
@@ -11,11 +12,14 @@ public class PlayState extends GameState {
 
     @Override
     public void show() {
+        app.logger.log("Show \tPlaystate", LogManager.INFO);
+
         setBackgroundColor(0.3f, 0, 0.5f, 1);
     }
 
     @Override
     public void hide() {
+        app.logger.log("Hide \tPlaystate", LogManager.INFO);
     }
 
     @Override
@@ -28,17 +32,21 @@ public class PlayState extends GameState {
 
     @Override
     public void pause() {
+        app.logger.log("Pause \tPlaystate", LogManager.INFO);
     }
 
     @Override
     public void resume() {
+        app.logger.log("Resume \tPlaystate", LogManager.INFO);
     }
 
     @Override
     public void resize(int width, int height) {
+        app.logger.log("Resize \tPlaystate", LogManager.INFO);
     }
 
     @Override
     public void dispose() {
+        app.logger.log("Dispose \tPlaystate", LogManager.INFO);
     }
 }
