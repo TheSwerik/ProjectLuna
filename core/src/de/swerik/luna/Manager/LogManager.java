@@ -77,6 +77,15 @@ public class LogManager {
         Gdx.app.setLogLevel(this.level = tempLvl);
     }
 
+    public void newLine() {
+        if (writeToConsole) {
+            System.out.println("");
+        }
+        if (writeToFile) {
+            logFile.writeString("\n", true);
+        }
+    }
+
     public void logToFile(String msg) {
         //save temp Booleans
         boolean tempConsole = writeToConsole;

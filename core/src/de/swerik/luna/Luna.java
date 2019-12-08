@@ -32,7 +32,10 @@ public class Luna extends Game {
         super.dispose();
         this.gameStateManager.dispose();
         assets.dispose();
+
+        logger.newLine();
         logger.log("Disposed Successfully", LogManager.DEBUG);
+
         Gdx.app.exit();
     }
 }

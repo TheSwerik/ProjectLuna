@@ -47,6 +47,6 @@ public class PlayState extends GameState {
 
     @Override
     public void dispose() {
-        app.logger.log("Dispose \tPlaystate", LogManager.DEBUG);
+        app.logger.log("Dispose Playstate", LogManager.DEBUG);
     }
 }

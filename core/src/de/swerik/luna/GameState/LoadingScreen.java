@@ -47,6 +47,6 @@ public class LoadingScreen extends GameState {
 
     @Override
     public void dispose() {
-        app.logger.log("Dispose \tLoadingScreen", LogManager.DEBUG);
+        app.logger.log("Dispose LoadingScreen", LogManager.DEBUG);
     }
 }
