@@ -3,6 +3,7 @@ package de.swerik.luna.Manager;
 import com.badlogic.gdx.ApplicationLogger;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
+import de.swerik.luna.Luna;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -47,6 +48,9 @@ public class LogManager {
                 tag = "Info";
                 break;
             case DEBUG:
+                if (!Luna.DEBUG) {
+                    return;
+                }
                 tag = "Debug";
                 break;
         }

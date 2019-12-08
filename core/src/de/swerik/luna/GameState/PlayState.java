@@ -12,14 +12,14 @@ public class PlayState extends GameState {
 
     @Override
     public void show() {
-        app.logger.log("Show \tPlaystate", LogManager.INFO);
+        app.logger.log("Show \tPlaystate", LogManager.DEBUG);
 
         setBackgroundColor(0.3f, 0, 0.5f, 1);
     }
 
     @Override
     public void hide() {
-        app.logger.log("Hide \tPlaystate", LogManager.INFO);
+        app.logger.log("Hide \tPlaystate", LogManager.DEBUG);
     }
 
     @Override
@@ -32,21 +32,21 @@ public class PlayState extends GameState {
 
     @Override
     public void pause() {
-        app.logger.log("Pause \tPlaystate", LogManager.INFO);
+        app.logger.log("Pause \tPlaystate", LogManager.DEBUG);
     }
 
     @Override
     public void resume() {
-        app.logger.log("Resume \tPlaystate", LogManager.INFO);
+        app.logger.log("Resume \tPlaystate", LogManager.DEBUG);
     }
 
     @Override
     public void resize(int width, int height) {
-        app.logger.log("Resize \tPlaystate", LogManager.INFO);
+        app.logger.log("Resize \tPlaystate", LogManager.DEBUG);
     }
 
     @Override
     public void dispose() {
-        app.logger.log("Dispose \tPlaystate", LogManager.INFO);
+        app.logger.log("Dispose \tPlaystate", LogManager.DEBUG);
     }
 }

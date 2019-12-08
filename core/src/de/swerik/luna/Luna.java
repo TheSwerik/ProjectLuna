@@ -8,11 +8,13 @@ import de.swerik.luna.Manager.LogManager;
 
 public class Luna extends Game {
 
+    private static final int LOG_LEVEL = LogManager.INFO;
+    public static final boolean DEBUG = true;
+
     public static final String TITLE = "Project Luna";
     public static final int V_WIDTH = 1920;
     public static final int V_HEIGHT = 1080;
 
-    private static final int LOG_LEVEL = LogManager.INFO;
 
     public LogManager logger;
     public AssetManager assets;
@@ -20,7 +22,7 @@ public class Luna extends Game {
 
     @Override
     public void create() {
-        logger = new LogManager(LOG_LEVEL, true, true);
+        logger = new LogManager(LOG_LEVEL, true, DEBUG);
         assets = new AssetManager();
         gameStateManager = new GameStateManager(this);
     }
@@ -30,7 +32,7 @@ public class Luna extends Game {
         super.dispose();
         this.gameStateManager.dispose();
         assets.dispose();
-        logger.log("Disposed Successfully", LogManager.ERROR);
+        logger.log("Disposed Successfully", LogManager.DEBUG);
         Gdx.app.exit();
     }
 }
