@@ -14,7 +14,7 @@ public class PlayState extends GameState {
     public void show() {
         app.logger.log("Show \tPlaystate", LogManager.DEBUG);
 
-        setBackgroundColor(0.3f, 0, 0.5f, 1);
+        setBackgroundColor(0f, 0, 0f, 1);
     }
 
     @Override
