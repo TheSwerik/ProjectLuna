@@ -49,10 +49,6 @@ public class GameStateManager {
     }
 
     public void dispose() {
-        // Dispose the SuperClass Stuff:
-        currentState.getBatch().dispose();
-        currentState.getShapeRenderer().dispose();
-
         // Dispose every State:
         playState.dispose();
         loadingScreen.dispose();

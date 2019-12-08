@@ -8,6 +8,7 @@ public class PlayState extends GameState {
 
     public PlayState(Luna app, GameStateManager gsm) {
         super(app, gsm);
+        app.logger.log("Cnstrct Playstate", LogManager.DEBUG);
     }
 
     @Override
@@ -48,5 +49,8 @@ public class PlayState extends GameState {
     @Override
     public void dispose() {
         app.logger.log("Dispose Playstate", LogManager.DEBUG);
+
+        batch.dispose();
+        shapeRenderer.dispose();
     }
 }

@@ -8,6 +8,7 @@ public class MainMenu extends GameState {
 
     public MainMenu(final Luna app, final GameStateManager gsm) {
         super(app, gsm);
+        app.logger.log("Cnstrct MainMenu", LogManager.DEBUG);
     }
 
     @Override
@@ -47,5 +48,8 @@ public class MainMenu extends GameState {
     @Override
     public void dispose() {
         app.logger.log("Dispose MainMenu", LogManager.DEBUG);
+
+        batch.dispose();
+        shapeRenderer.dispose();
     }
 }

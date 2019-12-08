@@ -15,7 +15,6 @@ public class Luna extends Game {
     public static final int V_WIDTH = 1920;
     public static final int V_HEIGHT = 1080;
 
-
     public LogManager logger;
     public AssetManager assets;
     private GameStateManager gameStateManager;

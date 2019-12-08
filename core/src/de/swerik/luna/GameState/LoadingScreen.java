@@ -7,11 +7,13 @@ import de.swerik.luna.Manager.GameStateManager;
 import de.swerik.luna.Manager.LogManager;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class LoadingScreen extends GameState {
 
     public LoadingScreen(final Luna app, final GameStateManager gsm) {
         super(app, gsm);
+        app.logger.log("Cnstrct LoadingScreen", LogManager.DEBUG);
     }
 
     @Override
@@ -68,12 +70,20 @@ public class LoadingScreen extends GameState {
     @Override
     public void dispose() {
         app.logger.log("Dispose LoadingScreen", LogManager.DEBUG);
+
+        batch.dispose();
+        shapeRenderer.dispose();
     }
 
-    public void load(ArrayList<AssetDescriptor> assets) {
+    public void load(List<AssetDescriptor> assets) {
         for (AssetDescriptor ad : assets) {
-            app.logger.log(ad.fileName);
+            app.logger.log("added File to Loading queue: " + ad.fileName, LogManager.DEBUG);
             app.assets.load(ad);
         }
+    }
+
+    public void load(AssetDescriptor asset) {
+        app.logger.log("added File to Loading queue: " + asset.fileName, LogManager.DEBUG);
+        app.assets.load(asset);
     }
 }
