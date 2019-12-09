@@ -13,13 +13,13 @@ public class GameStateManager {
     public static final byte LOADING = 3;
 
     private GameState currentState;
-    private Luna app;
+    private final Luna app;
 
-    public LoadingScreen loadingScreen;
-    public PlayState playState;
-    public MainMenu mainMenu;
+    public final LoadingScreen loadingScreen;
+    public final PlayState playState;
+    public final MainMenu mainMenu;
 
-    public GameStateManager(Luna app) {
+    public GameStateManager(final Luna app) {
         this.app = app;
         this.currentState = (GameState) this.app.getScreen();
 

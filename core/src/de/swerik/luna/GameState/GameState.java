@@ -14,8 +14,8 @@ public abstract class GameState implements Screen {
     protected final Luna app;
     protected final GameStateManager gsm;
 
-    protected  final SpriteBatch batch;
-    protected  final ShapeRenderer shapeRenderer;
+    protected final SpriteBatch batch;
+    protected final ShapeRenderer shapeRenderer;
 
     private float[] backgroundColor;
 
