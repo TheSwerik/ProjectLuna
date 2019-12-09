@@ -39,7 +39,7 @@ public class LoadingScreen extends GameState {
 
     @Override
     public void hide() {
-        app.logger.log("Hide \tLoadingScreen", LogManager.DEBUG);
+        app.logger.log("Hide \tLoadingScreen ", LogManager.DEBUG);
     }
 
     @Override
