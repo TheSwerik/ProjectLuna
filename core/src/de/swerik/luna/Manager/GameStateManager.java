@@ -53,9 +53,5 @@ public class GameStateManager {
         playState.dispose();
         loadingScreen.dispose();
         mainMenu.dispose();
-
-        //Dispose Batches
-        app.logger.log("Dispose static Batches", LogManager.DEBUG);
-        GameState.disposeBatches();
     }
 }
