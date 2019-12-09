@@ -7,23 +7,27 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import de.swerik.luna.Luna;
 import de.swerik.luna.Manager.GameStateManager;
+import de.swerik.luna.Manager.LogManager;
 
 public abstract class GameState implements Screen {
 
     protected final Luna app;
     protected final GameStateManager gsm;
 
-    protected final SpriteBatch batch;
-    protected final ShapeRenderer shapeRenderer;
+    protected static final SpriteBatch batch;
+    protected static final ShapeRenderer shapeRenderer;
 
     private float[] backgroundColor;
+
+    static {
+        batch = new SpriteBatch();
+        shapeRenderer = new ShapeRenderer();
+    }
 
     public GameState(final Luna app, final GameStateManager gsm) {
         this.app = app;
         this.gsm = gsm;
 
-        batch = new SpriteBatch();
-        shapeRenderer = new ShapeRenderer();
         backgroundColor = new float[]{0, 0, 0, 1};
     }
 
@@ -67,6 +71,11 @@ public abstract class GameState implements Screen {
         backgroundColor[1] = green;
         backgroundColor[2] = blue;
         backgroundColor[3] = alpha;
+    }
+
+    public static void disposeBatches(){
+        batch.dispose();
+        shapeRenderer.dispose();
     }
 
     // Getters
