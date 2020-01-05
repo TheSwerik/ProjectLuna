@@ -10,7 +10,7 @@ public class DesktopLauncher {
         config.title = Luna.TITLE;
         config.width = Luna.V_WIDTH;
         config.height = Luna.V_HEIGHT;
-        config.forceExit = false;       // Fix Memory Leaks
+        config.forceExit = false;       // Fixes Memory Leaks
         config.x = -1;                  // Put Screen to CenterX
         config.y = -1;                  // Put Screen to CenterY
         config.useGL30 = true;          // Use OpenGL3
