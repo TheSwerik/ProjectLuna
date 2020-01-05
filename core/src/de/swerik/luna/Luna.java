@@ -12,8 +12,8 @@ public class Luna extends Game {
     public static final boolean DEBUG = true;
 
     public static final String TITLE = "Project Luna";
-    public static final int V_WIDTH = 1920;
-    public static final int V_HEIGHT = 1080;
+    public static final float V_WIDTH = 1920;
+    public static final float V_HEIGHT = 1080;
 
     public LogManager logger;
     public AssetManager assets;

@@ -101,7 +101,7 @@ public class PlayState extends GameState {
         shape.setAsBox(25f / PPM, 90f / PPM); //he is 180cm tall
         fdef.shape = shape;
         fdef.density = 100;
-        fdef.friction = 100;
+        fdef.friction = 10;
         playerBody.setFixedRotation(true);
         playerBody.createFixture(fdef).setUserData("player");
     }
@@ -120,7 +120,7 @@ public class PlayState extends GameState {
         body.createFixture(fdef).setUserData("floor");
 
         //ceiling
-        bdef.position.set(Luna.V_WIDTH / 2 / PPM, (Luna.V_HEIGHT - 115f) / PPM);
+        bdef.position.set(Luna.V_WIDTH / 2 / PPM, (Luna.V_HEIGHT - 35f) / PPM);
         bdef.type = BodyDef.BodyType.StaticBody;
         body = world.createBody(bdef);
         shape.setAsBox(900f / PPM, 25f / PPM);
@@ -128,7 +128,7 @@ public class PlayState extends GameState {
         body.createFixture(fdef).setUserData("floor");
 
         //left
-        bdef.position.set(5f / PPM, (Luna.V_HEIGHT / 2) / PPM);
+        bdef.position.set(35f / PPM, (Luna.V_HEIGHT / 2) / PPM);
         bdef.type = BodyDef.BodyType.StaticBody;
         body = world.createBody(bdef);
         shape.setAsBox(25f / PPM, 500f / PPM); // 50 thicc and 1000 tall
@@ -136,7 +136,7 @@ public class PlayState extends GameState {
         body.createFixture(fdef).setUserData("floor");
 
         //right
-        bdef.position.set((Luna.V_WIDTH - 85f) / PPM, (Luna.V_HEIGHT / 2) / PPM);
+        bdef.position.set((Luna.V_WIDTH - 35f) / PPM, (Luna.V_HEIGHT / 2) / PPM);
         bdef.type = BodyDef.BodyType.StaticBody;
         body = world.createBody(bdef);
         shape.setAsBox(25f / PPM, 500f / PPM); // 50 thicc and 1000 tall

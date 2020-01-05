@@ -8,8 +8,8 @@ public class DesktopLauncher {
     public static void main(String[] arg) {
         LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
         config.title = Luna.TITLE;
-        config.width = Luna.V_WIDTH;
-        config.height = Luna.V_HEIGHT;
+        config.width = (int) Luna.V_WIDTH;
+        config.height = (int) Luna.V_HEIGHT;
         config.forceExit = false;       // Fixes Memory Leaks
         config.x = -1;                  // Put Screen to CenterX
         config.y = -1;                  // Put Screen to CenterY
