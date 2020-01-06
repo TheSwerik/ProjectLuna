@@ -110,15 +110,9 @@ public class PlayState extends GameState {
 
         //player 2
         bdef.position.set(550f / PPM, 400f / PPM);
-        bdef.type = BodyDef.BodyType.DynamicBody;
         playerBody2 = world.createBody(bdef);
-        shape.setAsBox(25f / PPM, 90f / PPM); //he is 180cm tall
-        fdef.shape = shape;
-        fdef.density = 100;
-        fdef.friction = 10;
-        fdef.restitution = 1;
         playerBody2.setFixedRotation(false);
-        playerBody2.createFixture(fdef).setUserData("player");
+        playerBody2.createFixture(fdef).setUserData("player2");
 
         //ball
         bdef.position.set(550f / PPM, 400f / PPM);
