@@ -93,6 +93,7 @@ public class PlayState extends GameState {
         BodyDef bdef = new BodyDef();
         FixtureDef fdef = new FixtureDef();
         PolygonShape shape = new PolygonShape();
+        CircleShape circle = new CircleShape();
 
         //create Player
         bdef.position.set(250f / PPM, 400f / PPM);
@@ -102,8 +103,19 @@ public class PlayState extends GameState {
         fdef.shape = shape;
         fdef.density = 100;
         fdef.friction = 10;
-        playerBody.setFixedRotation(true);
+        playerBody.setFixedRotation(false);
         playerBody.createFixture(fdef).setUserData("player");
+
+        //ball
+        bdef.position.set(550f / PPM, 400f / PPM);
+        bdef.type = BodyDef.BodyType.DynamicBody;
+        Body body = world.createBody(bdef);
+        circle.setRadius(50f / PPM);
+        fdef.shape = circle;
+        fdef.density = 100;
+        fdef.friction = 10;
+        fdef.restitution = 1;
+        body.createFixture(fdef);
     }
 
     private void createBox() {
