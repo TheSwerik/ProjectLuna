@@ -21,6 +21,7 @@ public class PlayState extends GameState {
 
     //placeholder player
     private Body playerBody;
+    private Body playerBody2;
 
     public PlayState(Luna app, GameStateManager gsm) {
         super(app, gsm);
@@ -103,8 +104,21 @@ public class PlayState extends GameState {
         fdef.shape = shape;
         fdef.density = 100;
         fdef.friction = 10;
+        fdef.restitution = 1;
         playerBody.setFixedRotation(false);
         playerBody.createFixture(fdef).setUserData("player");
+
+        //player 2
+        bdef.position.set(550f / PPM, 400f / PPM);
+        bdef.type = BodyDef.BodyType.DynamicBody;
+        playerBody2 = world.createBody(bdef);
+        shape.setAsBox(25f / PPM, 90f / PPM); //he is 180cm tall
+        fdef.shape = shape;
+        fdef.density = 100;
+        fdef.friction = 10;
+        fdef.restitution = 1;
+        playerBody2.setFixedRotation(false);
+        playerBody2.createFixture(fdef).setUserData("player");
 
         //ball
         bdef.position.set(550f / PPM, 400f / PPM);
@@ -158,14 +172,23 @@ public class PlayState extends GameState {
     }
 
     private void handleInput() {
-        if (Gdx.input.isKeyPressed(Input.Keys.D) || Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+        if (Gdx.input.isKeyPressed(Input.Keys.D)) {
             playerBody.setLinearVelocity(10, playerBody.getLinearVelocity().y);
         }
-        if (Gdx.input.isKeyPressed(Input.Keys.A) || Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+        if (Gdx.input.isKeyPressed(Input.Keys.A)) {
             playerBody.setLinearVelocity(-10, playerBody.getLinearVelocity().y);
         }
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
             playerBody.setLinearVelocity(playerBody.getLinearVelocity().x, 10);
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+            playerBody2.setLinearVelocity(10, playerBody2.getLinearVelocity().y);
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+            playerBody2.setLinearVelocity(-10, playerBody2.getLinearVelocity().y);
+        }
+        if (Gdx.input.isKeyJustPressed(Input.Keys.UP)) {
+            playerBody2.setLinearVelocity(playerBody2.getLinearVelocity().x, 10);
         }
     }
 }
