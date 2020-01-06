@@ -89,7 +89,6 @@ public class PlayState extends GameState {
         shapeRenderer.dispose();
     }
 
-
     private void createPlayer() {
         BodyDef bdef = new BodyDef();
         FixtureDef fdef = new FixtureDef();
@@ -157,6 +156,7 @@ public class PlayState extends GameState {
     }
 
     private void handleInput() {
+        //player 1
         if (Gdx.input.isKeyPressed(Input.Keys.D)) {
             playerBody.setLinearVelocity(10, playerBody.getLinearVelocity().y);
         }
@@ -166,6 +166,7 @@ public class PlayState extends GameState {
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
             playerBody.setLinearVelocity(playerBody.getLinearVelocity().x, 10);
         }
+        //player 2
         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
             playerBody2.setLinearVelocity(10, playerBody2.getLinearVelocity().y);
         }
