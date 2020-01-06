@@ -136,31 +136,23 @@ public class PlayState extends GameState {
         Body body = world.createBody(bdef);
         shape.setAsBox(900f / PPM, 25f / PPM);
         fdef.shape = shape;
-        body.createFixture(fdef).setUserData("floor");
+        body.createFixture(fdef).setUserData("wall");
 
         //ceiling
         bdef.position.set(Luna.V_WIDTH / 2 / PPM, (Luna.V_HEIGHT - 35f) / PPM);
-        bdef.type = BodyDef.BodyType.StaticBody;
         body = world.createBody(bdef);
-        shape.setAsBox(900f / PPM, 25f / PPM);
-        fdef.shape = shape;
-        body.createFixture(fdef).setUserData("floor");
+        body.createFixture(fdef).setUserData("wall");
 
         //left
         bdef.position.set(35f / PPM, (Luna.V_HEIGHT / 2) / PPM);
-        bdef.type = BodyDef.BodyType.StaticBody;
         body = world.createBody(bdef);
         shape.setAsBox(25f / PPM, 500f / PPM); // 50 thicc and 1000 tall
-        fdef.shape = shape;
-        body.createFixture(fdef).setUserData("floor");
+        body.createFixture(fdef).setUserData("wall");
 
         //right
         bdef.position.set((Luna.V_WIDTH - 35f) / PPM, (Luna.V_HEIGHT / 2) / PPM);
-        bdef.type = BodyDef.BodyType.StaticBody;
         body = world.createBody(bdef);
-        shape.setAsBox(25f / PPM, 500f / PPM); // 50 thicc and 1000 tall
-        fdef.shape = shape;
-        body.createFixture(fdef).setUserData("floor");
+        body.createFixture(fdef).setUserData("wall");
 
     }
 
