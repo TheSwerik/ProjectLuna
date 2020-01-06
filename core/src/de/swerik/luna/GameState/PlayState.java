@@ -116,13 +116,12 @@ public class PlayState extends GameState {
 
         //ball
         bdef.position.set(550f / PPM, 400f / PPM);
-        bdef.type = BodyDef.BodyType.DynamicBody;
         Body body = world.createBody(bdef);
         circle.setRadius(50f / PPM);
         fdef.shape = circle;
-        fdef.density = 100;
-        fdef.friction = 10;
-        fdef.restitution = 1;
+//        fdef.density = 100;
+//        fdef.friction = 10;
+//        fdef.restitution = 1;
         body.createFixture(fdef);
     }
 
