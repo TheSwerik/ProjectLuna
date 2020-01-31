@@ -14,7 +14,7 @@ public class MainMenu extends GameState {
     @Override
     public void show() {
         app.logger.log("Show \tMainMenu", LogManager.DEBUG);
-        setBackgroundColor(0.3f, 0, 0.5f, 1);
+        setBackgroundColor(0.3f, 0, 0.5f, 1);//sad
     }
 
     @Override
