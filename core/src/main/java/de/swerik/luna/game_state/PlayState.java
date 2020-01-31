@@ -1,4 +1,4 @@
-package de.swerik.luna.GameState;
+package de.swerik.luna.game_state;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -6,8 +6,8 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import de.swerik.luna.Luna;
-import de.swerik.luna.Manager.GameStateManager;
-import de.swerik.luna.Manager.LogManager;
+import de.swerik.luna.manager.GameStateManager;
+import de.swerik.luna.manager.LogManager;
 
 import static de.swerik.luna.utils.Variables.PPM;
 

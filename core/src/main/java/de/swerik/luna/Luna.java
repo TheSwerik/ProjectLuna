@@ -3,8 +3,8 @@ package de.swerik.luna;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
-import de.swerik.luna.Manager.GameStateManager;
-import de.swerik.luna.Manager.LogManager;
+import de.swerik.luna.manager.GameStateManager;
+import de.swerik.luna.manager.LogManager;
 
 public class Luna extends Game {
 

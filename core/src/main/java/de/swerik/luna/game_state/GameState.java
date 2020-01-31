@@ -1,4 +1,4 @@
-package de.swerik.luna.GameState;
+package de.swerik.luna.game_state;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -6,8 +6,7 @@ import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import de.swerik.luna.Luna;
-import de.swerik.luna.Manager.GameStateManager;
-import de.swerik.luna.Manager.LogManager;
+import de.swerik.luna.manager.GameStateManager;
 
 public abstract class GameState implements Screen {
 
@@ -17,7 +16,7 @@ public abstract class GameState implements Screen {
     protected final SpriteBatch batch;
     protected final ShapeRenderer shapeRenderer;
 
-    private float[] backgroundColor;
+    private final float[] backgroundColor;
 
     public GameState(final Luna app, final GameStateManager gsm) {
         this.app = app;
@@ -63,7 +62,7 @@ public abstract class GameState implements Screen {
 
     // Setters
 
-    protected void setBackgroundColor(float red, float green, float blue, float alpha) {
+    protected void setBackgroundColor(float red, @SuppressWarnings("SameParameterValue") float green, float blue, @SuppressWarnings("SameParameterValue") float alpha) {
         backgroundColor[0] = red;
         backgroundColor[1] = green;
         backgroundColor[2] = blue;

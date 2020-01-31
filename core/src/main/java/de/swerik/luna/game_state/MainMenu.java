@@ -1,8 +1,8 @@
-package de.swerik.luna.GameState;
+package de.swerik.luna.game_state;
 
 import de.swerik.luna.Luna;
-import de.swerik.luna.Manager.GameStateManager;
-import de.swerik.luna.Manager.LogManager;
+import de.swerik.luna.manager.GameStateManager;
+import de.swerik.luna.manager.LogManager;
 
 public class MainMenu extends GameState {
 
@@ -14,7 +14,7 @@ public class MainMenu extends GameState {
     @Override
     public void show() {
         app.logger.log("Show \tMainMenu", LogManager.DEBUG);
-        setBackgroundColor(0.3f, 0, 0.5f, 1);//sad
+        setBackgroundColor(0.3f, 0, 0.5f, 1);
     }
 
     @Override

@@ -1,9 +1,9 @@
-package de.swerik.luna.Manager;
+package de.swerik.luna.manager;
 
-import de.swerik.luna.GameState.GameState;
-import de.swerik.luna.GameState.LoadingScreen;
-import de.swerik.luna.GameState.MainMenu;
-import de.swerik.luna.GameState.PlayState;
+import de.swerik.luna.game_state.GameState;
+import de.swerik.luna.game_state.LoadingScreen;
+import de.swerik.luna.game_state.MainMenu;
+import de.swerik.luna.game_state.PlayState;
 import de.swerik.luna.Luna;
 
 public class GameStateManager {

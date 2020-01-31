@@ -1,10 +1,10 @@
-package de.swerik.luna.GameState;
+package de.swerik.luna.game_state;
 
 import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.graphics.Texture;
 import de.swerik.luna.Luna;
-import de.swerik.luna.Manager.GameStateManager;
-import de.swerik.luna.Manager.LogManager;
+import de.swerik.luna.manager.GameStateManager;
+import de.swerik.luna.manager.LogManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,18 +22,18 @@ public class LoadingScreen extends GameState {
 
         setBackgroundColor(0.3f, 0, 0.5f, 1);
 
-        ArrayList<AssetDescriptor> assets = new ArrayList<>();
-        assets.add(new AssetDescriptor<Texture>("placeholder/sprites/ninjaboy/Running.png", Texture.class));
-        assets.add(new AssetDescriptor<Texture>("placeholder/sprites/ninjaboy/Run__000.png", Texture.class));
-        assets.add(new AssetDescriptor<Texture>("placeholder/sprites/ninjaboy/Run__001.png", Texture.class));
-        assets.add(new AssetDescriptor<Texture>("placeholder/sprites/ninjaboy/Run__002.png", Texture.class));
-        assets.add(new AssetDescriptor<Texture>("placeholder/sprites/ninjaboy/Run__003.png", Texture.class));
-        assets.add(new AssetDescriptor<Texture>("placeholder/sprites/ninjaboy/Run__004.png", Texture.class));
-        assets.add(new AssetDescriptor<Texture>("placeholder/sprites/ninjaboy/Run__005.png", Texture.class));
-        assets.add(new AssetDescriptor<Texture>("placeholder/sprites/ninjaboy/Run__006.png", Texture.class));
-        assets.add(new AssetDescriptor<Texture>("placeholder/sprites/ninjaboy/Run__007.png", Texture.class));
-        assets.add(new AssetDescriptor<Texture>("placeholder/sprites/ninjaboy/Run__008.png", Texture.class));
-        assets.add(new AssetDescriptor<Texture>("placeholder/sprites/ninjaboy/Run__009.png", Texture.class));
+        @SuppressWarnings("rawtypes") ArrayList<AssetDescriptor> assets = new ArrayList<>();
+        assets.add(new AssetDescriptor<>("placeholder/sprites/ninjaboy/Running.png", Texture.class));
+        assets.add(new AssetDescriptor<>("placeholder/sprites/ninjaboy/Run__000.png", Texture.class));
+        assets.add(new AssetDescriptor<>("placeholder/sprites/ninjaboy/Run__001.png", Texture.class));
+        assets.add(new AssetDescriptor<>("placeholder/sprites/ninjaboy/Run__002.png", Texture.class));
+        assets.add(new AssetDescriptor<>("placeholder/sprites/ninjaboy/Run__003.png", Texture.class));
+        assets.add(new AssetDescriptor<>("placeholder/sprites/ninjaboy/Run__004.png", Texture.class));
+        assets.add(new AssetDescriptor<>("placeholder/sprites/ninjaboy/Run__005.png", Texture.class));
+        assets.add(new AssetDescriptor<>("placeholder/sprites/ninjaboy/Run__006.png", Texture.class));
+        assets.add(new AssetDescriptor<>("placeholder/sprites/ninjaboy/Run__007.png", Texture.class));
+        assets.add(new AssetDescriptor<>("placeholder/sprites/ninjaboy/Run__008.png", Texture.class));
+        assets.add(new AssetDescriptor<>("placeholder/sprites/ninjaboy/Run__009.png", Texture.class));
         load(assets);
     }
 
@@ -75,14 +75,14 @@ public class LoadingScreen extends GameState {
         shapeRenderer.dispose();
     }
 
-    public void load(List<AssetDescriptor> assets) {
-        for (AssetDescriptor ad : assets) {
+    public void load(@SuppressWarnings("rawtypes") List<AssetDescriptor> assets) {
+        for (@SuppressWarnings("rawtypes") AssetDescriptor ad : assets) {
             app.logger.log("added File to Loading queue: " + ad.fileName, LogManager.DEBUG);
             app.assets.load(ad);
         }
     }
 
-    public void load(AssetDescriptor asset) {
+    public void load(@SuppressWarnings("rawtypes") AssetDescriptor asset) {
         app.logger.log("added File to Loading queue: " + asset.fileName, LogManager.DEBUG);
         app.assets.load(asset);
     }

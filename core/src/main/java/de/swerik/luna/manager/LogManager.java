@@ -1,4 +1,4 @@
-package de.swerik.luna.Manager;
+package de.swerik.luna.manager;
 
 import com.badlogic.gdx.ApplicationLogger;
 import com.badlogic.gdx.Gdx;
@@ -16,12 +16,12 @@ public class LogManager {
     public static final int INFO = 2;
     public static final int DEBUG = 3;
 
-    private ApplicationLogger logger = Gdx.app.getApplicationLogger();
+    private final ApplicationLogger logger = Gdx.app.getApplicationLogger();
+    private final FileHandle logFile;
+    private final SimpleDateFormat dateFormatter;
     private boolean writeToFile;
     private boolean writeToConsole;
     private int level;
-    private FileHandle logFile;
-    private SimpleDateFormat dateFormatter;
 
     public LogManager(int level, boolean writeToFile, boolean writeToConsole) {
         this.writeToFile = writeToFile;
@@ -30,7 +30,7 @@ public class LogManager {
         logFile = Gdx.files.local("log.txt");
         dateFormatter = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss", Locale.GERMANY);
 
-        System.out.println("");
+        System.out.println();
         if (writeToFile) {
             logFile.writeString("----- Log [" + dateFormatter.format(new Date()) + "] -----\n\r", false);
         }
@@ -79,7 +79,7 @@ public class LogManager {
 
     public void newLine() {
         if (writeToConsole) {
-            System.out.println("");
+            System.out.println();
         }
         if (writeToFile) {
             logFile.writeString("\n", true);
