@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.utils.TimeUtils;
 import de.swerik.luna.Luna;
 import de.swerik.luna.manager.GameStateManager;
 import de.swerik.luna.manager.LogManager;
@@ -18,6 +19,9 @@ public class PlayState extends GameState {
     private World world;
 
     private Box2DDebugRenderer debugRenderer;
+
+    private long lastNanoTime = 0;
+    private long lastFPS = 0;
 
     //placeholder player
     private Body playerBody;
@@ -64,6 +68,17 @@ public class PlayState extends GameState {
     @Override
     public void render() {
         debugRenderer.render(world, cam.combined);
+
+
+        //Display FPS:
+        if (lastFPS != Gdx.graphics.getFramesPerSecond()) {
+            lastFPS = Gdx.graphics.getFramesPerSecond();
+            app.logger.log("MehGDX:\t" + lastFPS);
+        }
+        if (TimeUtils.timeSinceNanos(lastNanoTime) >= 333333333) {
+            lastNanoTime = TimeUtils.nanoTime();
+            app.logger.log("PRICISE:\t" + Math.round(1. / Gdx.graphics.getRawDeltaTime()));
+        }
     }
 
     @Override

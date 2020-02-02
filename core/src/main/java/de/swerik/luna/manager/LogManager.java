@@ -11,6 +11,18 @@ import java.util.Locale;
 
 public class LogManager {
 
+    // Colors:
+    private static final String ANSI_RESET = "\u001B[0m";
+    private static final String ANSI_BLACK = "\u001B[30m";
+    private static final String ANSI_RED = "\u001B[31m";
+    private static final String ANSI_GREEN = "\u001B[32m";
+    private static final String ANSI_YELLOW = "\u001B[33m";
+    private static final String ANSI_BLUE = "\u001B[34m";
+    private static final String ANSI_PURPLE = "\u001B[35m";
+    private static final String ANSI_CYAN = "\u001B[36m";
+    private static final String ANSI_WHITE = "\u001B[37m";
+
+    // Levels:
     public static final int OFF = 0;
     public static final int ERROR = 1;
     public static final int INFO = 2;
@@ -42,16 +54,17 @@ public class LogManager {
             case OFF:
                 return;
             case ERROR:
-                tag = "ERROR";
+                System.out.print(ANSI_RED);
+                tag = ANSI_RED + "ERROR" + ANSI_RESET;
                 break;
             case INFO:
-                tag = "Info";
+                tag = ANSI_WHITE + "Info" + ANSI_RESET;
                 break;
             case DEBUG:
                 if (!Luna.DEBUG) {
                     return;
                 }
-                tag = "Debug";
+                tag = ANSI_BLUE + "Debug" + ANSI_RESET;
                 break;
         }
 
