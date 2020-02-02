@@ -55,21 +55,22 @@ public class LogManager {
             case OFF:
                 return;
             case ERROR:
-                coloredTag = ANSI_RED + "ERROR" + ANSI_RESET;
+                coloredTag = ANSI_RED;
                 tag = "ERROR";
                 break;
             case INFO:
-                coloredTag = ANSI_WHITE + "Info" + ANSI_RESET;
                 tag = "Info";
+                coloredTag = ANSI_WHITE;
                 break;
             case DEBUG:
                 if (!Luna.DEBUG) {
                     return;
                 }
-                coloredTag = ANSI_BLUE + "Debug" + ANSI_RESET;
+                coloredTag = ANSI_BLUE;
                 tag = "Debug";
                 break;
         }
+        coloredTag += tag + ANSI_RESET;
 
         if (writeToConsole) {
             if (level == INFO) {
