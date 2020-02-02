@@ -49,34 +49,37 @@ public class LogManager {
     }
 
     public void log(String msg) {
+        String coloredTag = "";
         String tag = "";
         switch (level) {
             case OFF:
                 return;
             case ERROR:
-                System.out.print(ANSI_RED);
-                tag = ANSI_RED + "ERROR" + ANSI_RESET;
+                coloredTag = ANSI_RED + "ERROR" + ANSI_RESET;
+                tag = "ERROR";
                 break;
             case INFO:
-                tag = ANSI_WHITE + "Info" + ANSI_RESET;
+                coloredTag = ANSI_WHITE + "Info" + ANSI_RESET;
+                tag = "Info";
                 break;
             case DEBUG:
                 if (!Luna.DEBUG) {
                     return;
                 }
-                tag = ANSI_BLUE + "Debug" + ANSI_RESET;
+                coloredTag = ANSI_BLUE + "Debug" + ANSI_RESET;
+                tag = "Debug";
                 break;
         }
 
         if (writeToConsole) {
             if (level == INFO) {
-                logger.log(tag, "\t" + msg);
+                logger.log(coloredTag, "\t" + msg);
             } else {
-                logger.log(tag, msg);
+                logger.log(coloredTag, msg);
             }
         }
         if (writeToFile) {
-            logFile.writeString("[" + tag + "]\t[" + dateFormatter.format(new Date()) + "}\t" + msg + "\n", true);
+            logFile.writeString("[" + tag + "]\t[" + dateFormatter.format(new Date()) + "]\t" + msg + "\n", true);
         }
     }
 
