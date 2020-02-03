@@ -6,16 +6,19 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.World;
 import de.swerik.luna.Luna;
 import de.swerik.luna.ecs.components.*;
 import de.swerik.luna.ecs.systems.ControlledMovementSystem;
 import de.swerik.luna.ecs.systems.RenderSystem;
+import de.swerik.luna.utils.BodyGenerator;
+import de.swerik.luna.utils.Variables;
 
 public class EntityManager {
     private final Engine engine;
     private final Luna app;
 
-    public EntityManager(Luna app, Engine e, SpriteBatch batch) {
+    public EntityManager(Luna app, Engine e, SpriteBatch batch, World world) {
         engine = e;
         this.app = app;
 
@@ -28,7 +31,8 @@ public class EntityManager {
         playerEntity.add(new PositionComponent(0, 100))
                 .add(new VelocityComponent(3))
                 .add(new SpriteComponent(new Texture("placeholder/sprites/ninjaboy/Idle__000.png")))
-                .add(new RenderableComponent());
+                .add(new RenderableComponent())
+                .add(new BodyComponent(BodyGenerator.generate("bodies/Player.json", Variables.PLAYER, world)));
         engine.addEntity(playerEntity);
     }
 
