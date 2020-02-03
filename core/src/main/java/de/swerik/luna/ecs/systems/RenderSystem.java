@@ -21,6 +21,7 @@ public class RenderSystem extends EntitySystem {
         this.app = app;
     }
 
+    @Override
     public void addedToEngine(Engine engine) {
         if (engine != null) {
             entities = engine.getEntitiesFor(Family.all(RenderableComponent.class, SpriteComponent.class, PositionComponent.class).get());
@@ -29,11 +30,15 @@ public class RenderSystem extends EntitySystem {
         }
     }
 
+    @Override
     public void update(float delta) {
+        batch.begin();
         for (Entity entity : entities) {
             SpriteComponent sprite = entity.getComponent(SpriteComponent.class);
             PositionComponent position = entity.getComponent(PositionComponent.class);
-            batch.draw(sprite.sprite.getTexture(), position.x, position.y);
+            batch.draw(sprite.sprite, position.x, position.y);
+            app.logger.log("drawing at " + position.x + "  " + position.y);
         }
+        batch.end();
     }
 }

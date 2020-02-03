@@ -4,6 +4,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import de.swerik.luna.manager.GameStateManager;
+import de.swerik.luna.manager.Input;
 import de.swerik.luna.manager.LogManager;
 
 public class Luna extends Game {
@@ -24,6 +25,7 @@ public class Luna extends Game {
         logger = new LogManager(LOG_LEVEL, true, DEBUG);
         assets = new AssetManager();
         gameStateManager = new GameStateManager(this);
+        Gdx.input.setInputProcessor(new Input());
     }
 
     @Override

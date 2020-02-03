@@ -25,7 +25,7 @@ public class EntityManager {
         engine.addSystem(rs);
 
         Entity playerEntity = new Entity();
-        playerEntity.add(new PositionComponent(500, 500))
+        playerEntity.add(new PositionComponent(0, 100))
                 .add(new VelocityComponent(3))
                 .add(new SpriteComponent(new Texture("placeholder/sprites/ninjaboy/Idle__000.png")))
                 .add(new RenderableComponent());

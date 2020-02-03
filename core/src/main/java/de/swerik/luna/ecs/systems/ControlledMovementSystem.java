@@ -5,6 +5,7 @@ import com.badlogic.ashley.utils.ImmutableArray;
 import de.swerik.luna.Luna;
 import de.swerik.luna.ecs.components.PositionComponent;
 import de.swerik.luna.ecs.components.VelocityComponent;
+import de.swerik.luna.manager.Input;
 import de.swerik.luna.manager.LogManager;
 
 public class ControlledMovementSystem extends EntitySystem {
@@ -31,7 +32,7 @@ public class ControlledMovementSystem extends EntitySystem {
             PositionComponent position = pm.get(entity);
             VelocityComponent velocity = vm.get(entity);
 
-            position.x += velocity.velocity * delta;
+            position.x += velocity.velocity * delta * Input.xMovement;
         }
     }
 }

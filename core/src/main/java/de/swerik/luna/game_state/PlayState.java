@@ -1,5 +1,6 @@
 package de.swerik.luna.game_state;
 
+import com.badlogic.ashley.core.Engine;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -7,6 +8,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.TimeUtils;
 import de.swerik.luna.Luna;
+import de.swerik.luna.ecs.EntityManager;
 import de.swerik.luna.manager.GameStateManager;
 import de.swerik.luna.manager.LogManager;
 
@@ -26,6 +28,9 @@ public class PlayState extends GameState {
     //placeholder player
     private Body playerBody;
     private Body playerBody2;
+
+    // Entity Manager
+    private EntityManager entityManager;
 
     public PlayState(Luna app, GameStateManager gsm) {
         super(app, gsm);
@@ -52,6 +57,9 @@ public class PlayState extends GameState {
 
         //placeholder player
         createPlayer();
+
+        // Entity Manager
+        entityManager = new EntityManager(app, new Engine(), batch);
     }
 
     @Override
@@ -63,6 +71,7 @@ public class PlayState extends GameState {
     public void update(float delta) {
         handleInput();
         world.step(delta, 6, 2);
+        entityManager.update(delta);
     }
 
     @Override
@@ -71,14 +80,14 @@ public class PlayState extends GameState {
 
 
         //Display FPS:
-        if (lastFPS != Gdx.graphics.getFramesPerSecond()) {
-            lastFPS = Gdx.graphics.getFramesPerSecond();
-            app.logger.log("MehGDX:\t" + lastFPS);
-        }
-        if (TimeUtils.timeSinceNanos(lastNanoTime) >= 333333333) {
-            lastNanoTime = TimeUtils.nanoTime();
-            app.logger.log("PRICISE:\t" + Math.round(1. / Gdx.graphics.getRawDeltaTime()));
-        }
+//        if (lastFPS != Gdx.graphics.getFramesPerSecond()) {
+//            lastFPS = Gdx.graphics.getFramesPerSecond();
+//            app.logger.log("MehGDX:\t" + lastFPS);
+//        }
+//        if (TimeUtils.timeSinceNanos(lastNanoTime) >= 333333333) {
+//            lastNanoTime = TimeUtils.nanoTime();
+//            app.logger.log("PRICISE:\t" + Math.round(1. / Gdx.graphics.getRawDeltaTime()));
+//        }
     }
 
     @Override
