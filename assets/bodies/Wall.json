@@ -9,48 +9,48 @@
       "isSensor": false,
       "type": "Polygon",
       "width": 50,
-      "height": 500,
+      "height": 540,
       "density": 1,
       "friction": 1,
       "restitution": 0,
-      "x": 1,
-      "y": 1
+      "x": 0,
+      "y": 540
     },
     {
       "description": "wall",
       "isSensor": false,
       "type": "Polygon",
       "width": 50,
-      "height": 500,
+      "height": 540,
       "density": 1,
       "friction": 1,
       "restitution": 0,
-      "x": 1780,
-      "y": 1
+      "x": 1920,
+      "y": 540
     },
     {
       "description": "wall",
       "isSensor": false,
       "type": "Polygon",
-      "width": 500,
+      "width": 2000,
       "height": 50,
       "density": 1,
       "friction": 1,
       "restitution": 0,
-      "x": 25,
-      "y": 500
+      "x": 0,
+      "y": 0
     },
     {
       "description": "wall",
       "isSensor": false,
       "type": "Polygon",
-      "width": 500,
+      "width": 2000,
       "height": 50,
       "density": 1,
       "friction": 1,
       "restitution": 0,
-      "x": 25,
-      "y": 500
+      "x": 0,
+      "y": 1080
     }
   ]
 }

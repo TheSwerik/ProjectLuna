@@ -71,14 +71,14 @@ public class BodyGenerator {
             fdef.isSensor = fixture.getBoolean("isSensor");
 
             if (fdef.isSensor) {
-//                fdef.filter.categoryBits = (short) (filterCategory << fixture.getShort("bitShifts"));
-//                fdef.filter.maskBits = Variables.LEVEL_BITS;
+                fdef.filter.categoryBits = (short) (filterCategory << fixture.getShort("bitShifts"));
+                fdef.filter.maskBits = Variables.LEVEL_BITS;
             } else {
                 fdef.friction = fixture.getFloat("friction");
                 fdef.restitution = fixture.getFloat("restitution");
                 fdef.density = fixture.getFloat("density");
-//                fdef.filter.categoryBits = filterCategory;
-//                fdef.filter.maskBits = maskingBits;
+                fdef.filter.categoryBits = filterCategory;
+                fdef.filter.maskBits = maskingBits;
             }
 
             body.createFixture(fdef).setUserData(entity);

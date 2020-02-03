@@ -49,7 +49,7 @@ public class EntityManager {
         //Entities:
         player = new Entity();
         SpriteComponent spriteComponent = new SpriteComponent(new Texture("placeholder/sprites/ninjaboy/Idle__000.png"));
-        PositionComponent positionComponent = new PositionComponent(100, 100);
+        PositionComponent positionComponent = new PositionComponent(200, 200);
         player.add(positionComponent)
                 .add(new TypeComponent(Variables.COLLISION_PLAYER))
                 .add(new PlayerDataComponent())
@@ -65,7 +65,7 @@ public class EntityManager {
         engine.addEntity(player);
 
         Entity wallEntity = new Entity();
-        PositionComponent wallPositionComponent = new PositionComponent(100, 100);
+        PositionComponent wallPositionComponent = new PositionComponent(0, 0);
         SpriteComponent wallSpriteComponent = new SpriteComponent(new Texture("placeholder/sprites/ninjaboy/Idle__000.png"));
         wallEntity.add(wallPositionComponent)
                 .add(new SensorCollisionComponent())
