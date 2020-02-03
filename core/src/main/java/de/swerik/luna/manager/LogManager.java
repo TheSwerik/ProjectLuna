@@ -31,8 +31,8 @@ public class LogManager {
     private final ApplicationLogger logger = Gdx.app.getApplicationLogger();
     private final FileHandle logFile;
     private final SimpleDateFormat dateFormatter;
-    private boolean writeToFile;
     private boolean writeToConsole;
+    private boolean writeToFile;
     private int level;
 
     public LogManager(int level, boolean writeToFile, boolean writeToConsole) {
