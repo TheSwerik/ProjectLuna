@@ -1,4 +1,4 @@
-package de.swerik.luna.ecs.components;
+package de.swerik.luna.ecs.components.physics;
 
 import com.badlogic.ashley.core.Component;
 

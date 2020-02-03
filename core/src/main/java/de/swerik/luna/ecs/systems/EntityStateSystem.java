@@ -2,12 +2,9 @@ package de.swerik.luna.ecs.systems;
 
 import com.badlogic.ashley.core.*;
 import com.badlogic.ashley.utils.ImmutableArray;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
 import de.swerik.luna.Luna;
-import de.swerik.luna.ecs.components.*;
-import de.swerik.luna.manager.Input;
+import de.swerik.luna.ecs.components.states.EntityStateComponent;
+import de.swerik.luna.ecs.components.states.SensorCollisionComponent;
 import de.swerik.luna.manager.LogManager;
 
 public class EntityStateSystem extends EntitySystem {
