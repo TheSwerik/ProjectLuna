@@ -37,7 +37,6 @@ public class RenderSystem extends EntitySystem {
             SpriteComponent sprite = entity.getComponent(SpriteComponent.class);
             PositionComponent position = entity.getComponent(PositionComponent.class);
             batch.draw(sprite.sprite, position.x, position.y);
-            app.logger.log("drawing at " + position.x + "  " + position.y);
         }
         batch.end();
     }

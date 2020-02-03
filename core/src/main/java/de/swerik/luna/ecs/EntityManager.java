@@ -2,6 +2,7 @@ package de.swerik.luna.ecs;
 
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -28,11 +29,15 @@ public class EntityManager {
         engine.addSystem(rs);
 
         Entity playerEntity = new Entity();
-        playerEntity.add(new PositionComponent(0, 100))
+        playerEntity.add(new PositionComponent(100, 100))
                 .add(new VelocityComponent(3))
                 .add(new SpriteComponent(new Texture("placeholder/sprites/ninjaboy/Idle__000.png")))
                 .add(new RenderableComponent())
-                .add(new BodyComponent(BodyGenerator.generate("bodies/Player.json", Variables.PLAYER, world)));
+                .add(new BodyComponent(BodyGenerator.generate("bodies/Player.json",
+                        Variables.COLLISION_PLAYER,
+                        Variables.COLLISION_PLAYER,
+                        world,
+                        playerEntity.getComponent(SpriteComponent.class).sprite)));
         engine.addEntity(playerEntity);
     }
 

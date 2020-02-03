@@ -1,5 +1,6 @@
 package de.swerik.luna.utils;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
@@ -11,7 +12,7 @@ import static de.swerik.luna.utils.Variables.PIXELS_TO_METERS;
 public class BodyGenerator {
     public static Body generate(String filePath, short filterCategory, short ownerCategory, World world, Sprite owner) {
         // parse JSON:
-        JsonValue root = new JsonReader().parse(filePath);
+        JsonValue root = new JsonReader().parse(Gdx.files.internal(filePath));
 
         // BodyDef:
         short maskingBits = (short) ((Variables.FRIENDLY_BITS | Variables.ENEMY_BITS | Variables.NEUTRAL_BITS | Variables.LEVEL_BITS) ^ filterCategory);
@@ -61,16 +62,16 @@ public class BodyGenerator {
             FixtureDef fdef = new FixtureDef();
             fdef.shape = shape;
             fdef.isSensor = fixture.getBoolean("isSensor");
-            fdef.density = fixture.getFloat("density");
 
             if (fdef.isSensor) {
-                fdef.filter.categoryBits = (short) (filterCategory << fixture.getShort("bitShifts"));
-                fdef.filter.maskBits = Variables.LEVEL_BITS;
+//                fdef.filter.categoryBits = (short) (filterCategory << fixture.getShort("bitShifts"));
+//                fdef.filter.maskBits = Variables.LEVEL_BITS;
             } else {
                 fdef.friction = fixture.getFloat("friction");
                 fdef.restitution = fixture.getFloat("restitution");
-                fdef.filter.categoryBits = filterCategory;
-                fdef.filter.maskBits = maskingBits;
+                fdef.density = fixture.getFloat("density");
+//                fdef.filter.categoryBits = filterCategory;
+//                fdef.filter.maskBits = maskingBits;
             }
 
             body.createFixture(fdef).setUserData(ownerCategory);

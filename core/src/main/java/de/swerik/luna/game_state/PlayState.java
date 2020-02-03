@@ -4,6 +4,8 @@ import com.badlogic.ashley.core.Engine;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import de.swerik.luna.Luna;
@@ -13,6 +15,7 @@ import de.swerik.luna.manager.LogManager;
 import de.swerik.luna.utils.BodyGenerator;
 import de.swerik.luna.utils.Variables;
 
+import static de.swerik.luna.utils.Variables.METERS_TO_PIXELS;
 import static de.swerik.luna.utils.Variables.PIXELS_TO_METERS;
 
 public class PlayState extends GameState {
@@ -45,8 +48,8 @@ public class PlayState extends GameState {
         setBackgroundColor(0f, 0, 0f, 1);
 
         cam = new OrthographicCamera();
-        cam.setToOrtho(false, Luna.V_WIDTH / PIXELS_TO_METERS, Luna.V_HEIGHT / PIXELS_TO_METERS);
-        cam.position.set(Luna.V_WIDTH / 2 / PIXELS_TO_METERS, Luna.V_HEIGHT / 2 / PIXELS_TO_METERS, 0);
+        cam.setToOrtho(false, Luna.V_WIDTH * PIXELS_TO_METERS, Luna.V_HEIGHT * PIXELS_TO_METERS);
+        cam.position.set(Luna.V_WIDTH / 2 * PIXELS_TO_METERS, Luna.V_HEIGHT / 2 * PIXELS_TO_METERS, 0);
         cam.update();
 
         // Box2D Stuff
@@ -115,7 +118,7 @@ public class PlayState extends GameState {
     }
 
     private void createPlayer() {
-        playerBody = BodyGenerator.generate("bodies/Player.json", Variables.PLAYER, world);
+        playerBody = BodyGenerator.generate("bodies/Player.json", Variables.COLLISION_PLAYER, Variables.COLLISION_PLAYER, world, new Sprite(new Texture("placeholder/sprites/ninjaboy/Idle__000.png")));
 
 //        BodyDef bdef = new BodyDef();
 //        FixtureDef fdef = new FixtureDef();
@@ -157,26 +160,28 @@ public class PlayState extends GameState {
         PolygonShape shape = new PolygonShape();
 
         //floor
-        bdef.position.set(Luna.V_WIDTH / 2 / PIXELS_TO_METERS, 35f / PIXELS_TO_METERS);
+        bdef.position.set(Luna.V_WIDTH / 2 * PIXELS_TO_METERS, 35f * PIXELS_TO_METERS);
         bdef.type = BodyDef.BodyType.StaticBody;
         Body body = world.createBody(bdef);
-        shape.setAsBox(900f / PIXELS_TO_METERS, 25f / PIXELS_TO_METERS);
+        shape.setAsBox(900f * PIXELS_TO_METERS, 25f * PIXELS_TO_METERS);
         fdef.shape = shape;
+        fdef.filter.categoryBits = Variables.LEVEL_BITS;
+//        fdef.filter.maskBits = Variables.FRIENDLY_LEFT_WALL_SENSOR;
         body.createFixture(fdef).setUserData("wall");
 
         //ceiling
-        bdef.position.set(Luna.V_WIDTH / 2 / PIXELS_TO_METERS, (Luna.V_HEIGHT - 35f) / PIXELS_TO_METERS);
+        bdef.position.set(Luna.V_WIDTH / 2 * PIXELS_TO_METERS, (Luna.V_HEIGHT - 35f) * PIXELS_TO_METERS);
         body = world.createBody(bdef);
         body.createFixture(fdef).setUserData("wall");
 
         //left
-        bdef.position.set(35f / PIXELS_TO_METERS, (Luna.V_HEIGHT / 2) / PIXELS_TO_METERS);
+        bdef.position.set(35f * PIXELS_TO_METERS, (Luna.V_HEIGHT / 2) * PIXELS_TO_METERS);
         body = world.createBody(bdef);
-        shape.setAsBox(25f / PIXELS_TO_METERS, 500f / PIXELS_TO_METERS); // 50 thicc and 1000 tall
+        shape.setAsBox(25f * PIXELS_TO_METERS, 500f * PIXELS_TO_METERS); // 50 thicc and 1000 tall
         body.createFixture(fdef).setUserData("wall");
 
         //right
-        bdef.position.set((Luna.V_WIDTH - 35f) / PIXELS_TO_METERS, (Luna.V_HEIGHT / 2) / PIXELS_TO_METERS);
+        bdef.position.set((Luna.V_WIDTH - 35f) * PIXELS_TO_METERS, (Luna.V_HEIGHT / 2) * PIXELS_TO_METERS);
         body = world.createBody(bdef);
         body.createFixture(fdef).setUserData("wall");
 
