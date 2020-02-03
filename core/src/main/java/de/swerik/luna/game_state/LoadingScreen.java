@@ -4,7 +4,7 @@ import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.graphics.Texture;
 import de.swerik.luna.Luna;
 import de.swerik.luna.manager.GameStateManager;
-import de.swerik.luna.manager.LogManager;
+import de.swerik.luna.manager.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,12 +13,12 @@ public class LoadingScreen extends GameState {
 
     public LoadingScreen(final Luna app, final GameStateManager gsm) {
         super(app, gsm);
-        app.logger.log("Cnstrct LoadingScreen", LogManager.DEBUG);
+        Logger.log("Cnstrct LoadingScreen", Logger.DEBUG);
     }
 
     @Override
     public void show() {
-        app.logger.log("Show \tLoadingScreen", LogManager.DEBUG);
+        Logger.log("Show \tLoadingScreen", Logger.DEBUG);
 
         setBackgroundColor(0.3f, 0, 0.5f, 1);
 
@@ -39,7 +39,7 @@ public class LoadingScreen extends GameState {
 
     @Override
     public void hide() {
-        app.logger.log("Hide \tLoadingScreen ", LogManager.DEBUG);
+        Logger.log("Hide \tLoadingScreen ", Logger.DEBUG);
     }
 
     @Override
@@ -54,22 +54,22 @@ public class LoadingScreen extends GameState {
 
     @Override
     public void pause() {
-        app.logger.log("Pause \tLoadingScreen", LogManager.DEBUG);
+        Logger.log("Pause \tLoadingScreen", Logger.DEBUG);
     }
 
     @Override
     public void resume() {
-        app.logger.log("Resume \tLoadingScreen", LogManager.DEBUG);
+        Logger.log("Resume \tLoadingScreen", Logger.DEBUG);
     }
 
     @Override
     public void resize(int width, int height) {
-        app.logger.log("Resize \tLoadingScreen", LogManager.DEBUG);
+        Logger.log("Resize \tLoadingScreen", Logger.DEBUG);
     }
 
     @Override
     public void dispose() {
-        app.logger.log("Dispose LoadingScreen", LogManager.DEBUG);
+        Logger.log("Dispose LoadingScreen", Logger.DEBUG);
 
         batch.dispose();
         shapeRenderer.dispose();
@@ -77,13 +77,13 @@ public class LoadingScreen extends GameState {
 
     public void load(@SuppressWarnings("rawtypes") List<AssetDescriptor> assets) {
         for (@SuppressWarnings("rawtypes") AssetDescriptor ad : assets) {
-            app.logger.log("added File to Loading queue: " + ad.fileName, LogManager.DEBUG);
+            Logger.log("added File to Loading queue: " + ad.fileName, Logger.DEBUG);
             app.assets.load(ad);
         }
     }
 
     public void load(@SuppressWarnings("rawtypes") AssetDescriptor asset) {
-        app.logger.log("added File to Loading queue: " + asset.fileName, LogManager.DEBUG);
+        Logger.log("added File to Loading queue: " + asset.fileName, Logger.DEBUG);
         app.assets.load(asset);
     }
 }

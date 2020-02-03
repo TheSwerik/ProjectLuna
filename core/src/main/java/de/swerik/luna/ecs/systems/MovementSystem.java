@@ -47,7 +47,6 @@ public class MovementSystem extends IteratingSystem {
         // handle jump:
         if (stateCom.state == EntityStateComponent.State.GROUNDED && Gdx.input.isKeyJustPressed(com.badlogic.gdx.Input.Keys.SPACE)) {
             body.applyForceToCenter(0, 200f * delta, true);
-            System.out.println("JUMP");
         }
     }
 }

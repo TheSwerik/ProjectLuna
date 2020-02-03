@@ -2,24 +2,24 @@ package de.swerik.luna.game_state;
 
 import de.swerik.luna.Luna;
 import de.swerik.luna.manager.GameStateManager;
-import de.swerik.luna.manager.LogManager;
+import de.swerik.luna.manager.Logger;
 
 public class MainMenu extends GameState {
 
     public MainMenu(final Luna app, final GameStateManager gsm) {
         super(app, gsm);
-        app.logger.log("Cnstrct MainMenu", LogManager.DEBUG);
+        Logger.log("Cnstrct MainMenu", Logger.DEBUG);
     }
 
     @Override
     public void show() {
-        app.logger.log("Show \tMainMenu", LogManager.DEBUG);
+        Logger.log("Show \tMainMenu", Logger.DEBUG);
         setBackgroundColor(0.3f, 0, 0.5f, 1);
     }
 
     @Override
     public void hide() {
-        app.logger.log("Hide \tMainMenu", LogManager.DEBUG);
+        Logger.log("Hide \tMainMenu", Logger.DEBUG);
     }
 
     @Override
@@ -33,22 +33,22 @@ public class MainMenu extends GameState {
 
     @Override
     public void pause() {
-        app.logger.log("Pause \tMainMenu", LogManager.DEBUG);
+        Logger.log("Pause \tMainMenu", Logger.DEBUG);
     }
 
     @Override
     public void resume() {
-        app.logger.log("Resume \tMainMenu", LogManager.DEBUG);
+        Logger.log("Resume \tMainMenu", Logger.DEBUG);
     }
 
     @Override
     public void resize(int width, int height) {
-        app.logger.log("Resize \tMainMenu", LogManager.DEBUG);
+        Logger.log("Resize \tMainMenu", Logger.DEBUG);
     }
 
     @Override
     public void dispose() {
-        app.logger.log("Dispose MainMenu", LogManager.DEBUG);
+        Logger.log("Dispose MainMenu", Logger.DEBUG);
 
         batch.dispose();
         shapeRenderer.dispose();

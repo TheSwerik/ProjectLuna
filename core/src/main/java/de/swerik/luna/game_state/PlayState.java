@@ -1,21 +1,15 @@
 package de.swerik.luna.game_state;
 
 import com.badlogic.ashley.core.Engine;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import de.swerik.luna.Luna;
 import de.swerik.luna.ecs.EntityManager;
 import de.swerik.luna.manager.GameStateManager;
-import de.swerik.luna.manager.LogManager;
-import de.swerik.luna.utils.BodyGenerator;
+import de.swerik.luna.manager.Logger;
 import de.swerik.luna.utils.Variables;
 
-import static de.swerik.luna.utils.Variables.METERS_TO_PIXELS;
 import static de.swerik.luna.utils.Variables.PIXELS_TO_METERS;
 
 public class PlayState extends GameState {
@@ -34,12 +28,12 @@ public class PlayState extends GameState {
 
     public PlayState(Luna app, GameStateManager gsm) {
         super(app, gsm);
-        app.logger.log("Cnstrct Playstate", LogManager.DEBUG);
+        Logger.log("Cnstrct Playstate", Logger.DEBUG);
     }
 
     @Override
     public void show() {
-        app.logger.log("Show \tPlaystate", LogManager.DEBUG);
+        Logger.log("Show \tPlaystate", Logger.DEBUG);
 
         setBackgroundColor(0f, 0, 0f, 1);
 
@@ -61,7 +55,7 @@ public class PlayState extends GameState {
 
     @Override
     public void hide() {
-        app.logger.log("Hide \tPlaystate", LogManager.DEBUG);
+        Logger.log("Hide \tPlaystate", Logger.DEBUG);
     }
 
     @Override
@@ -78,32 +72,32 @@ public class PlayState extends GameState {
         //Display FPS:
 //        if (lastFPS != Gdx.graphics.getFramesPerSecond()) {
 //            lastFPS = Gdx.graphics.getFramesPerSecond();
-//            app.logger.log("MehGDX:\t" + lastFPS);
+//            Logger.log("MehGDX:\t" + lastFPS);
 //        }
 //        if (TimeUtils.timeSinceNanos(lastNanoTime) >= 333333333) {
 //            lastNanoTime = TimeUtils.nanoTime();
-//            app.logger.log("PRICISE:\t" + Math.round(1. / Gdx.graphics.getRawDeltaTime()));
+//            Logger.log("PRICISE:\t" + Math.round(1. / Gdx.graphics.getRawDeltaTime()));
 //        }
     }
 
     @Override
     public void pause() {
-        app.logger.log("Pause \tPlaystate", LogManager.DEBUG);
+        Logger.log("Pause \tPlaystate", Logger.DEBUG);
     }
 
     @Override
     public void resume() {
-        app.logger.log("Resume \tPlaystate", LogManager.DEBUG);
+        Logger.log("Resume \tPlaystate", Logger.DEBUG);
     }
 
     @Override
     public void resize(int width, int height) {
-        app.logger.log("Resize \tPlaystate", LogManager.DEBUG);
+        Logger.log("Resize \tPlaystate", Logger.DEBUG);
     }
 
     @Override
     public void dispose() {
-        app.logger.log("Dispose Playstate", LogManager.DEBUG);
+        Logger.log("Dispose Playstate", Logger.DEBUG);
 
         batch.dispose();
         shapeRenderer.dispose();

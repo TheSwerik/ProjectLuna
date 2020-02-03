@@ -9,7 +9,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-public class LogManager {
+public class Logger {
 
     // Colors:
     private static final String ANSI_RESET = "\u001B[0m";
@@ -28,17 +28,17 @@ public class LogManager {
     public static final int INFO = 2;
     public static final int DEBUG = 3;
 
-    private final ApplicationLogger logger = Gdx.app.getApplicationLogger();
-    private final FileHandle logFile;
-    private final SimpleDateFormat dateFormatter;
-    private boolean writeToConsole;
-    private boolean writeToFile;
-    private int level;
+    private static final ApplicationLogger logger = Gdx.app.getApplicationLogger();
+    private static FileHandle logFile;
+    private static SimpleDateFormat dateFormatter;
+    private static boolean writeToConsole;
+    private static boolean writeToFile;
+    private static int level;
 
-    public LogManager(int level, boolean writeToFile, boolean writeToConsole) {
-        this.writeToFile = writeToFile;
-        this.writeToConsole = writeToConsole;
-        Gdx.app.setLogLevel(this.level = level);
+    public static void initLogManager(int lvl, boolean file, boolean console) {
+        writeToFile = file;
+        writeToConsole = console;
+        Gdx.app.setLogLevel(level = lvl);
         logFile = Gdx.files.local("log.txt");
         dateFormatter = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss", Locale.GERMANY);
 
@@ -48,7 +48,7 @@ public class LogManager {
         }
     }
 
-    public void log(String msg) {
+    public static void log(String msg) {
         String coloredTag = "";
         String tag = "";
         switch (level) {
@@ -84,17 +84,17 @@ public class LogManager {
         }
     }
 
-    public void log(String msg, int lvl) {
+    public static void log(String msg, int lvl) {
         //save temp Level
         int tempLvl = Gdx.app.getLogLevel();
-        Gdx.app.setLogLevel(this.level = lvl);
+        Gdx.app.setLogLevel(level = lvl);
 
-        this.log(msg);
+        log(msg);
 
-        Gdx.app.setLogLevel(this.level = tempLvl);
+        Gdx.app.setLogLevel(level = tempLvl);
     }
 
-    public void newLine() {
+    public static void newLine() {
         if (writeToConsole) {
             System.out.println();
         }
@@ -103,79 +103,79 @@ public class LogManager {
         }
     }
 
-    public void logToFile(String msg) {
+    public static void logToFile(String msg) {
         //save temp Booleans
         boolean tempConsole = writeToConsole;
         boolean tempFile = writeToFile;
         writeToConsole = false;
         writeToFile = true;
 
-        this.log(msg);
+        log(msg);
 
         //revert changes
         writeToConsole = tempConsole;
         writeToFile = tempFile;
     }
 
-    public void logToConsole(String msg) {
+    public static void logToConsole(String msg) {
         //save temp Booleans
         boolean tempConsole = writeToConsole;
         boolean tempFile = writeToFile;
         writeToConsole = true;
         writeToFile = false;
 
-        this.log(msg);
+        log(msg);
 
         //revert changes
         writeToConsole = tempConsole;
         writeToFile = tempFile;
     }
 
-    public void logToFile(String msg, int level) {
+    public static void logToFile(String msg, int lvl) {
         //save temp Level
-        int tempLvl = this.level;
-        Gdx.app.setLogLevel(this.level = level);
+        int tempLvl = level;
+        Gdx.app.setLogLevel(level = lvl);
         //save temp Booleans
         boolean tempConsole = writeToConsole;
         boolean tempFile = writeToFile;
         writeToConsole = false;
         writeToFile = true;
 
-        this.log(msg);
+        log(msg);
 
         //revert changes
         writeToConsole = tempConsole;
         writeToFile = tempFile;
-        Gdx.app.setLogLevel(this.level = tempLvl);
+        Gdx.app.setLogLevel(level = tempLvl);
     }
 
-    public void logToConsole(String msg, int level) {
+    public static void logToConsole(String msg, int lvl) {
         //save temp Level
-        int tempLvl = this.level;
-        Gdx.app.setLogLevel(this.level = level);
+        int tempLvl = level;
+        Gdx.app.setLogLevel(level = lvl);
         //save temp Booleans
         boolean tempConsole = writeToConsole;
         boolean tempFile = writeToFile;
         writeToConsole = true;
         writeToFile = false;
 
-        this.log(msg);
+        log(msg);
 
         //revert changes
         writeToConsole = tempConsole;
         writeToFile = tempFile;
-        Gdx.app.setLogLevel(this.level = tempLvl);
+        Gdx.app.setLogLevel(level = tempLvl);
     }
 
-    public void setWriteToFile(boolean writeToFile) {
-        this.writeToFile = writeToFile;
+    public static void setWriteToFile(boolean file) {
+        writeToFile = file;
     }
 
-    public void setWriteToConsole(boolean writeToConsole) {
-        this.writeToConsole = writeToConsole;
+    public static void setWriteToConsole(boolean console) {
+        writeToConsole = console;
     }
 
-    public void setLevel(int lvl) {
-        Gdx.app.setLogLevel(this.level = lvl);
+    public static void setLevel(int lvl) {
+        Gdx.app.setLogLevel(level = lvl);
     }
 }

@@ -22,13 +22,13 @@ public class GravitySystem extends IteratingSystem {
 
     @Override
     protected void processEntity(Entity entity, float delta) {
-//        PositionComponent pCom = pm.get(entity);
-//        VelocityComponent vCom = vm.get(entity);
-//        float gravity = gm.get(entity).gravity;
-//
-//        vCom.y -= gravity;
-//
-//        pCom.x += vCom.x;
-//        pCom.y += vCom.y;
+        PositionComponent pCom = pm.get(entity);
+        VelocityComponent vCom = vm.get(entity);
+        float gravity = gm.get(entity).gravity;
+
+        vCom.y -= gravity;
+
+        pCom.x += vCom.x;
+        pCom.y += vCom.y;
     }
 }

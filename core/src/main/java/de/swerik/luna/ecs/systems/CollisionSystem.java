@@ -45,7 +45,6 @@ public class CollisionSystem extends IteratingSystem implements ContactListener 
 
         SensorCollisionComponent data;
         short categoryBits;
-        System.out.println(fixtureA.getFilterData().categoryBits + "  " + fixtureB.getFilterData().categoryBits);
 
         if (fixtureA.isSensor() && fixtureB.getFilterData().categoryBits == LEVEL_BITS) {
             data = scm.get(entityA);
