@@ -2,6 +2,7 @@ package de.swerik.luna.ecs;
 
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
@@ -15,9 +16,7 @@ import de.swerik.luna.ecs.components.physics.PositionComponent;
 import de.swerik.luna.ecs.components.physics.VelocityComponent;
 import de.swerik.luna.ecs.components.states.EntityStateComponent;
 import de.swerik.luna.ecs.components.states.SensorCollisionComponent;
-import de.swerik.luna.ecs.systems.MovementSystem;
-import de.swerik.luna.ecs.systems.RenderSystem;
-import de.swerik.luna.ecs.systems.CollisionSystem;
+import de.swerik.luna.ecs.systems.*;
 import de.swerik.luna.utils.BodyGenerator;
 import de.swerik.luna.utils.Variables;
 
@@ -28,42 +27,54 @@ public class EntityManager {
     private static Array<Entity> entities = new Array<>();
     private static Array<Entity> destroyEntities = new Array<>();
 
-    public EntityManager( Engine e, SpriteBatch batch, World world) {
+    public EntityManager(Engine e, SpriteBatch batch, World world) {
         engine = e;
         this.world = world;
+        BodyGenerator.setWorld(world);
 
+        // Systems:
+        CollisionSystem scs = new CollisionSystem(world);
+        GravitySystem gs = new GravitySystem();
         MovementSystem ms = new MovementSystem();
-        engine.addSystem(ms);
+        PositionSystem ps = new PositionSystem();
         RenderSystem rs = new RenderSystem(batch);
-        engine.addSystem(rs);
-        CollisionSystem scs = new CollisionSystem( world);
+        TurnSystem ts = new TurnSystem(batch);
         engine.addSystem(scs);
+        engine.addSystem(gs);
+        engine.addSystem(ms);
+        engine.addSystem(ps);
+        engine.addSystem(rs);
+        engine.addSystem(ts);
 
+        //Entities:
         player = new Entity();
-        player.add(new PositionComponent(100, 100))
-                .add(new VelocityComponent(3))
-                .add(new MomentumComponent(new Vector2(0, 0)))
+        SpriteComponent spriteComponent = new SpriteComponent(new Texture("placeholder/sprites/ninjaboy/Idle__000.png"));
+        PositionComponent positionComponent = new PositionComponent(100, 100);
+        player.add(positionComponent)
+                .add(new TypeComponent(Variables.COLLISION_PLAYER))
+                .add(new PlayerDataComponent())
+                .add(spriteComponent)
+                .add(new VelocityComponent(3, 0))
                 .add(new EntityStateComponent())
                 .add(new SensorCollisionComponent())
                 .add(new RenderableComponent())
-                .add(new SpriteComponent(new Texture("placeholder/sprites/ninjaboy/Idle__000.png")))
-                .add(new BodyComponent(BodyGenerator.generate("bodies/Player.json",
-                        Variables.COLLISION_PLAYER,
-                        Variables.COLLISION_PLAYER,
-                        world,
-                        player.getComponent(SpriteComponent.class).sprite)));
+                .add(new BodyComponent(positionComponent, BodyGenerator.generate(player,
+                        spriteComponent.sprites.first(),
+                        "bodies/Player.json",
+                        Variables.FRIENDLY_BITS)));
         engine.addEntity(player);
 
         Entity wallEntity = new Entity();
-        wallEntity.add(new PositionComponent(100, 100))
+        PositionComponent wallPositionComponent = new PositionComponent(100, 100);
+        SpriteComponent wallSpriteComponent = new SpriteComponent(new Texture("placeholder/sprites/ninjaboy/Idle__000.png"));
+        wallEntity.add(wallPositionComponent)
                 .add(new SensorCollisionComponent())
                 .add(new RenderableComponent())
-                .add(new SpriteComponent(new Texture("placeholder/sprites/ninjaboy/Idle__000.png")))
-                .add(new BodyComponent(BodyGenerator.generate("bodies/Wall.json",
-                        Variables.COLLISION_LEVEL,
-                        Variables.COLLISION_LEVEL,
-                        world,
-                        wallEntity.getComponent(SpriteComponent.class).sprite)));
+                .add(wallSpriteComponent)
+                .add(new BodyComponent(wallPositionComponent,BodyGenerator.generate(wallEntity,
+                        wallSpriteComponent.sprites.first(),
+                        "bodies/Wall.json",
+                        Variables.LEVEL_BITS)));
         engine.addEntity(wallEntity);
     }
 

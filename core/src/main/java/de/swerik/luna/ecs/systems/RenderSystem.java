@@ -2,6 +2,7 @@ package de.swerik.luna.ecs.systems;
 
 import com.badlogic.ashley.core.*;
 import com.badlogic.ashley.systems.IteratingSystem;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import de.swerik.luna.ecs.components.physics.PositionComponent;
 import de.swerik.luna.ecs.components.graphics.RenderableComponent;
@@ -21,8 +22,9 @@ public class RenderSystem extends IteratingSystem {
     protected void processEntity(Entity entity, float deltaTime) {
         batch.begin(); //TODO fix batch
 
-        SpriteComponent sc = sm.get(entity);
-        sc.sprite.draw(batch);
+        for (Sprite sprite : sm.get(entity).sprites) {
+            sprite.draw(batch);
+        }
 
         batch.end();
 

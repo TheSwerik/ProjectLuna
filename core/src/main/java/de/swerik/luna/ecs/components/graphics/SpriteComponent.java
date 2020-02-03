@@ -8,10 +8,6 @@ import com.badlogic.gdx.utils.Array;
 public class SpriteComponent implements Component {
     public Array<Sprite> sprites = new Array<>();
 
-    public SpriteComponent(Texture texture) {
-        sprites.add(new Sprite(texture));
-    }
-
     public SpriteComponent(Texture... textures) {
         for (Texture texture : textures) {
             sprites.add(new Sprite(texture));

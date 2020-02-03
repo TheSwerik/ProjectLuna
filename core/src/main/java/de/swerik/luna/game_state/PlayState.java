@@ -56,7 +56,7 @@ public class PlayState extends GameState {
 //        createBox();
 
         // Entity Manager
-        entityManager = new EntityManager(app, new Engine(), batch, world);
+        entityManager = new EntityManager( new Engine(), batch, world);
     }
 
     @Override

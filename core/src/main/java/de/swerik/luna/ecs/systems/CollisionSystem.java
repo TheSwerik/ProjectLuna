@@ -3,6 +3,7 @@ package de.swerik.luna.ecs.systems;
 import com.badlogic.ashley.core.*;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.physics.box2d.*;
+import de.swerik.luna.ecs.components.TypeComponent;
 import de.swerik.luna.ecs.components.physics.BodyComponent;
 import de.swerik.luna.ecs.components.states.EntityStateComponent;
 import de.swerik.luna.ecs.components.states.SensorCollisionComponent;
@@ -15,7 +16,9 @@ public class CollisionSystem extends IteratingSystem implements ContactListener 
     private final ComponentMapper<EntityStateComponent> esm = ComponentMapper.getFor(EntityStateComponent.class);
     private final ComponentMapper<BodyComponent> bm = ComponentMapper.getFor(BodyComponent.class);
 
-    public CollisionSystem( World world) {
+    private final ComponentMapper<TypeComponent> tm = ComponentMapper.getFor(TypeComponent.class);
+
+    public CollisionSystem(World world) {
         super(Family.all(SensorCollisionComponent.class, BodyComponent.class, EntityStateComponent.class).get());
         world.setContactListener(this);
     }
@@ -30,11 +33,6 @@ public class CollisionSystem extends IteratingSystem implements ContactListener 
         } else {
             esc.state = EntityStateComponent.State.AIRBORN;
         }
-    }
-
-    private  void createCollision(Entity a, Entity b){
-        short typeA;
-        short typeB;
     }
 
     @Override
@@ -67,18 +65,6 @@ public class CollisionSystem extends IteratingSystem implements ContactListener 
                 break;
             case Variables.FRIENDLY_LEFT_WALL_SENSOR:
                 data.numLeftWall++;
-                break;
-            case Variables.FRIENDLY_RIGHT_SENSOR:
-                data.numRight++;
-                break;
-            case Variables.FRIENDLY_LEFT_SENSOR:
-                data.numLeft++;
-                break;
-            case Variables.FRIENDLY_RIGHT_UPPER_SENSOR:
-                data.numRightUpper++;
-                break;
-            case Variables.FRIENDLY_LEFT_UPPER_SENSOR:
-                data.numLeftUpper++;
                 break;
         }
     }

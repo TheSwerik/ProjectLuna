@@ -1,5 +1,6 @@
 package de.swerik.luna.utils;
 
+import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
@@ -10,7 +11,13 @@ import com.badlogic.gdx.utils.JsonValue;
 import static de.swerik.luna.utils.Variables.PIXELS_TO_METERS;
 
 public class BodyGenerator {
-    public static Body generate(String filePath, short filterCategory, short ownerCategory, World world, Sprite owner) {
+    private static World world;
+
+    public static void setWorld(World world) {
+        BodyGenerator.world = world;
+    }
+
+    public static Body generate(Entity entity, Sprite owner, String filePath, short filterCategory) {
         // parse JSON:
         JsonValue root = new JsonReader().parse(Gdx.files.internal(filePath));
 
@@ -74,7 +81,7 @@ public class BodyGenerator {
 //                fdef.filter.maskBits = maskingBits;
             }
 
-            body.createFixture(fdef).setUserData(ownerCategory);
+            body.createFixture(fdef).setUserData(entity);
             shape.dispose();
         }
 
