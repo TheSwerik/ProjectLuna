@@ -11,8 +11,10 @@ public class Input implements InputProcessor {
     public boolean keyDown(int keycode) {
         if (keycode == Keys.A) {
             xMovement = -1;
+            return true;
         } else if (keycode == Keys.D) {
             xMovement = 1;
+            return true;
         }
 
         return false;
@@ -22,8 +24,10 @@ public class Input implements InputProcessor {
     public boolean keyUp(int keycode) {
         if (keycode == Keys.A) {
             xMovement = 0;
+            return true;
         } else if (keycode == Keys.D) {
             xMovement = 0;
+            return true;
         }
         return false;
     }

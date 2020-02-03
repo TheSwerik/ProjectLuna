@@ -1,0 +1,56 @@
+{
+  "BodyDef": {
+    "fixedRotation": true,
+    "type": "Static"
+  },
+  "Fixtures": [
+    {
+      "description": "wall",
+      "isSensor": false,
+      "type": "Polygon",
+      "width": 50,
+      "height": 500,
+      "density": 1,
+      "friction": 1,
+      "restitution": 0,
+      "x": 1,
+      "y": 1
+    },
+    {
+      "description": "wall",
+      "isSensor": false,
+      "type": "Polygon",
+      "width": 50,
+      "height": 500,
+      "density": 1,
+      "friction": 1,
+      "restitution": 0,
+      "x": 1780,
+      "y": 1
+    },
+    {
+      "description": "wall",
+      "isSensor": false,
+      "type": "Polygon",
+      "width": 500,
+      "height": 50,
+      "density": 1,
+      "friction": 1,
+      "restitution": 0,
+      "x": 25,
+      "y": 500
+    },
+    {
+      "description": "wall",
+      "isSensor": false,
+      "type": "Polygon",
+      "width": 500,
+      "height": 50,
+      "density": 1,
+      "friction": 1,
+      "restitution": 0,
+      "x": 25,
+      "y": 500
+    }
+  ]
+}
