@@ -36,5 +36,4 @@ public class RenderSystem extends EntitySystem {
             batch.draw(sprite.sprite.getTexture(), position.x, position.y);
         }
     }
-
 }

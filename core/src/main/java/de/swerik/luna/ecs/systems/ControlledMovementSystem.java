@@ -21,7 +21,7 @@ public class ControlledMovementSystem extends EntitySystem {
     public void addedToEngine(Engine engine) {
         if (engine != null) {
             entities = engine.getEntitiesFor(Family.all(PositionComponent.class, VelocityComponent.class).get());
-        }else {
+        } else {
             app.logger.log("ControlledMovementSystem: Ashley Engine is null.", LogManager.ERROR);
         }
     }
@@ -34,5 +34,4 @@ public class ControlledMovementSystem extends EntitySystem {
             position.x += velocity.velocity * delta;
         }
     }
-
 }
