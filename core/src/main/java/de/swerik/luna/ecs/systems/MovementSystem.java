@@ -21,11 +21,12 @@ public class MovementSystem extends IteratingSystem {
     private final ComponentMapper<EntityStateComponent> esm = ComponentMapper.getFor(EntityStateComponent.class);
 
     public MovementSystem() {
-        super(Family.all(PositionComponent.class, VelocityComponent.class,  EntityStateComponent.class, BodyComponent.class).get());
+        super(Family.all(PositionComponent.class, VelocityComponent.class, EntityStateComponent.class, BodyComponent.class).get());
     }
 
     @Override
     protected void processEntity(Entity entity, float delta) {
+        delta = 60f / (1000f * delta);
         BodyComponent bodyCom = bm.get(entity);
         VelocityComponent velocityCom = vm.get(entity);
         SensorCollisionComponent sensorCom = scm.get(entity);
@@ -37,7 +38,7 @@ public class MovementSystem extends IteratingSystem {
         float momentumX = body.getLinearVelocity().x;
 
         float desiredVelocity = Math.max(body.getLinearVelocity().x - acceleration,
-                Math.min(Input.xMovement * velocityCom.x, body.getLinearVelocity().x + acceleration));
+                Math.min(Input.xMovement * velocityCom.x * delta, body.getLinearVelocity().x + acceleration));
 
         float velocityChange = desiredVelocity - momentumX;
         float impulse = body.getMass() * velocityChange;
@@ -45,7 +46,8 @@ public class MovementSystem extends IteratingSystem {
 
         // handle jump:
         if (stateCom.state == EntityStateComponent.State.GROUNDED && Gdx.input.isKeyJustPressed(com.badlogic.gdx.Input.Keys.SPACE)) {
-            body.applyForceToCenter(0, 60f, true);
+            body.applyForceToCenter(0, 200f * delta, true);
+            System.out.println("JUMP");
         }
     }
 }

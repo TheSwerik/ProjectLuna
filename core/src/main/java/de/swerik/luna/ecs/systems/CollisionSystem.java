@@ -45,6 +45,7 @@ public class CollisionSystem extends IteratingSystem implements ContactListener 
 
         SensorCollisionComponent data;
         short categoryBits;
+        System.out.println(fixtureA.getFilterData().categoryBits + "  " + fixtureB.getFilterData().categoryBits);
 
         if (fixtureA.isSensor() && fixtureB.getFilterData().categoryBits == LEVEL_BITS) {
             data = scm.get(entityA);
@@ -71,6 +72,36 @@ public class CollisionSystem extends IteratingSystem implements ContactListener 
 
     @Override
     public void endContact(Contact contact) {
+        Fixture fixtureA = contact.getFixtureA();
+        Fixture fixtureB = contact.getFixtureB();
+
+        Entity entityA = (Entity) fixtureA.getUserData();
+        Entity entityB = (Entity) fixtureB.getUserData();
+
+        SensorCollisionComponent data;
+        short categoryBits;
+
+        if (fixtureA.isSensor() && fixtureB.getFilterData().categoryBits == LEVEL_BITS) {
+            data = scm.get(entityA);
+            categoryBits = fixtureA.getFilterData().categoryBits;
+        } else if (fixtureB.isSensor() && fixtureA.getFilterData().categoryBits == LEVEL_BITS) {
+            data = scm.get(entityB);
+            categoryBits = fixtureB.getFilterData().categoryBits;
+        } else {
+            return;
+        }
+
+        switch (categoryBits) {
+            case Variables.FRIENDLY_FOOT_SENSOR:
+                data.numFoot--;
+                break;
+            case Variables.FRIENDLY_RIGHT_WALL_SENSOR:
+                data.numRightWall--;
+                break;
+            case Variables.FRIENDLY_LEFT_WALL_SENSOR:
+                data.numLeftWall--;
+                break;
+        }
 
     }
 

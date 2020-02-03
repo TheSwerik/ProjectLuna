@@ -22,7 +22,7 @@ public class BodyGenerator {
         JsonValue root = new JsonReader().parse(Gdx.files.internal(filePath));
 
         // BodyDef:
-        short maskingBits = (short) ((Variables.FRIENDLY_BITS | Variables.ENEMY_BITS | Variables.NEUTRAL_BITS | Variables.LEVEL_BITS) ^ filterCategory);
+        short maskingBits = (short) ((Variables.FRIENDLY_FOOT_SENSOR | Variables.FRIENDLY_BITS | Variables.ENEMY_BITS | Variables.NEUTRAL_BITS | Variables.LEVEL_BITS) ^ filterCategory);
 
         BodyDef bdef = new BodyDef();
 
