@@ -20,13 +20,11 @@ public class RenderSystem extends IteratingSystem {
 
     @Override
     protected void processEntity(Entity entity, float deltaTime) {
-        batch.begin(); //TODO fix batch
+    }
 
+    public void render(Entity entity) {
         for (Sprite sprite : sm.get(entity).sprites) {
             sprite.draw(batch);
         }
-
-        batch.end();
-
     }
 }

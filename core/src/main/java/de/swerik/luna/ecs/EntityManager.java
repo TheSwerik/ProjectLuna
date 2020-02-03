@@ -21,13 +21,13 @@ import de.swerik.luna.utils.BodyGenerator;
 import de.swerik.luna.utils.Variables;
 
 public class EntityManager {
-    private final Engine engine;
+    private final LunaEngine engine;
     private World world;
     private Entity player;
     private static Array<Entity> entities = new Array<>();
     private static Array<Entity> destroyEntities = new Array<>();
 
-    public EntityManager(Engine e, SpriteBatch batch, World world) {
+    public EntityManager(LunaEngine e, SpriteBatch batch, World world) {
         engine = e;
         this.world = world;
         BodyGenerator.setWorld(world);
@@ -71,7 +71,7 @@ public class EntityManager {
                 .add(new SensorCollisionComponent())
                 .add(new RenderableComponent())
                 .add(wallSpriteComponent)
-                .add(new BodyComponent(wallPositionComponent,BodyGenerator.generate(wallEntity,
+                .add(new BodyComponent(wallPositionComponent, BodyGenerator.generate(wallEntity,
                         wallSpriteComponent.sprites.first(),
                         "bodies/Wall.json",
                         Variables.LEVEL_BITS)));
@@ -88,6 +88,10 @@ public class EntityManager {
             }
         }
         EntityManager.destroyEntities.clear();
+    }
+
+    public void render() {
+        engine.render();
     }
 
     public static void add(Entity entity) {

@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import de.swerik.luna.Luna;
 import de.swerik.luna.ecs.EntityManager;
+import de.swerik.luna.ecs.LunaEngine;
 import de.swerik.luna.manager.GameStateManager;
 import de.swerik.luna.manager.Logger;
 import de.swerik.luna.utils.Variables;
@@ -46,11 +47,8 @@ public class PlayState extends GameState {
         world = new World(new Vector2(0, -9.81f), true);
         debugRenderer = new Box2DDebugRenderer();
 
-        //placeholder floor
-//        createBox();
-
         // Entity Manager
-        entityManager = new EntityManager( new Engine(), batch, world);
+        entityManager = new EntityManager(new LunaEngine(), batch, world);
     }
 
     @Override
@@ -67,7 +65,9 @@ public class PlayState extends GameState {
     @Override
     public void render() {
         debugRenderer.render(world, cam.combined);
-
+        batch.begin();
+        entityManager.render();
+        batch.end();
 
         //Display FPS:
 //        if (lastFPS != Gdx.graphics.getFramesPerSecond()) {
@@ -101,38 +101,5 @@ public class PlayState extends GameState {
 
         batch.dispose();
         shapeRenderer.dispose();
-    }
-
-    private void createBox() {
-        BodyDef bdef = new BodyDef();
-        FixtureDef fdef = new FixtureDef();
-        PolygonShape shape = new PolygonShape();
-
-        //floor
-        bdef.position.set(Luna.V_WIDTH / 2 * PIXELS_TO_METERS, 35f * PIXELS_TO_METERS);
-        bdef.type = BodyDef.BodyType.StaticBody;
-        Body body = world.createBody(bdef);
-        shape.setAsBox(900f * PIXELS_TO_METERS, 25f * PIXELS_TO_METERS);
-        fdef.shape = shape;
-        fdef.filter.categoryBits = Variables.LEVEL_BITS;
-//        fdef.filter.maskBits = Variables.FRIENDLY_LEFT_WALL_SENSOR;
-        body.createFixture(fdef).setUserData("wall");
-
-        //ceiling
-        bdef.position.set(Luna.V_WIDTH / 2 * PIXELS_TO_METERS, (Luna.V_HEIGHT - 35f) * PIXELS_TO_METERS);
-        body = world.createBody(bdef);
-        body.createFixture(fdef).setUserData("wall");
-
-        //left
-        bdef.position.set(35f * PIXELS_TO_METERS, (Luna.V_HEIGHT / 2) * PIXELS_TO_METERS);
-        body = world.createBody(bdef);
-        shape.setAsBox(25f * PIXELS_TO_METERS, 500f * PIXELS_TO_METERS); // 50 thicc and 1000 tall
-        body.createFixture(fdef).setUserData("wall");
-
-        //right
-        bdef.position.set((Luna.V_WIDTH - 35f) * PIXELS_TO_METERS, (Luna.V_HEIGHT / 2) * PIXELS_TO_METERS);
-        body = world.createBody(bdef);
-        body.createFixture(fdef).setUserData("wall");
-
     }
 }
