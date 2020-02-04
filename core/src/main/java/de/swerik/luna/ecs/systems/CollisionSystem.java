@@ -57,13 +57,13 @@ public class CollisionSystem extends IteratingSystem implements ContactListener 
         }
 
         switch (categoryBits) {
-            case Variables.FRIENDLY_FOOT_SENSOR:
+            case Variables.FOOT_SENSOR:
                 data.numFoot++;
                 break;
-            case Variables.FRIENDLY_RIGHT_WALL_SENSOR:
+            case Variables.RIGHT_WALL_SENSOR:
                 data.numRightWall++;
                 break;
-            case Variables.FRIENDLY_LEFT_WALL_SENSOR:
+            case Variables.LEFT_WALL_SENSOR:
                 data.numLeftWall++;
                 break;
         }
@@ -91,13 +91,13 @@ public class CollisionSystem extends IteratingSystem implements ContactListener 
         }
 
         switch (categoryBits) {
-            case Variables.FRIENDLY_FOOT_SENSOR:
+            case Variables.FOOT_SENSOR:
                 data.numFoot--;
                 break;
-            case Variables.FRIENDLY_RIGHT_WALL_SENSOR:
+            case Variables.RIGHT_WALL_SENSOR:
                 data.numRightWall--;
                 break;
-            case Variables.FRIENDLY_LEFT_WALL_SENSOR:
+            case Variables.LEFT_WALL_SENSOR:
                 data.numLeftWall--;
                 break;
         }

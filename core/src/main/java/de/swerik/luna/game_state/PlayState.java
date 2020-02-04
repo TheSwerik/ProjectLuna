@@ -1,15 +1,13 @@
 package de.swerik.luna.game_state;
 
-import com.badlogic.ashley.core.Engine;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import de.swerik.luna.Luna;
-import de.swerik.luna.ecs.EntityManager;
+import de.swerik.luna.manager.EntityManager;
 import de.swerik.luna.ecs.LunaEngine;
 import de.swerik.luna.manager.GameStateManager;
 import de.swerik.luna.manager.Logger;
-import de.swerik.luna.utils.Variables;
 
 import static de.swerik.luna.utils.Variables.PIXELS_TO_METERS;
 

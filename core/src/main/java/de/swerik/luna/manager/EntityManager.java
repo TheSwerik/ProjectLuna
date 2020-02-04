@@ -1,13 +1,11 @@
-package de.swerik.luna.ecs;
+package de.swerik.luna.manager;
 
-import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
+import de.swerik.luna.ecs.LunaEngine;
 import de.swerik.luna.ecs.components.*;
 import de.swerik.luna.ecs.components.graphics.RenderableComponent;
 import de.swerik.luna.ecs.components.graphics.SpriteComponent;

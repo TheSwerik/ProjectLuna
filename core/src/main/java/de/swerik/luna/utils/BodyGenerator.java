@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
+import de.swerik.luna.manager.Logger;
 
 import static de.swerik.luna.utils.Variables.PIXELS_TO_METERS;
 
@@ -22,7 +23,11 @@ public class BodyGenerator {
         JsonValue root = new JsonReader().parse(Gdx.files.internal(filePath));
 
         // BodyDef:
-        short maskingBits = (short) ((Variables.FRIENDLY_FOOT_SENSOR | Variables.FRIENDLY_BITS | Variables.ENEMY_BITS | Variables.NEUTRAL_BITS | Variables.LEVEL_BITS) ^ filterCategory);
+        short maskingBits = (short) ((Variables.FRIENDLY_BITS | Variables.ENEMY_BITS | Variables.NEUTRAL_BITS | Variables.LEVEL_BITS) ^ filterCategory);
+        // TODO:
+        if (filePath.contains("Wall"))
+            maskingBits = (short) ((Variables.FRIENDLY_BITS | Variables.ENEMY_BITS | Variables.NEUTRAL_BITS | Variables.FRIENDLY_FOOT_SENSOR | Variables.FRIENDLY_RIGHT_WALL_SENSOR | Variables.FRIENDLY_LEFT_WALL_SENSOR) ^ filterCategory);
+
 
         BodyDef bdef = new BodyDef();
 
@@ -34,7 +39,7 @@ public class BodyGenerator {
         } else if (bodyType.equalsIgnoreCase("Kinematic")) {
             bdef.type = BodyDef.BodyType.KinematicBody;
         } else {
-            System.out.println("Didnt work");
+            Logger.log("Cannot parse BodyType: " + bodyType + " for: " + filePath, Logger.ERROR);
         }
 
         bdef.fixedRotation = root.get("BodyDef").getBoolean("fixedRotation");
@@ -62,7 +67,7 @@ public class BodyGenerator {
                 ((CircleShape) shape).setPosition(new Vector2((body.getLocalCenter().x + fixture.getFloat("x")) * PIXELS_TO_METERS,
                         (body.getLocalCenter().y + fixture.getFloat("y")) * PIXELS_TO_METERS));
             } else {
-                System.out.println("Didnt work");
+                Logger.log("Cannot parse Shape type: " + type + " for: " + filePath, Logger.ERROR);
                 continue;
             }
 
@@ -86,6 +91,5 @@ public class BodyGenerator {
         }
 
         return body;
-        //TODO log errors
     }
 }

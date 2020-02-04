@@ -9,6 +9,10 @@ public class SpriteComponent implements Component {
     public Array<Sprite> sprites = new Array<>();
 
     public SpriteComponent(Texture... textures) {
+        addTextures(textures);
+    }
+
+    public void addTextures(Texture... textures) {
         for (Texture texture : textures) {
             sprites.add(new Sprite(texture));
         }

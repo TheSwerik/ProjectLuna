@@ -1,32 +1,33 @@
 package de.swerik.luna.manager;
 
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.math.Vector2;
 
 import static com.badlogic.gdx.Input.Keys;
 
 public class Input implements InputProcessor {
-    public static byte xMovement = 0;
+    public static Vector2 keyForce = new Vector2(0, 0);
 
     @Override
     public boolean keyDown(int keycode) {
+        keyForce.x = 0;
         if (keycode == Keys.A) {
-            xMovement = -1;
-            return true;
-        } else if (keycode == Keys.D) {
-            xMovement = 1;
-            return true;
+            keyForce.x -= 1;
+        }
+        if (keycode == Keys.D) {
+            keyForce.x += 1;
         }
 
-        return false;
+        return true;
     }
 
     @Override
     public boolean keyUp(int keycode) {
         if (keycode == Keys.A) {
-            xMovement = 0;
+            keyForce.x = 0;
             return true;
         } else if (keycode == Keys.D) {
-            xMovement = 0;
+            keyForce.x = 0;
             return true;
         }
         return false;

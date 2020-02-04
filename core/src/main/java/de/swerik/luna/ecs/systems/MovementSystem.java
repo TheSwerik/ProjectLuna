@@ -38,7 +38,7 @@ public class MovementSystem extends IteratingSystem {
         float momentumX = body.getLinearVelocity().x;
 
         float desiredVelocity = Math.max(body.getLinearVelocity().x - acceleration,
-                Math.min(Input.xMovement * velocityCom.x * delta, body.getLinearVelocity().x + acceleration));
+                Math.min(Input.keyForce.x * velocityCom.x * delta, body.getLinearVelocity().x + acceleration));
 
         float velocityChange = desiredVelocity - momentumX;
         float impulse = body.getMass() * velocityChange;
