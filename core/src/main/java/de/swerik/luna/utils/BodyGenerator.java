@@ -9,7 +9,7 @@ import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
 import de.swerik.luna.manager.Logger;
 
-import static de.swerik.luna.utils.Variables.PIXELS_TO_METERS;
+import static de.swerik.luna.utils.Variables.MPP;
 
 public class BodyGenerator {
     private static World world;
@@ -44,8 +44,8 @@ public class BodyGenerator {
 
         bdef.fixedRotation = root.get("BodyDef").getBoolean("fixedRotation");
 
-        bdef.position.set((owner.getX() + owner.getWidth() / 2) * PIXELS_TO_METERS,
-                (owner.getY() + owner.getHeight() / 2) * PIXELS_TO_METERS);
+        bdef.position.set((owner.getX() + owner.getWidth() / 2) * MPP,
+                (owner.getY() + owner.getHeight() / 2) * MPP);
 
         Body body = world.createBody(bdef);
 
@@ -57,15 +57,15 @@ public class BodyGenerator {
             Shape shape;
             if (type.equalsIgnoreCase("Polygon")) {
                 shape = new PolygonShape();
-                ((PolygonShape) shape).setAsBox(fixture.getFloat("width") * PIXELS_TO_METERS,
-                        fixture.getFloat("height") * PIXELS_TO_METERS,
-                        new Vector2((body.getLocalCenter().x + fixture.getFloat("x")) * PIXELS_TO_METERS,
-                                (body.getLocalCenter().y + fixture.getFloat("y")) * PIXELS_TO_METERS), 0f);
+                ((PolygonShape) shape).setAsBox(fixture.getFloat("width") * MPP,
+                        fixture.getFloat("height") * MPP,
+                        new Vector2((body.getLocalCenter().x + fixture.getFloat("x")) * MPP,
+                                (body.getLocalCenter().y + fixture.getFloat("y")) * MPP), 0f);
             } else if (type.equalsIgnoreCase("Circle")) {
                 shape = new CircleShape();
-                shape.setRadius(fixture.getFloat("radius") * PIXELS_TO_METERS);
-                ((CircleShape) shape).setPosition(new Vector2((body.getLocalCenter().x + fixture.getFloat("x")) * PIXELS_TO_METERS,
-                        (body.getLocalCenter().y + fixture.getFloat("y")) * PIXELS_TO_METERS));
+                shape.setRadius(fixture.getFloat("radius") * MPP);
+                ((CircleShape) shape).setPosition(new Vector2((body.getLocalCenter().x + fixture.getFloat("x")) * MPP,
+                        (body.getLocalCenter().y + fixture.getFloat("y")) * MPP));
             } else {
                 Logger.log("Cannot parse Shape type: " + type + " for: " + filePath, Logger.ERROR);
                 continue;

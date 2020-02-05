@@ -1,8 +1,8 @@
 package de.swerik.luna.utils;
 
 public class Variables {
-    public static final float PIXELS_TO_METERS = 0.01f; // 100 pixels = 1 Meter
-    public static final int METERS_TO_PIXELS = 100; // 1 Meter = 100 pixels
+    public static final float MPP = 0.01f; // 0,01 meters are in a pixel
+    public static final int PPM = 100; // 100 pixels are in a meter
 
     // Filters:
     public static final short COLLISION_PLAYER = -1;

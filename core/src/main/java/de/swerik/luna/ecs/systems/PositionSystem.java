@@ -7,11 +7,9 @@ import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import de.swerik.luna.ecs.components.graphics.SpriteComponent;
 import de.swerik.luna.ecs.components.physics.BodyComponent;
-import de.swerik.luna.ecs.components.physics.GravityComponent;
 import de.swerik.luna.ecs.components.physics.PositionComponent;
-import de.swerik.luna.ecs.components.physics.VelocityComponent;
 
-import static de.swerik.luna.utils.Variables.METERS_TO_PIXELS;
+import static de.swerik.luna.utils.Variables.PPM;
 
 public class PositionSystem extends IteratingSystem {
     private final ComponentMapper<PositionComponent> pm = ComponentMapper.getFor(PositionComponent.class);
@@ -29,8 +27,8 @@ public class PositionSystem extends IteratingSystem {
         BodyComponent bCom = bm.get(entity);
 
         if (bCom != null) {
-            pCom.x = bCom.body.getPosition().x * METERS_TO_PIXELS - sCom.sprites.get(0).getWidth() / 2;
-            pCom.y = bCom.body.getPosition().y * METERS_TO_PIXELS - sCom.sprites.get(0).getHeight() / 2;
+            pCom.x = bCom.body.getPosition().x * PPM - sCom.sprites.get(0).getWidth() / 2;
+            pCom.y = bCom.body.getPosition().y * PPM - sCom.sprites.get(0).getHeight() / 2;
         }
 
         if (sCom != null) {

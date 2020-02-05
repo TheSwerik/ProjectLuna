@@ -9,7 +9,7 @@ import de.swerik.luna.ecs.LunaEngine;
 import de.swerik.luna.manager.GameStateManager;
 import de.swerik.luna.manager.Logger;
 
-import static de.swerik.luna.utils.Variables.PIXELS_TO_METERS;
+import static de.swerik.luna.utils.Variables.PPM;
 
 public class PlayState extends GameState {
 
@@ -37,9 +37,10 @@ public class PlayState extends GameState {
         setBackgroundColor(0f, 0, 0f, 1);
 
         cam = new OrthographicCamera();
-        cam.setToOrtho(false, Luna.V_WIDTH * PIXELS_TO_METERS, Luna.V_HEIGHT * PIXELS_TO_METERS);
-        cam.position.set(Luna.V_WIDTH / 2 * PIXELS_TO_METERS, Luna.V_HEIGHT / 2 * PIXELS_TO_METERS, 0);
+        cam.setToOrtho(false, Luna.V_WIDTH , Luna.V_HEIGHT );
+        cam.position.set(Luna.V_WIDTH / 2 , Luna.V_HEIGHT / 2 , 0);
         cam.update();
+        batch.setProjectionMatrix(cam.combined);
 
         // Box2D Stuff
         world = new World(new Vector2(0, -9.81f), true);
@@ -62,7 +63,7 @@ public class PlayState extends GameState {
 
     @Override
     public void render() {
-        debugRenderer.render(world, cam.combined);
+        debugRenderer.render(world, cam.combined.cpy().scl(PPM));
         batch.begin();
         entityManager.render();
         batch.end();
