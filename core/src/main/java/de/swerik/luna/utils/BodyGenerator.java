@@ -12,13 +12,8 @@ import de.swerik.luna.manager.Logger;
 import static de.swerik.luna.utils.Variables.MPP;
 
 public class BodyGenerator {
-    private static World world;
 
-    public static void setWorld(World world) {
-        BodyGenerator.world = world;
-    }
-
-    public static Body generate(Entity entity, Sprite owner, String filePath, short filterCategory) {
+    public static Body generate(Entity entity, Sprite owner, String filePath, short filterCategory, World world) {
         // parse JSON:
         JsonValue root = new JsonReader().parse(Gdx.files.internal(filePath));
 

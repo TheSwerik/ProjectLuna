@@ -28,7 +28,6 @@ public class EntityManager {
     public EntityManager(LunaEngine e, SpriteBatch batch, World world) {
         engine = e;
         this.world = world;
-        BodyGenerator.setWorld(world);
 
         // Systems:
         CollisionSystem scs = new CollisionSystem(world);
@@ -59,7 +58,8 @@ public class EntityManager {
                 .add(new BodyComponent(positionComponent, BodyGenerator.generate(player,
                         spriteComponent.sprites.first(),
                         "bodies/Player.json",
-                        Variables.FRIENDLY_BITS)));
+                        Variables.FRIENDLY_BITS,
+                        world)));
         engine.addEntity(player);
 
         Entity wallEntity = new Entity();
@@ -72,7 +72,8 @@ public class EntityManager {
                 .add(new BodyComponent(wallPositionComponent, BodyGenerator.generate(wallEntity,
                         wallSpriteComponent.sprites.first(),
                         "bodies/Wall.json",
-                        Variables.LEVEL_BITS)));
+                        Variables.LEVEL_BITS,
+                        world)));
         engine.addEntity(wallEntity);
     }
 
