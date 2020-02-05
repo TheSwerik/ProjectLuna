@@ -51,7 +51,7 @@ public class EntityManager {
                 .add(new TypeComponent(Variables.COLLISION_PLAYER))
                 .add(new PlayerDataComponent())
                 .add(spriteComponent)
-                .add(new VelocityComponent(3, 0))
+                .add(new VelocityComponent(300, 0))
                 .add(new EntityStateComponent())
                 .add(new SensorCollisionComponent())
                 .add(new RenderableComponent())

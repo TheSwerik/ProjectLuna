@@ -26,7 +26,7 @@ public class Lwjgl3Launcher {
         configuration.setWindowPosition(-1, 25);
         configuration.setWindowIcon("libgdx128.png", "libgdx64.png", "libgdx32.png", "libgdx16.png");
 //        configuration.setMaximized(true);
-//        configuration.useVsync(true);
+        configuration.useVsync(false);
 //        configuration.setResizable(false);
         return configuration;
     }

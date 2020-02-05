@@ -1,8 +1,12 @@
 package de.swerik.luna.game_state;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.utils.TimeUtils;
 import de.swerik.luna.Luna;
 import de.swerik.luna.manager.EntityManager;
 import de.swerik.luna.ecs.LunaEngine;
@@ -19,8 +23,7 @@ public class PlayState extends GameState {
 
     private Box2DDebugRenderer debugRenderer;
 
-    private long lastNanoTime = 0;
-    private long lastFPS = 0;
+    private BitmapFont font;
 
     // Entity Manager
     private EntityManager entityManager;
@@ -48,6 +51,9 @@ public class PlayState extends GameState {
 
         // Entity Manager
         entityManager = new EntityManager(new LunaEngine(), batch, world);
+
+        font = new BitmapFont();
+        font.setColor(Color.WHITE);
     }
 
     @Override
@@ -58,25 +64,18 @@ public class PlayState extends GameState {
     @Override
     public void update(float delta) {
         world.step(1f / 60f, 6, 2);
+//        entityManager.update(1f/delta);
         entityManager.update(delta);
     }
 
     @Override
     public void render() {
         debugRenderer.render(world, cam.combined.cpy().scl(PPM));
+
         batch.begin();
         entityManager.render();
+        font.draw(batch,  Gdx.graphics.getFramesPerSecond() + "", 10, Luna.V_HEIGHT - 10);
         batch.end();
-
-        //Display FPS:
-//        if (lastFPS != Gdx.graphics.getFramesPerSecond()) {
-//            lastFPS = Gdx.graphics.getFramesPerSecond();
-//            Logger.log("MehGDX:\t" + lastFPS);
-//        }
-//        if (TimeUtils.timeSinceNanos(lastNanoTime) >= 333333333) {
-//            lastNanoTime = TimeUtils.nanoTime();
-//            Logger.log("PRICISE:\t" + Math.round(1. / Gdx.graphics.getRawDeltaTime()));
-//        }
     }
 
     @Override

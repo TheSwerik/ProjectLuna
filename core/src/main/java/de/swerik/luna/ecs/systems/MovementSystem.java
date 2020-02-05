@@ -26,7 +26,6 @@ public class MovementSystem extends IteratingSystem {
 
     @Override
     protected void processEntity(Entity entity, float delta) {
-        delta = 60f / (1000f * delta);
         BodyComponent bodyCom = bm.get(entity);
         VelocityComponent velocityCom = vm.get(entity);
         SensorCollisionComponent sensorCom = scm.get(entity);
@@ -46,7 +45,7 @@ public class MovementSystem extends IteratingSystem {
 
         // handle jump:
         if (stateCom.state == EntityStateComponent.State.GROUNDED && Gdx.input.isKeyJustPressed(com.badlogic.gdx.Input.Keys.SPACE)) {
-            body.applyForceToCenter(0, 200f * delta, true);
+            body.applyForceToCenter(0, 20000f * delta, true);
         }
     }
 }
