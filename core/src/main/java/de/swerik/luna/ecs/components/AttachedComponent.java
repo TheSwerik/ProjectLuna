@@ -1,10 +1,13 @@
 package de.swerik.luna.ecs.components;
 
-import com.badlogic.ashley.core.Component;
-import com.badlogic.ashley.core.Entity;
+import com.artemis.Component;
+import com.artemis.Entity;
 
-public class AttachedComponent implements Component {
+public class AttachedComponent extends Component {
     public Entity attachedTo;
+
+    public AttachedComponent() {
+    }
 
     public AttachedComponent(Entity attachedTo) {
         this.attachedTo = attachedTo;

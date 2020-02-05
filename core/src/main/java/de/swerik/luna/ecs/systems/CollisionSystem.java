@@ -1,7 +1,10 @@
 package de.swerik.luna.ecs.systems;
 
-import com.badlogic.ashley.core.*;
-import com.badlogic.ashley.systems.IteratingSystem;
+import com.artemis.Aspect;
+import com.artemis.ComponentMapper;
+import com.artemis.Entity;
+import com.artemis.systems.EntityProcessingSystem;
+import com.artemis.systems.IteratingSystem;
 import com.badlogic.gdx.physics.box2d.*;
 import de.swerik.luna.ecs.components.TypeComponent;
 import de.swerik.luna.ecs.components.physics.BodyComponent;
@@ -12,19 +15,18 @@ import de.swerik.luna.utils.Variables;
 import static de.swerik.luna.utils.Variables.LEVEL_BITS;
 
 public class CollisionSystem extends IteratingSystem implements ContactListener {
-    private final ComponentMapper<SensorCollisionComponent> scm = ComponentMapper.getFor(SensorCollisionComponent.class);
-    private final ComponentMapper<EntityStateComponent> esm = ComponentMapper.getFor(EntityStateComponent.class);
-    private final ComponentMapper<BodyComponent> bm = ComponentMapper.getFor(BodyComponent.class);
-
-    private final ComponentMapper<TypeComponent> tm = ComponentMapper.getFor(TypeComponent.class);
+    private ComponentMapper<SensorCollisionComponent> scm;
+    private ComponentMapper<EntityStateComponent> esm;
+    private ComponentMapper<BodyComponent> bm;
+    private ComponentMapper<TypeComponent> tm;
 
     public CollisionSystem(World world) {
-        super(Family.all(SensorCollisionComponent.class, BodyComponent.class, EntityStateComponent.class).get());
+        super(Aspect.all(SensorCollisionComponent.class, BodyComponent.class, EntityStateComponent.class));
         world.setContactListener(this);
     }
 
     @Override
-    protected void processEntity(Entity entity, float delta) {
+    protected void process(int entity) {
         SensorCollisionComponent scc = scm.get(entity);
         EntityStateComponent esc = esm.get(entity);
 
@@ -40,8 +42,8 @@ public class CollisionSystem extends IteratingSystem implements ContactListener 
         Fixture fixtureA = contact.getFixtureA();
         Fixture fixtureB = contact.getFixtureB();
 
-        Entity entityA = (Entity) fixtureA.getUserData();
-        Entity entityB = (Entity) fixtureB.getUserData();
+        int entityA = (int) fixtureA.getUserData();
+        int entityB = (int) fixtureB.getUserData();
 
         SensorCollisionComponent data;
         short categoryBits;

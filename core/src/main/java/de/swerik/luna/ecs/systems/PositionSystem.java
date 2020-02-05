@@ -1,9 +1,10 @@
 package de.swerik.luna.ecs.systems;
 
-import com.badlogic.ashley.core.ComponentMapper;
-import com.badlogic.ashley.core.Entity;
-import com.badlogic.ashley.core.Family;
-import com.badlogic.ashley.systems.IteratingSystem;
+import com.artemis.Aspect;
+import com.artemis.ComponentMapper;
+import com.artemis.Entity;
+import com.artemis.systems.EntityProcessingSystem;
+import com.artemis.systems.IteratingSystem;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import de.swerik.luna.ecs.components.graphics.SpriteComponent;
 import de.swerik.luna.ecs.components.physics.BodyComponent;
@@ -12,16 +13,16 @@ import de.swerik.luna.ecs.components.physics.PositionComponent;
 import static de.swerik.luna.utils.Variables.PPM;
 
 public class PositionSystem extends IteratingSystem {
-    private final ComponentMapper<PositionComponent> pm = ComponentMapper.getFor(PositionComponent.class);
-    private final ComponentMapper<SpriteComponent> sm = ComponentMapper.getFor(SpriteComponent.class);
-    private final ComponentMapper<BodyComponent> bm = ComponentMapper.getFor(BodyComponent.class);
+    private  ComponentMapper<PositionComponent> pm ;
+    private  ComponentMapper<SpriteComponent> sm ;
+    private  ComponentMapper<BodyComponent> bm ;
 
     public PositionSystem() {
-        super(Family.all(PositionComponent.class).get());
+        super(Aspect.all(PositionComponent.class));
     }
 
     @Override
-    protected void processEntity(Entity entity, float delta) {
+    protected void process(int entity) {
         PositionComponent pCom = pm.get(entity);
         SpriteComponent sCom = sm.get(entity);
         BodyComponent bCom = bm.get(entity);

@@ -1,17 +1,30 @@
 package de.swerik.luna.game_state;
 
+import com.artemis.WorldConfiguration;
+import com.artemis.WorldConfigurationBuilder;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
-import com.badlogic.gdx.utils.TimeUtils;
 import de.swerik.luna.Luna;
-import de.swerik.luna.manager.EntityManager;
-import de.swerik.luna.ecs.LunaEngine;
+import de.swerik.luna.ecs.components.PlayerDataComponent;
+import de.swerik.luna.ecs.components.TypeComponent;
+import de.swerik.luna.ecs.components.graphics.RenderableComponent;
+import de.swerik.luna.ecs.components.graphics.SpriteComponent;
+import de.swerik.luna.ecs.components.physics.BodyComponent;
+import de.swerik.luna.ecs.components.physics.PositionComponent;
+import de.swerik.luna.ecs.components.physics.VelocityComponent;
+import de.swerik.luna.ecs.components.states.EntityStateComponent;
+import de.swerik.luna.ecs.components.states.SensorCollisionComponent;
+import de.swerik.luna.ecs.systems.*;
 import de.swerik.luna.manager.GameStateManager;
 import de.swerik.luna.manager.Logger;
+import de.swerik.luna.manager.Strategy;
+import de.swerik.luna.utils.BodyGenerator;
+import de.swerik.luna.utils.Variables;
 
 import static de.swerik.luna.utils.Variables.PPM;
 
@@ -26,7 +39,7 @@ public class PlayState extends GameState {
     private BitmapFont font;
 
     // Entity Manager
-    private EntityManager entityManager;
+    private com.artemis.World artemisWorld;
 
     public PlayState(Luna app, GameStateManager gsm) {
         super(app, gsm);
@@ -50,7 +63,18 @@ public class PlayState extends GameState {
         debugRenderer = new Box2DDebugRenderer();
 
         // Entity Manager
-        entityManager = new EntityManager(new LunaEngine(), batch, world);
+        WorldConfiguration config = new WorldConfigurationBuilder()
+                .with(
+                        new CollisionSystem(world),
+                        new GravitySystem(),
+                        new MovementSystem(),
+                        new PositionSystem(),
+                        new RenderSystem(batch),
+                        new TurnSystem(batch)
+                )
+                .register(new Strategy()).build();
+        artemisWorld = new com.artemis.World(config);
+        initEntities();
 
         font = new BitmapFont();
         font.setColor(Color.WHITE);
@@ -65,7 +89,8 @@ public class PlayState extends GameState {
     public void update(float delta) {
         world.step(1f / 60f, 6, 2);
 //        entityManager.update(1f/delta);
-        entityManager.update(delta);
+        artemisWorld.setDelta(delta);
+        artemisWorld.process();
     }
 
     @Override
@@ -73,8 +98,8 @@ public class PlayState extends GameState {
         debugRenderer.render(world, cam.combined.cpy().scl(PPM));
 
         batch.begin();
-        entityManager.render();
-        font.draw(batch,  Gdx.graphics.getFramesPerSecond() + "", 10, Luna.V_HEIGHT - 10);
+        ((Strategy) artemisWorld.getInvocationStrategy()).render();
+        font.draw(batch, Gdx.graphics.getFramesPerSecond() + "", 10, Luna.V_HEIGHT - 10);
         batch.end();
     }
 
@@ -97,4 +122,36 @@ public class PlayState extends GameState {
     public void dispose() {
         Logger.log("Dispose Playstate", Logger.DEBUG);
     }
+
+    private void initEntities(){
+        //Entities:
+        int player = artemisWorld.create();
+        SpriteComponent spriteComponent = new SpriteComponent(new Texture("placeholder/sprites/ninjaboy/Idle__000.png"));
+        PositionComponent positionComponent = new PositionComponent(200, 200);
+        artemisWorld.edit(player).add(positionComponent)
+                .add(new TypeComponent(Variables.COLLISION_PLAYER))
+                .add(new PlayerDataComponent())
+                .add(spriteComponent)
+                .add(new VelocityComponent(300, 0))
+                .add(new EntityStateComponent())
+                .add(new SensorCollisionComponent())
+                .add(new RenderableComponent())
+                .add(new BodyComponent(positionComponent, BodyGenerator.generate(player,
+                        spriteComponent.sprites.first(),
+                        "bodies/Player.json",
+                        Variables.FRIENDLY_BITS,
+                        world)));
+
+        int wallEntity = artemisWorld.create();
+        PositionComponent wallPositionComponent = new PositionComponent(0, 0);
+        SpriteComponent wallSpriteComponent = new SpriteComponent(new Texture("placeholder/sprites/ninjaboy/Idle__000.png"));
+        artemisWorld.edit(wallEntity).add(wallPositionComponent)
+                .add(new SensorCollisionComponent())
+                .add(new RenderableComponent())
+                .add(wallSpriteComponent)
+                .add(new BodyComponent(wallPositionComponent, BodyGenerator.generate(wallEntity,
+                        wallSpriteComponent.sprites.first(),
+                        "bodies/Wall.json",
+                        Variables.LEVEL_BITS,
+                        world)));}
 }

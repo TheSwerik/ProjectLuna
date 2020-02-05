@@ -1,7 +1,10 @@
 package de.swerik.luna.ecs.systems;
 
-import com.badlogic.ashley.core.*;
-import com.badlogic.ashley.systems.IteratingSystem;
+import com.artemis.Aspect;
+import com.artemis.ComponentMapper;
+import com.artemis.Entity;
+import com.artemis.systems.EntityProcessingSystem;
+import com.artemis.systems.IteratingSystem;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -15,17 +18,17 @@ import de.swerik.luna.manager.Input;
 
 public class MovementSystem extends IteratingSystem {
 
-    private final ComponentMapper<BodyComponent> bm = ComponentMapper.getFor(BodyComponent.class);
-    private final ComponentMapper<VelocityComponent> vm = ComponentMapper.getFor(VelocityComponent.class);
-    private final ComponentMapper<SensorCollisionComponent> scm = ComponentMapper.getFor(SensorCollisionComponent.class);
-    private final ComponentMapper<EntityStateComponent> esm = ComponentMapper.getFor(EntityStateComponent.class);
+    private  ComponentMapper<BodyComponent> bm ;
+    private  ComponentMapper<VelocityComponent> vm ;
+    private  ComponentMapper<SensorCollisionComponent> scm ;
+    private  ComponentMapper<EntityStateComponent> esm ;
 
     public MovementSystem() {
-        super(Family.all(PositionComponent.class, VelocityComponent.class, EntityStateComponent.class, BodyComponent.class).get());
+        super(Aspect.all(PositionComponent.class, VelocityComponent.class, EntityStateComponent.class, BodyComponent.class));
     }
 
     @Override
-    protected void processEntity(Entity entity, float delta) {
+    protected void process(int entity ) {
         BodyComponent bodyCom = bm.get(entity);
         VelocityComponent velocityCom = vm.get(entity);
         SensorCollisionComponent sensorCom = scm.get(entity);
@@ -37,7 +40,7 @@ public class MovementSystem extends IteratingSystem {
         float momentumX = body.getLinearVelocity().x;
 
         float desiredVelocity = Math.max(body.getLinearVelocity().x - acceleration,
-                Math.min(Input.keyForce.x * velocityCom.x * delta, body.getLinearVelocity().x + acceleration));
+                Math.min(Input.keyForce.x * velocityCom.x * world.delta, body.getLinearVelocity().x + acceleration));
 
         float velocityChange = desiredVelocity - momentumX;
         float impulse = body.getMass() * velocityChange;
@@ -45,7 +48,7 @@ public class MovementSystem extends IteratingSystem {
 
         // handle jump:
         if (stateCom.state == EntityStateComponent.State.GROUNDED && Gdx.input.isKeyJustPressed(com.badlogic.gdx.Input.Keys.SPACE)) {
-            body.applyForceToCenter(0, 20000f * delta, true);
+            body.applyForceToCenter(0, 20000f * world.delta, true);
         }
     }
 }

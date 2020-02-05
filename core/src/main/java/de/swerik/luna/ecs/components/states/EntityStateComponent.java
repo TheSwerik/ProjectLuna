@@ -1,8 +1,8 @@
 package de.swerik.luna.ecs.components.states;
 
-import com.badlogic.ashley.core.Component;
+import com.artemis.Component;
 
-public class EntityStateComponent implements Component {
+public class EntityStateComponent extends Component {
     public static enum State {
         AIRBORN,
         GROUNDED

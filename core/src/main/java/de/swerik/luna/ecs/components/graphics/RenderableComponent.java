@@ -1,6 +1,8 @@
 package de.swerik.luna.ecs.components.graphics;
 
-import com.badlogic.ashley.core.Component;
+import com.artemis.Component;
 
-public class RenderableComponent implements Component {
+public class RenderableComponent extends Component {
+    public RenderableComponent() {
+    }
 }
