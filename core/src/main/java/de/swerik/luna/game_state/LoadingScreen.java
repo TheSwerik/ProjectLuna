@@ -70,9 +70,6 @@ public class LoadingScreen extends GameState {
     @Override
     public void dispose() {
         Logger.log("Dispose LoadingScreen", Logger.DEBUG);
-
-        batch.dispose();
-        shapeRenderer.dispose();
     }
 
     public void load(@SuppressWarnings("rawtypes") List<AssetDescriptor> assets) {

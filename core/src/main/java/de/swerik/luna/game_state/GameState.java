@@ -22,8 +22,8 @@ public abstract class GameState implements Screen {
         this.app = app;
         this.gsm = gsm;
 
-        batch = new SpriteBatch();
-        shapeRenderer = new ShapeRenderer();
+        batch = app.batch;
+        shapeRenderer = app.shapeBatch;
         backgroundColor = new float[]{0, 0, 0, 1};
     }
 

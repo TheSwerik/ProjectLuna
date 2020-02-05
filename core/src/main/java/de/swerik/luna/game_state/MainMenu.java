@@ -49,8 +49,5 @@ public class MainMenu extends GameState {
     @Override
     public void dispose() {
         Logger.log("Dispose MainMenu", Logger.DEBUG);
-
-        batch.dispose();
-        shapeRenderer.dispose();
     }
 }
