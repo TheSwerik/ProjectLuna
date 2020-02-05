@@ -37,8 +37,8 @@ public class PlayState extends GameState {
         setBackgroundColor(0f, 0, 0f, 1);
 
         cam = new OrthographicCamera();
-        cam.setToOrtho(false, Luna.V_WIDTH , Luna.V_HEIGHT );
-        cam.position.set(Luna.V_WIDTH / 2 , Luna.V_HEIGHT / 2 , 0);
+        cam.setToOrtho(false, Luna.V_WIDTH, Luna.V_HEIGHT);
+        cam.position.set(Luna.V_WIDTH / 2, Luna.V_HEIGHT / 2, 0);
         cam.update();
         batch.setProjectionMatrix(cam.combined);
 
@@ -57,7 +57,7 @@ public class PlayState extends GameState {
 
     @Override
     public void update(float delta) {
-        world.step(delta, 6, 2);
+        world.step(1f / 60f, 6, 2);
         entityManager.update(delta);
     }
 
