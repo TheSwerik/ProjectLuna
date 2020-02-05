@@ -23,9 +23,6 @@ public class RenderSystem extends IteratingSystem {
 
     @Override
     protected void process(int entity) {
-    }
-
-    public void render(Entity entity) {
         for (Sprite sprite : sm.get(entity).sprites) {
             sprite.draw(batch);
         }

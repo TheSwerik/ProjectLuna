@@ -76,8 +76,8 @@ public class CollisionSystem extends IteratingSystem implements ContactListener 
         Fixture fixtureA = contact.getFixtureA();
         Fixture fixtureB = contact.getFixtureB();
 
-        Entity entityA = (Entity) fixtureA.getUserData();
-        Entity entityB = (Entity) fixtureB.getUserData();
+        int entityA = (int) fixtureA.getUserData();
+        int entityB = (int) fixtureB.getUserData();
 
         SensorCollisionComponent data;
         short categoryBits;

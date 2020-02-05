@@ -11,7 +11,7 @@ public class Strategy extends SystemInvocationStrategy {
     protected void process() {
         BaseSystem[] systemsData = systems.getData();
         for (int i = 0, s = systems.size(); s > i; i++) {
-            if (disabled.get(i) || systemsData[i] instanceof RenderSystem|| systemsData[i] instanceof TurnSystem)
+            if (disabled.get(i) || systemsData[i] instanceof RenderSystem || systemsData[i] instanceof TurnSystem)
                 continue;
 
             updateEntityStates();
@@ -21,12 +21,11 @@ public class Strategy extends SystemInvocationStrategy {
         updateEntityStates();
     }
 
-    public void render(){
+    public void render() {
         BaseSystem[] systemsData = systems.getData();
         for (int i = 0, s = systems.size(); s > i; i++) {
-            if (disabled.get(i) || !(systemsData[i] instanceof RenderSystem)|| !(systemsData[i] instanceof TurnSystem))
+            if (disabled.get(i) || (!(systemsData[i] instanceof RenderSystem) && !(systemsData[i] instanceof TurnSystem)))
                 continue;
-
             updateEntityStates();
             systemsData[i].process();
         }
