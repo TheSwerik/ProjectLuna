@@ -8,9 +8,17 @@ import de.swerik.luna.Luna;
 
 public class GameStateManager {
 
-    public static final byte PLAY = 1;
-    public static final byte MAIN_MENU = 2;
-    public static final byte LOADING = 3;
+    public enum State {
+        PLAY(1),
+        MAIN_MENU(2),
+        LOADING(3);
+
+        private byte stateNumber;
+
+        State(int stateNumber) {
+            this.stateNumber = (byte) stateNumber;
+        }
+    }
 
     private GameState currentState;
     private final Luna app;
@@ -27,10 +35,10 @@ public class GameStateManager {
         loadingScreen = new LoadingScreen(this.app, this);
         mainMenu = new MainMenu(this.app, this);
 
-        this.setState(LOADING);
+        this.setState(State.LOADING);
     }
 
-    public void setState(byte state) {
+    public void setState(State state) {
         switch (state) {
             case PLAY:
                 setState(playState);
