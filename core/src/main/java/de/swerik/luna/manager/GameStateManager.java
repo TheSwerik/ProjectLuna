@@ -1,65 +1,42 @@
 package de.swerik.luna.manager;
 
-import de.swerik.luna.game_state.GameState;
-import de.swerik.luna.game_state.LoadingScreen;
-import de.swerik.luna.game_state.MainMenu;
-import de.swerik.luna.game_state.PlayState;
+import de.swerik.luna.game_state.*;
 import de.swerik.luna.Luna;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class GameStateManager {
-
-    public enum State {
-        PLAY(1),
-        MAIN_MENU(2),
-        LOADING(3);
-
-        private byte stateNumber;
-
-        State(int stateNumber) {
-            this.stateNumber = (byte) stateNumber;
-        }
-    }
 
     private GameState currentState;
     private final Luna app;
 
-    public final LoadingScreen loadingScreen;
-    public final PlayState playState;
-    public final MainMenu mainMenu;
+    private Map<State, GameState> states;
 
     public GameStateManager(final Luna app) {
         this.app = app;
         this.currentState = (GameState) this.app.getScreen();
 
-        playState = new PlayState(this.app, this);
-        loadingScreen = new LoadingScreen(this.app, this);
-        mainMenu = new MainMenu(this.app, this);
+        states = new HashMap<State, GameState>();
+        states.put(State.PLAY, new PlayState(this.app, this));
+        states.put(State.MAIN_MENU, new MainMenu(this.app, this));
+        states.put(State.LOADING, new LoadingScreen(this.app, this));
 
         this.setState(State.LOADING);
     }
 
     public void setState(State state) {
-        switch (state) {
-            case PLAY:
-                setState(playState);
-                break;
-            case MAIN_MENU:
-                setState(mainMenu);
-                break;
-            case LOADING:
-                setState(loadingScreen);
-                break;
-        }
+        setState(states.get(state));
     }
 
-    public void setState(GameState state) {
+    private void setState(GameState state) {
         app.setScreen(currentState = state);
     }
 
     public void dispose() {
         // Dispose every State:
-        playState.dispose();
-        loadingScreen.dispose();
-        mainMenu.dispose();
+        for (GameState state : states.values()) {
+            state.dispose();
+        }
     }
 }

@@ -24,7 +24,7 @@ public class MainMenu extends GameState {
 
     @Override
     public void update(float delta) {
-        gsm.setState(GameStateManager.State.PLAY);
+        gsm.setState(State.PLAY);
     }
 
     @Override

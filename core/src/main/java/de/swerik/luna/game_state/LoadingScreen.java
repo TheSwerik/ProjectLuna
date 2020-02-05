@@ -45,7 +45,7 @@ public class LoadingScreen extends GameState {
     @Override
     public void update(float delta) {
         app.assets.finishLoading();
-        gsm.setState(GameStateManager.State.MAIN_MENU);
+        gsm.setState(State.MAIN_MENU);
     }
 
     @Override

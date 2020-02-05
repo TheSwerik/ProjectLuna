@@ -26,7 +26,7 @@ public class BodyGenerator {
         short maskingBits = (short) ((Variables.FRIENDLY_BITS | Variables.ENEMY_BITS | Variables.NEUTRAL_BITS | Variables.LEVEL_BITS) ^ filterCategory);
         // TODO:
         if (filePath.contains("Wall"))
-            maskingBits = (short) ((Variables.FRIENDLY_BITS | Variables.ENEMY_BITS | Variables.NEUTRAL_BITS | Variables.FRIENDLY_FOOT_SENSOR | Variables.FRIENDLY_RIGHT_WALL_SENSOR | Variables.FRIENDLY_LEFT_WALL_SENSOR) ^ filterCategory);
+            maskingBits = (short) ((Variables.FRIENDLY_BITS | Variables.ENEMY_BITS | Variables.NEUTRAL_BITS | Variables.FOOT_SENSOR | Variables.RIGHT_WALL_SENSOR | Variables.LEFT_WALL_SENSOR) ^ filterCategory);
 
 
         BodyDef bdef = new BodyDef();
