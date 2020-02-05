@@ -18,4 +18,5 @@ dependencies {
 //	api "com.github.tommyettinger:regexodus:$regExodusVersion"
 	api "com.github.czyzby:noise4j:$noise4jVersion"
 	api "com.strongjoshua:libgdx-inGameConsole:$inGameConsoleVersion"
+	api "com.underwaterapps.overlap2druntime:overlap2d-runtime-libgdx:$overlap2dVersion"
 }
