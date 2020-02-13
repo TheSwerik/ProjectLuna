@@ -3,6 +3,7 @@ package de.swerik.luna.game_state;
 import com.artemis.WorldConfiguration;
 import com.artemis.WorldConfigurationBuilder;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -24,6 +25,7 @@ import de.swerik.luna.manager.GameStateManager;
 import de.swerik.luna.manager.Logger;
 import de.swerik.luna.manager.Strategy;
 import de.swerik.luna.utils.BodyGenerator;
+import de.swerik.luna.utils.Music;
 import de.swerik.luna.utils.Variables;
 
 import static de.swerik.luna.utils.Variables.PPM;
@@ -40,6 +42,8 @@ public class PlayState extends GameState {
 
     // Entity Manager
     private com.artemis.World artemisWorld;
+
+    private Music music;
 
     public PlayState(Luna app, GameStateManager gsm) {
         super(app, gsm);
@@ -78,6 +82,8 @@ public class PlayState extends GameState {
 
         font = new BitmapFont();
         font.setColor(Color.WHITE);
+
+        music = new Music(app.assets);
     }
 
     @Override
@@ -91,6 +97,18 @@ public class PlayState extends GameState {
 //        entityManager.update(1f/delta);
         artemisWorld.setDelta(delta);
         artemisWorld.process();
+
+        if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_1)) {
+            music.play();
+        } else if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_2)) {
+            music.bass();
+        } else if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_3)) {
+            music.synth();
+        } else if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_4)) {
+            music.complete();
+        } else if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_5)) {
+            music.both();
+        }
     }
 
     @Override
@@ -123,7 +141,7 @@ public class PlayState extends GameState {
         Logger.log("Dispose Playstate", Logger.DEBUG);
     }
 
-    private void initEntities(){
+    private void initEntities() {
         //Entities:
         int player = artemisWorld.create();
         SpriteComponent spriteComponent = new SpriteComponent(new Texture("placeholder/sprites/ninjaboy/Idle__000.png"));
@@ -153,5 +171,6 @@ public class PlayState extends GameState {
                         wallSpriteComponent.sprites.first(),
                         "bodies/Wall.json",
                         Variables.LEVEL_BITS,
-                        world)));}
+                        world)));
+    }
 }
