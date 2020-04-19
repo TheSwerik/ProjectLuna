@@ -65,12 +65,12 @@ public class DynamicMusic {
      * Adds a new track-name for a track for the play, pause, stop methods.
      * Actually just adds another key-value-pair and preserves the old pair. So you can still find a track by FileName but also by the new Key.
      *
-     * @param oldtrackName the name(s) of the Track(s).
-     * @param newtrackName the name(s) of the Track(s).
+     * @param oldTrackName the name(s) of the Track(s).
+     * @param newTrackName the name(s) of the Track(s).
      * @return the DynamicMusic instance
      */
-    public DynamicMusic changeTrackName(String oldtrackName, String newtrackName) {
-        tracks.put(newtrackName, tracks.get(oldtrackName));
+    public DynamicMusic changeTrackName(String oldTrackName, String newTrackName) {
+        tracks.put(newTrackName, tracks.get(oldTrackName));
         return this;
     }
 
