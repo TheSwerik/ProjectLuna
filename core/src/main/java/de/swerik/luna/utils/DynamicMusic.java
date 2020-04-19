@@ -9,6 +9,8 @@ import java.util.HashMap;
 
 /**
  * The DynamicMusic class enables use of Dynamic Music based on LibGDX' Music Class
+ *
+ * @author Swerik
  */
 public class DynamicMusic {
     private final HashMap<String, Music> tracks;
