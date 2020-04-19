@@ -74,7 +74,7 @@ public class LoadingScreen extends GameState {
 
     public void load(@SuppressWarnings("rawtypes") List<AssetDescriptor> assets) {
         for (@SuppressWarnings("rawtypes") AssetDescriptor ad : assets) {
-            Logger.log("added File to Loading queue: " + ad.fileName, Logger.DEBUG);
+//            Logger.log("added File to Loading queue: " + ad.fileName, Logger.DEBUG);
             app.assets.load(ad);
         }
     }

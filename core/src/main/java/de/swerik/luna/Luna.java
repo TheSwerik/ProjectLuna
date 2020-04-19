@@ -29,6 +29,7 @@ public class Luna extends Game {
     public void create() {
         Logger.initLogManager(LOG_LEVEL, true, DEBUG);
         assets = new AssetManager();
+        assets.getLogger().setLevel(LOG_LEVEL);
         batch = new SpriteBatch();
         shapeBatch = new ShapeRenderer();
         gameStateManager = new GameStateManager(this);
