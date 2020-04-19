@@ -56,7 +56,19 @@ public class DynamicMusic {
      */
     public DynamicMusic remove(String... trackNames) {
         for (String trackName : trackNames) {
-            assetManager.unload(assetManager.getAssetFileName(tracks.get(trackName)));
+            assetManager.unload(assetManager.getAssetFileName(tracks.remove(trackName)));
+        }
+        return this;
+    }
+
+    /**
+     * Remove all Tracks. Also unloads them from the AssetManager.
+     *
+     * @return the DynamicMusic instance
+     */
+    public DynamicMusic remove() {
+        for (String key : tracks.keySet()) {
+            assetManager.unload(assetManager.getAssetFileName(tracks.remove(key)));
         }
         return this;
     }
