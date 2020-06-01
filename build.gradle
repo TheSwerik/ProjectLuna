@@ -10,7 +10,12 @@ buildscript {
 		classpath "com.badlogicgames.gdx:gdx-tools:$gdxVersion"
 		classpath "com.mobidevelop.robovm:robovm-gradle-plugin:$robovmVersion"
 		classpath "com.android.tools.build:gradle:$androidPluginVersion"
+//		implementation fileTree(dir: 'lib', include: ['*.jar'])
+//		compile fileTree(include: ['*.jar'], dir: 'lib')
+
+//		classpath files('lib/DynamicMusic.jar')
 	}
+
 }
 
 allprojects {
@@ -36,11 +41,4 @@ subprojects {
 		maven { url 'https://jitpack.io' }
 		jcenter()
 	}
-}
-
-// Clearing Eclipse project data in root folder:
-tasks.eclipse.doLast {
-	delete '.project'
-	delete '.classpath'
-	delete '.settings/'
 }

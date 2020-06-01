@@ -9,7 +9,8 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import com.badlogic.gdx.physics.box2d.World;
 import de.swerik.luna.Luna;
 import de.swerik.luna.ecs.components.PlayerDataComponent;
 import de.swerik.luna.ecs.components.TypeComponent;
@@ -84,6 +85,9 @@ public class PlayState extends GameState {
         font.setColor(Color.WHITE);
 
         music = new DynamicMusic(app.assets);
+        music.add("placeholder/music/Marco Bros Complete vorbis.ogg");
+        music.play();
+        music.fadeOut(2000);
     }
 
     @Override
@@ -97,6 +101,8 @@ public class PlayState extends GameState {
 //        entityManager.update(1f/delta);
         artemisWorld.setDelta(delta);
         artemisWorld.process();
+        if (Gdx.input.isKeyJustPressed(Input.Keys.A)) music.fadeIn(10000, 0.5f);
+        if (Gdx.input.isKeyJustPressed(Input.Keys.D)) music.fadeOut(10000);
     }
 
     @Override
